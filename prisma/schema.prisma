@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://macbook:123noodles@localhost:5432/oodlesv2"
 }
 
 model Placeholder_Table {
@@ -12,9 +12,23 @@ model Placeholder_Table {
 
   @@map("Placeholder Table")
 }
+
+enum Business {
+  ORGANIZATION
+  RESTAURANT
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   email     String   @unique
-  name      String?
+  businessName  String  @unique
+  username  String
+  address   String
+  contactNum  String
+  biography String
+  businessType Business 
+  imageUrl  String
+  is501c3 Boolean @default(false)
 }
+
