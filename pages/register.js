@@ -2,12 +2,6 @@ import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-/*TODO: Fix bugs with address autocomplete
-    - State doesn't change when suggestion is selected (on change not triggered)
-    - Disable chrome suggestions
-    
-*/
-
 const Register = () => {
   const initialForm = {
     email: "",
