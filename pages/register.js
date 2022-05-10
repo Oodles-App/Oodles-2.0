@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Autocomplete } from "@lob/react-address-autocomplete";
+import React, { useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
-/*TODO:
-    - UX: Auto-complete address feature
+/*TODO: Fix bugs with address autocomplete
+    - State doesn't change when suggestion is selected (on change not triggered)
+    - Disable chrome suggestions
+    
 */
 
 const Register = () => {
@@ -10,12 +13,34 @@ const Register = () => {
     email: "",
     password: "",
     businessName: "",
-    address: "",
     contactNum: "",
   };
 
   const [orgType, setOrgType] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [formContent, setFormContent] = useState(initialForm);
+
+  const step1 =
+    "Please indicate whether you are registering as an organization or a restaurant.";
+  const step2 = "Please fill out your details (all fields are required.";
+
+  //TODO: move this API call to redux? & Manage suggestions in Redux state?
+  useEffect(() => {
+    if (address.length > 2) {
+      fetch(
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=589d58eb199f4f898d2194bfad9ec7b5`,
+        { method: "GET" }
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setAddressSuggestions(
+            result.features.map((location) => location.properties.formatted)
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [address]);
 
   const handleFormChange = (e) => {
     setFormContent({ ...formContent, [e.target.name]: e.target.value });
@@ -24,12 +49,12 @@ const Register = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(`Form will be submitted as an ${orgType} with content:`);
-    console.log(formContent);
+    console.log({ orgType, address, ...formContent });
   };
 
   return (
     <div>
-      <h1>Register</h1>
+      <h3>{orgType === "" ? step1 : step2}</h3>
       <form onSubmit={handleFormSubmit}>
         <div>
           <div>
@@ -47,52 +72,21 @@ const Register = () => {
         </div>
 
         <div>
-          <div>
-            <label htmlFor="businessName">Business Name:</label>
-          </div>
-          <input
-            name="businessName"
-            type="text"
-            value={formContent.businessName}
-            required
-            disabled={orgType === ""}
-            onChange={handleFormChange}
-          />
-        </div>
-
-        <div>
-          <div>
-            <label htmlFor="email">Email:</label>
-          </div>
-          <input
+          <TextField
+            label="Email"
             name="email"
             type="email"
             value={formContent.email}
             required
+            autoComplete="new-password"
             disabled={orgType === ""}
             onChange={handleFormChange}
           />
         </div>
 
         <div>
-          <div>
-            <label htmlFor="address">Address:</label>
-          </div>
-          <input
-            name="address"
-            type="text"
-            value={formContent.address}
-            required
-            disabled={orgType === ""}
-            onChange={handleFormChange}
-          />
-        </div>
-
-        <div>
-          <div>
-            <label htmlFor="password">Password:</label>
-          </div>
-          <input
+          <TextField
+            label="Password"
             name="password"
             type="password"
             value={formContent.password}
@@ -103,10 +97,44 @@ const Register = () => {
         </div>
 
         <div>
-          <div>
-            <label htmlFor="contactNum">Phone Number:</label>
-          </div>
-          <input
+          <TextField
+            label="Business Name"
+            name="businessName"
+            type="text"
+            value={formContent.businessName}
+            required
+            disabled={orgType === ""}
+            onChange={handleFormChange}
+          />
+        </div>
+
+        <div>
+          <Autocomplete
+            id="address-search"
+            options={addressSuggestions}
+            sx={{ width: 300 }}
+            onSelect={(e) => setAddress(e.target.value)}
+            freeSolo={true}
+            disabled={orgType === ""}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Address"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                required
+                value={address}
+                autoComplete="new-password"
+                disabled={orgType === ""}
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <TextField
+            label="Phone Number"
             name="contactNum"
             type="text"
             value={formContent.contactNum}
