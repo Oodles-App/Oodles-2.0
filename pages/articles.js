@@ -1,4 +1,3 @@
-// import '../styles/globals.css'
 import {PrismaClient} from '@prisma/client'
 import { useState } from 'react';
 const prisma = new PrismaClient();
@@ -12,33 +11,30 @@ export async function getStaticProps() {
     }
 }
 
+function newTab(url) {
+    window.open(url)
+}
 const Articles = ({initialArticles}) => {
     const [articles, setArticles] = useState(initialArticles);
- 
+    const [search , setSearch ] = useState("")
+
     return (
         <div>
             <h1 className="ArticlesPage">Articles</h1>
                 <div className="search-container">
                     <form action="/action_page.php">
-                    <input type="text" placeholder="Search.." name="search"/>
-                    <button type="submit"><i className="fa fa-search"></i></button>
+                    <input id="search" type="text" placeholder="Search by Title" name="search" onChange={e => setSearch(e.target.value)} />
+                    <ul>
+                        {articles.filter(article => article.title.toLowerCase().includes(search.toLowerCase()))
+                        .map((article) => (
+                            <li key={article.id}>
+                                <h3 onClick={() => newTab(article.url)}>{article.title} by {article.author}</h3>
+                            </li>
+                        ))
+                    }
+                    </ul>
                     </form>
                  </div>
-                 <div>
-                    {articles && articles.map((article) => {
-                        return(
-                            <div key={article.id}>
-                                <h3>{article.title}</h3>
-                                <p>{article.author}</p>
-                            </div>
-                        )
-                    })}
-                 </div>
- 
-
-
-
-
         </div>
     )
   };

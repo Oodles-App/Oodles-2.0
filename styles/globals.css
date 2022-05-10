@@ -34,12 +34,9 @@ a {
   cursor: pointer;
 }
 .input[type=text] {
+
   padding: 6px;
   margin-top: 8px;
   font-size: 17px;
   border: none;
 }
-
-/* @import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'; */
