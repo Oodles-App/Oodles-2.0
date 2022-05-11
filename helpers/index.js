@@ -1,1 +1,1 @@
-export * from './api/fetch-wrapper';
+export * from "./fetch-wrapper";

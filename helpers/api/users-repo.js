@@ -1,10 +1,12 @@
+import path from "path";
+
 const fs = require("fs");
 
 // users in JSON file for simplicity, store in a db for production applications
 // let users = require("data/users.json");
-let users = require("../../pages/data/users");
+// let users = require("../../pages/data/users");
 
-console.log(users, "users inside users-repo");
+let users = require("../../pages/data/users.json");
 
 export const usersRepo = {
   getAll: () => users,
@@ -50,7 +52,9 @@ function _delete(id) {
 
 function saveData() {
   fs.writeFileSync(
-    "//Users/macbook/Dev/exercises/GHP 2202/oodlesV2/oodlesv2/pages/data/users.json",
+    path.join(__dirname + "../../../../../../pages/data/users.json"),
     JSON.stringify(users, null, 4)
   );
 }
+
+console.log(__dirname, "dirname");

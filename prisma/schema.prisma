@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://macbook:123noodles@localhost:5432/oodlesv2"
 }
 
 enum Business {
@@ -75,11 +75,7 @@ model Message {
 }
 
 model Article {
-<<<<<<< HEAD
-  id      Int  @id
-=======
   id      Int  @id 
->>>>>>> main
   title   String
   author  String
   url     String
