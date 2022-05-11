@@ -50,7 +50,7 @@ function _delete(id) {
 
 function saveData() {
   fs.writeFileSync(
-    "/Users/halseyquinn/Desktop/GHP-Senior/oodlesv2/pages/data/users.json",
+    "//Users/macbook/Dev/exercises/GHP 2202/oodlesV2/oodlesv2/pages/data/users.json",
     JSON.stringify(users, null, 4)
   );
 }

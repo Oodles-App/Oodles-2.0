@@ -1,3 +1,6 @@
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
 const bcrypt = require("bcryptjs");
 
 import { apiHandler, usersRepo } from "../../../helpers/api";

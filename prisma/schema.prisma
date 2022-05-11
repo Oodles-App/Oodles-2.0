@@ -75,7 +75,7 @@ model Message {
 }
 
 model Article {
-  id      Int  
+  id      Int  @id
   title   String
   author  String
   url     String
