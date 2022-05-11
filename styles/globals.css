@@ -1,4 +1,6 @@
 html,
+
+
 body {
   padding: 0;
   margin: 0;
@@ -13,4 +15,28 @@ a {
 
 * {
   box-sizing: border-box;
+
+}
+
+.ArticlesPage {
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large
+}
+
+.search-container button {
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+.input[type=text] {
+
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
 }
