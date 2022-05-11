@@ -1,15 +1,17 @@
-const expressJwt = require("express-jwt");
+const { expressjwt: jwt } = require("express-jwt");
+// const expressJwt = require("express-jwt");
 const util = require("util");
 
 import getConfig from "next/config";
 
 const { serverRuntimeConfig } = getConfig();
+console.log(serverRuntimeConfig, "server runtime config");
 
 export { jwtMiddleware };
 
 function jwtMiddleware(req, res) {
-  const middleware = expressJwt({
-    secret: serverRuntimeConfig.secret,
+  const middleware = jwt({
+    secret: serverRuntimeConfig.mySecret,
     algorithms: ["HS256"],
   }).unless({
     path: [
