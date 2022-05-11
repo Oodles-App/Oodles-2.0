@@ -73,3 +73,10 @@ model Message {
   senderId   Int
   receiverId Int
 }
+
+model Article {
+  id      Int  
+  title   String
+  author  String
+  url     String
+}
