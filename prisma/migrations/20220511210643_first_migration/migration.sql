@@ -1,14 +1,25 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Business" AS ENUM ('ORGANIZATION', 'RESTAURANT');
 
-  - You are about to drop the `Placeholder Table` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('ACTIVE', 'PENDING', 'CONFIRM', 'COMPLETED');
 
--- DropTable
-DROP TABLE "Placeholder Table";
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "businessName" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "contactNum" TEXT NOT NULL,
+    "biography" TEXT NOT NULL,
+    "businessType" "Business" NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "is501c3" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Tag" (
@@ -52,6 +63,16 @@ CREATE TABLE "Message" (
 );
 
 -- CreateTable
+CREATE TABLE "Article" (
+    "id" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
+    "author" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+
+    CONSTRAINT "Article_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_TagToUser" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -62,6 +83,12 @@ CREATE TABLE "_ProductToTag" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_businessName_key" ON "User"("businessName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
