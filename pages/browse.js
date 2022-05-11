@@ -1,26 +1,21 @@
 import React from 'react'
-import { GoogleMap, LoadScriptNext } from '@react-google-maps/api';
+import dynamic from "next/dynamic"
 
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
-
-const center = {
-  lat: 40.712776,
-  lng: -74.005974
-};
+const Map = dynamic(() => import ("../components/map"), {ssr:false})
 
 function Browse() {
+
   return (
       <div>
           <h1>Browse</h1>
           <p>Location: </p>
           <button type="button" name="List">List</button>
           <button type="button" name="Map">Map</button>
-          <div id="map"> 
-    
+          <div id="map">   
+            <Map/> 
           </div>
+  
+       
           <p>Restaurant Info</p>
 
       </div>
