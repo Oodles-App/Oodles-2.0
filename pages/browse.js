@@ -19,7 +19,6 @@ export async function getStaticProps() {
 
 function Browse({initialRestaurants}) {
   const [restaurants, setRestaurants] = useState(initialRestaurants)
-  console.log(restaurants)
 
   return (
       <div>

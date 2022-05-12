@@ -1,36 +1,27 @@
 import React from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
-// import "leaflet/dist/leaflset.css"
-import { useEffect } from 'react';
-import L from "leaflet";
-
+import { useState } from 'react';
 
 
 export default function Map(props) {
-  const restaurants = props
-  console.log("props here", restaurants)
+  const [restaurants, setRestaurants] = useState(props.restaurants)
+  // console.log("props here", restaurants)
 
   return (
     <div id="map" >
-      <MapContainer center={[40.712776, -74.005974]} zoom={13} scrollWheelZoom={false} >
+      <MapContainer center={[40.735360, -73.989970]} zoom={11} scrollWheelZoom={false} >
       <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
       />
-      {/* <Marker position={[restaurants[0].lat, restaurants[0].lng]}>
-          <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-      </Marker> */}
-      {/* <Markers data={restaurants}/> */}
+      <Markers data={restaurants}/>
       </MapContainer>
     </div>
     
   )
 }
 
-//fakeData//
 function Markers( {data} ) {
   const map = useMap();
   return (
@@ -42,25 +33,25 @@ function Markers( {data} ) {
             click: () => {
               map.setView(
                 [
-                  restaurant.x,
-                  restaurant.y
+                  restaurant.lat,
+                  restaurant.lng
                 ],
                 14
               );
-              map.flyTo([restaurant.x, restaurant.y], 14, {
+              map.flyTo([restaurant.lat, restaurant.lng], 14, {
                 animate: true,
                 duration: 2 // in seconds
               })
             }
           }}
-          key={restaurant.name}
+          key={restaurant.id}
           position={{
-            lat: restaurant.x,
-            lng: restaurant.y
+            lat: restaurant.lat,
+            lng: restaurant.lng
           }}
         >
           <Popup>
-            <span>{restaurant.name}</span>
+            <span>{restaurant.businessName}</span>
           </Popup>
         </Marker>
       );

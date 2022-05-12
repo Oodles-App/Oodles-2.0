@@ -1,7 +1,7 @@
 import { Alert } from "../components/Alert";
 import "../styles/globals.css";
 import Head from "next/head";
-import "../styles/layout.module.css"
+
 
 function MyApp({ Component, pageProps }) {
   return (
