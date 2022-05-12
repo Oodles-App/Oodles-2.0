@@ -1,6 +1,8 @@
 import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
-import { BehaviorSubject } from "rxjs";
+import { async, BehaviorSubject } from "rxjs";
+import Router from "next/router";
+import { useDispatch } from "react-redux";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
@@ -41,7 +43,13 @@ export const register = () => {
 };
 
 export const logout = () => {
-  dispatch(setUser({}));
+  localStorage.removeItem("user");
+  userSubject.next(null);
+  Router.push("/account/login");
+  return {
+    type: SET_USER,
+    user: {},
+  };
 };
 
 //REDUCER
