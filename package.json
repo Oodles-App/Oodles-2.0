@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "express-jwt": "^7.7.0",
     "leaflet": "^1.8.0",
+    "leaflet.locatecontrol": "^0.76.1",
     "next": "12.1.6",
     "next-auth": "^4.3.4",
     "next-utils": "^0.2.1",
@@ -28,10 +29,10 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.31.1",
+    "react-icons": "^4.3.1",
     "react-leaflet": "^4.0.0",
     "rxjs": "^7.5.5",
-    "yup": "^0.32.11",
-    "react-icons": "^4.3.1"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
