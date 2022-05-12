@@ -18,12 +18,13 @@ async function register(req, res) {
   });
 
   if (existingUser)
-    throw `An account has already been registered with this email, ${req.email}.`;
+    throw `An account has already been registered with this email, ${user.email}.`;
 
   // hash password
   user.hash = bcrypt.hashSync(password, 10);
 
-  await prisma.user.create({ data: user });
+  const newUser = await prisma.user.create({ data: user });
+  console.log(newUser, "new user");
 
-  return res.status(200).json(user);
+  return res.status(200).json(newUser.data);
 }

@@ -59,11 +59,11 @@ function Register() {
   function onSubmit(user) {
     return userService
       .register({ ...user, businessType, address })
-      .then(() => {
+      .then((user) => {
         alertService.success("Registration successful", {
           keepAfterRouteChange: true,
         });
-        router.push("login"); // TODO: Instead, automatically log user in and redirect them to the edit profile page
+        router.push("login");
       })
       .catch(alertService.error);
   }
