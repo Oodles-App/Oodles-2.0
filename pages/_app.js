@@ -1,7 +1,7 @@
 import { Alert } from "../components/Alert";
 import "../styles/globals.css";
 import Head from "next/head";
-
+import Layout from "../components/Layout"
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -11,8 +11,9 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="Donate Food to Nonprofit Organizations" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Alert />
+      <Layout>
       <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
