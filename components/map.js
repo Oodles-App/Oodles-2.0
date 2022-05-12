@@ -7,7 +7,7 @@ import { useState, useRef} from 'react';
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
-  
+
   return (
     <div>
 
@@ -19,7 +19,7 @@ export default function Map(props) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
       />
-      {/* <Markers data={restaurants}/> */}
+      <Markers data={restaurants}/>
       <LocationMarker/>
       </MapContainer>
     </div>
