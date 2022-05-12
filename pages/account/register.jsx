@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +8,9 @@ import { Link } from "../../components";
 import { Layout } from "../../components/account";
 import { userService, alertService } from "../../services";
 
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+
 export default Register;
 
 function Register() {
@@ -14,27 +18,52 @@ function Register() {
 
   // form validation rules
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
-    username: Yup.string().required("Username is required"),
+    email: Yup.string()
+      .email("Please enter a valid email address.")
+      .required("Email is required."),
     password: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters"),
+    businessName: Yup.string().required(
+      "Please specify your business or organization name."
+    ),
+    contactNum: Yup.string().required("Please provide a contact phone number."),
   });
+
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  // get functions to build form with useForm() hook
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
+  const [businessType, setBusinessType] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+
+  ///TODO: move this API call (address autocomplete API) to redux/ a services file?
+  useEffect(() => {
+    if (address.length > 2) {
+      fetch(
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=589d58eb199f4f898d2194bfad9ec7b5`,
+        { method: "GET" }
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setAddressSuggestions(
+            result.features.map((location) => location.properties.formatted)
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [address]);
+
   function onSubmit(user) {
     return userService
-      .register(user)
+      .register({ ...user, businessType, address })
       .then(() => {
         alertService.success("Registration successful", {
           keepAfterRouteChange: true,
         });
-        router.push("login");
+        router.push("login"); // TODO: Instead, automatically log user in and redirect them to the edit profile page
       })
       .catch(alertService.error);
   }
@@ -45,55 +74,99 @@ function Register() {
         <h4 className="card-header">Register</h4>
         <div className="card-body">
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <div>
+                <label htmlFor="businessType"></label>
+              </div>
+              <select
+                name="businessType"
+                value={businessType}
+                onChange={(e) => setBusinessType(e.target.value)}
+              >
+                <option value="">Register as:</option>
+                <option value="organization">Organization</option>
+                <option value="restaurant">Restaurant</option>
+              </select>
+            </div>
+
             <div className="form-group">
-              <label>First Name</label>
-              <input
-                name="firstName"
-                type="text"
-                {...register("firstName")}
-                className={`form-control ${
-                  errors.firstName ? "is-invalid" : ""
-                }`}
-              />
-              <div className="invalid-feedback">
-                {errors.firstName?.message}
+              <div>
+                <TextField
+                  label="Email"
+                  name="email"
+                  {...register("email")}
+                  autoComplete="new-password"
+                  disabled={businessType === ""}
+                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                />
+              </div>
+              <div className="invalid-feedback">{errors.email?.message}</div>
+            </div>
+            <div className="form-group">
+              <div>
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  disabled={businessType === ""}
+                  {...register("password")}
+                  className={`form-control ${
+                    errors.lastName ? "is-invalid" : ""
+                  }`}
+                />
+                <div className="invalid-feedback">
+                  {errors.password?.message}
+                </div>
               </div>
             </div>
             <div className="form-group">
-              <label>Last Name</label>
-              <input
-                name="lastName"
+              <div>
+                <TextField
+                  label="Business Name"
+                  name="businessName"
+                  type="text"
+                  {...register("businessName")}
+                  disabled={businessType === ""}
+                />
+              </div>
+              <div className="invalid-feedback">
+                {errors.businessName?.message}
+              </div>
+            </div>
+            <div>
+              <Autocomplete
+                id="address-search"
+                options={addressSuggestions}
+                sx={{ width: 300 }}
+                onSelect={(e) => setAddress(e.target.value)}
+                freeSolo={true}
+                disabled={businessType === ""}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Address"
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                    required
+                    value={address}
+                    autoComplete="new-password"
+                    disabled={businessType === ""}
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Phone Number"
+                name="contacNum"
                 type="text"
-                {...register("lastName")}
+                disabled={businessType === ""}
+                {...register("contactNum")}
                 className={`form-control ${
                   errors.lastName ? "is-invalid" : ""
                 }`}
               />
-              <div className="invalid-feedback">{errors.lastName?.message}</div>
-            </div>
-            <div className="form-group">
-              <label>Username</label>
-              <input
-                name="username"
-                type="text"
-                {...register("username")}
-                className={`form-control ${
-                  errors.username ? "is-invalid" : ""
-                }`}
-              />
-              <div className="invalid-feedback">{errors.username?.message}</div>
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                {...register("password")}
-                className={`form-control ${
-                  errors.password ? "is-invalid" : ""
-                }`}
-              />
-              <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
             <button
               disabled={formState.isSubmitting}

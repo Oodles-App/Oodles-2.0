@@ -1,27 +1,29 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 const bcrypt = require("bcryptjs");
 
-import { apiHandler, usersRepo } from "../../../helpers/api";
-
-console.log(usersRepo, "users repo");
+import { apiHandler } from "../../../helpers/api";
 
 export default apiHandler({
   post: register,
 });
 
-function register(req, res) {
+async function register(req, res) {
   // split out password from user details
   const { password, ...user } = req.body;
 
-  // validate
-  if (usersRepo.find((x) => x.username === user.username))
-    throw `User with the username "${user.username}" already exists`;
+  const existingUser = await prisma.user.findUnique({
+    where: { email: user.email },
+  });
+
+  if (existingUser)
+    throw `An account has already been registered with this email, ${req.email}.`;
 
   // hash password
   user.hash = bcrypt.hashSync(password, 10);
 
-  usersRepo.create(user);
-  return res.status(200).json({});
+  await prisma.user.create({ data: user });
+
+  return res.status(200).json(user);
 }
