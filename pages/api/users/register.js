@@ -9,6 +9,7 @@ export default apiHandler({
   post: register,
 });
 
+//TODO: improve error handling to include database-validation errors and more specific messages
 async function register(req, res) {
   try {
     // split out password from user details (to hash before adding to DB)
@@ -28,6 +29,11 @@ async function register(req, res) {
 
     return res.status(200).json(newUser.data);
   } catch (error) {
-    console.log("handle error: ", error);
+    //If error comes from something thrown in try/catch (where it has been thrown as a message):
+    //set error message to existing message; otherwise send a generic message that registration is invalid
+    const errMessage =
+      typeof error === "string" ? error : `Invalid registration information.`;
+
+    res.status(400).send({ message: errMessage });
   }
 }

@@ -58,7 +58,6 @@ export const postUser = (user) => {
       dispatch(setUser({ error }));
     }
   };
-  // (then call log-in: stretch goal for logging in and redirecting users automatically to edit profile view)
 };
 
 //REDUCER
