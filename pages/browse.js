@@ -1,5 +1,6 @@
 import React from 'react'
 import dynamic from "next/dynamic"
+// import "../components/map.module.css"
 
 const Map = dynamic(() => import ("../components/map"), {ssr:false})
 
