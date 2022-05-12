@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import { userRegistrationSchema } from "../../helpers/validationSchema";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
 import { userService, alertService } from "../../services";
+
+import { useDispatch, useSelector } from "react-redux";
+import { postUser } from "../../redux/user";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -15,22 +19,10 @@ export default Register;
 
 function Register() {
   const router = useRouter();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  // form validation rules
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Please enter a valid email address.")
-      .required("Email is required."),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
-    businessName: Yup.string().required(
-      "Please specify your business or organization name."
-    ),
-    contactNum: Yup.string().required("Please provide a contact phone number."),
-  });
-
-  const formOptions = { resolver: yupResolver(validationSchema) };
+  const formOptions = { resolver: yupResolver(userRegistrationSchema) };
 
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
@@ -56,17 +48,31 @@ function Register() {
     }
   }, [address]);
 
-  function onSubmit(user) {
-    return userService
-      .register({ ...user, businessType, address })
-      .then((user) => {
-        alertService.success("Registration successful", {
-          keepAfterRouteChange: true,
-        });
-        router.push("login");
-      })
-      .catch(alertService.error);
-  }
+  useEffect(() => {
+    if (user.id) {
+      //TODO: Add registration successful alert here
+      router.push("edit-profile"); //TODO: replace with edit profile path when component is created
+    } else if (user.error) {
+      console.log(user.error, "error to be in alert once connected");
+      //TODO: Add registration failed alert here
+    }
+  }, [user, router]);
+
+  const onSubmit = (user) => {
+    dispatch(postUser({ ...user, businessType, address }));
+  };
+
+  // function onSubmit(user) {
+  //   return userService
+  //     .register({ ...user, businessType, address })
+  //     .then((user) => {
+  //       alertService.success("Registration successful", {
+  //         keepAfterRouteChange: true,
+  //       });
+  //       router.push("login");
+  //     })
+  //     .catch(alertService.error);
+  // }
 
   return (
     <Layout>
