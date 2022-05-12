@@ -36,9 +36,9 @@ export const login = (email, password) => {
         email,
         password,
       });
-      console.log(user, "user after log in thunk");
       userSubject.next(user);
       localStorage.setItem("user", JSON.stringify(user));
+
       dispatch(setUser(user));
     } catch (error) {
       //if user tries to log in with invalid credentials user object with have a key 'error' with error message
