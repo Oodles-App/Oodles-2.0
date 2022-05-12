@@ -1,8 +1,11 @@
+import getConfig from "next/config";
+import { apiHandler } from "../../../helpers/api";
+
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-import getConfig from "next/config";
-
-import { apiHandler, usersRepo } from "../../../helpers/api";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -10,9 +13,10 @@ export default apiHandler({
   post: authenticate,
 });
 
-function authenticate(req, res) {
-  const { username, password } = req.body;
-  const user = usersRepo.find((u) => u.username === username);
+async function authenticate(req, res) {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findUnique({ where: { email: email } });
 
   // validate
   if (!(user && bcrypt.compareSync(password, user.hash))) {
@@ -27,9 +31,8 @@ function authenticate(req, res) {
   // return basic user details and token
   return res.status(200).json({
     id: user.id,
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    email: user.email,
+    businessName: user.businessName,
     token,
   });
 }
