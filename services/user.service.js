@@ -9,11 +9,8 @@ const { publicRuntimeConfig } = getConfig();
 
 const baseUrl = "/api/users";
 
-console.log(publicRuntimeConfig, "public runtime config");
-console.log(baseUrl, "base URL");
-
 const userSubject = new BehaviorSubject(
-  process.browser && JSON.parse(localStorage.getItem("user"))
+  typeof window === undefined && JSON.parse(localStorage.getItem("user"))
 );
 
 export const userService = {
