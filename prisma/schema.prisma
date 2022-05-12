@@ -17,12 +17,12 @@ model User {
   address   String
   contactNum  String
   biography String?
-  businessType String 
+  businessType String
   imageUrl  String?
   is501c3 Boolean? @default(false)
   tags Tag[]
   sentMessages      Message[]  @relation("sentMessages")
-  receivedMessages  Message[]  @relation("receivedMessages") 
+  receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
   reservations      Reservation[]
 }
@@ -36,18 +36,18 @@ model Tag {
 
 model Product {
   id      Int         @id @default(autoincrement())
-	imageUrl		String
 	user			  User    @relation(fields:[userId], references:[id])
   userId      Int
   name        String
-  description String
+  amount      Int
+  measurement String
   tags        Tag[]
 }
 
 enum Status {
   ACTIVE
   PENDING
-  CONFIRM 
+  CONFIRM
   COMPLETED
 }
 
@@ -71,7 +71,7 @@ model Message {
 }
 
 model Article {
-  id      Int  @id 
+  id      Int  @id
   title   String
   author  String
   url     String
