@@ -28,7 +28,7 @@ function Browse({initialRestaurants}) {
           <button type="button" name="List">List</button>
           <button type="button" name="Map">Map</button>
           <div id="map">   
-            <Map /> 
+            <Map restaurants={restaurants}/> 
           </div>
           <p>Restaurant Info</p>
 

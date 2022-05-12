@@ -6,7 +6,9 @@ import L from "leaflet";
 
 
 
-export default function Map() {
+export default function Map(props) {
+  const restaurants = props
+  console.log("props here", restaurants)
 
   return (
     <div id="map" >
@@ -16,13 +18,52 @@ export default function Map() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
       />
-      <Marker position={[40.712776, -74.005974]}>
+      {/* <Marker position={[restaurants[0].lat, restaurants[0].lng]}>
           <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
-      </Marker>
+      </Marker> */}
+      {/* <Markers data={restaurants}/> */}
       </MapContainer>
     </div>
     
   )
+}
+
+//fakeData//
+function Markers( {data} ) {
+  const map = useMap();
+  return (
+    data.length > 0 &&
+    data.map((restaurant) => {
+      return (
+        <Marker
+          eventHandlers={{
+            click: () => {
+              map.setView(
+                [
+                  restaurant.x,
+                  restaurant.y
+                ],
+                14
+              );
+              map.flyTo([restaurant.x, restaurant.y], 14, {
+                animate: true,
+                duration: 2 // in seconds
+              })
+            }
+          }}
+          key={restaurant.name}
+          position={{
+            lat: restaurant.x,
+            lng: restaurant.y
+          }}
+        >
+          <Popup>
+            <span>{restaurant.name}</span>
+          </Popup>
+        </Marker>
+      );
+    })
+  );
 }
