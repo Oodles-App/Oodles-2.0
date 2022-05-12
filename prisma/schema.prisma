@@ -4,28 +4,24 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-enum Business {
-  ORGANIZATION
-  RESTAURANT
+  url      = "postgresql://macbook:123noodles@localhost:5432/oodlesv2"
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   email     String   @unique
+  hash      String
   businessName  String  @unique
-  username  String
+  username  String?
   address   String
   lat       Float
   lng       Float
   contactNum  String
-  biography String
-  businessType Business 
-  imageUrl  String
-  is501c3 Boolean @default(false)
+  biography String?
+  businessType String 
+  imageUrl  String?
+  is501c3 Boolean? @default(false)
   tags Tag[]
   sentMessages      Message[]  @relation("sentMessages")
   receivedMessages  Message[]  @relation("receivedMessages") 

@@ -457,6 +457,7 @@ const createRestaurants = async() => {
                 contactNum: '123',
                 biography: 'foo',
                 imageUrl: 'bar',
+                hash: '1'
             }
         })
      }
