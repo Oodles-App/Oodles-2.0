@@ -15,7 +15,6 @@ export default apiHandler({
 
 async function authenticate(req, res) {
   const { email, password } = req.body;
-  console.log(email, "email in authenticate API ");
 
   const user = await prisma.user.findUnique({ where: { email: email } });
 

@@ -24,7 +24,6 @@ async function register(req, res) {
   user.hash = bcrypt.hashSync(password, 10);
 
   const newUser = await prisma.user.create({ data: user });
-  console.log(newUser, "new user");
 
   return res.status(200).json(newUser.data);
 }

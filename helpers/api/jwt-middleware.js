@@ -5,7 +5,6 @@ const util = require("util");
 import getConfig from "next/config";
 
 const { serverRuntimeConfig } = getConfig();
-console.log(serverRuntimeConfig, "server runtime config");
 
 export { jwtMiddleware };
 
