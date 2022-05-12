@@ -15,8 +15,8 @@ model User {
   businessName  String  @unique
   username  String?
   address   String
-  lat       Float
-  lng       Float
+  lat       Float?
+  lng       Float?
   contactNum  String
   biography String?
   businessType String 
@@ -73,7 +73,7 @@ model Message {
 }
 
 model Article {
-  id      Int  @id 
+  id      Int  @id @default(autoincrement())
   title   String
   author  String
   url     String
