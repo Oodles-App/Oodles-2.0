@@ -1,7 +1,13 @@
 import { fetchWrapper } from "../../helpers";
+import getConfig from "next/config";
+import { BehaviorSubject } from "rxjs";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
+
+const userSubject = new BehaviorSubject(
+  typeof window === undefined && JSON.parse(localStorage.getItem("user"))
+);
 
 //ACTION TYPES
 const SET_USER = "SET_USER";
@@ -19,18 +25,23 @@ export const login = (email, password) => {
         email,
         password,
       });
+      userSubject.next(user);
+      localStorage.setItem("user", JSON.stringify(user));
       dispatch(setUser(user));
-    } catch (err) {}
-    dispatch(setUser);
+    } catch (error) {
+      //if user tries to log in with invalid credentials user object with have a key 'error' with error message
+      dispatch(setUser({ error }));
+    }
   };
 };
 
-export const authenticate = () => {
-  //move authenticate function here
+export const register = () => {
+  // TODO: add register thunk here
+  // (then call log-in: stretch goal for logging in and redirecting users automatically to edit profile view)
 };
 
 export const logout = () => {
-  //move logout function from user services here
+  dispatch(setUser({}));
 };
 
 //REDUCER

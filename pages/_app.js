@@ -1,5 +1,5 @@
 import { Alert } from "../components/Alert";
-import { wrapper, store } from "../store/store";
+import { wrapper, store } from "../redux/store";
 import { Provider } from "react-redux";
 import "../styles/globals.css";
 
