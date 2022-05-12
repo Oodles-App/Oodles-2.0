@@ -10,20 +10,24 @@ export default apiHandler({
 });
 
 async function register(req, res) {
-  // split out password from user details (security measure)
-  const { password, ...user } = req.body;
+  try {
+    // split out password from user details (to hash before adding to DB)
+    const { password, ...user } = req.body;
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email: user.email },
-  });
+    const existingUser = await prisma.user.findUnique({
+      where: { email: user.email },
+    });
 
-  if (existingUser)
-    throw `An account has already been registered with this email, ${user.email}.`;
+    if (existingUser)
+      throw `An account has already been registered with this email, ${user.email}.`;
 
-  // hash password
-  user.hash = bcrypt.hashSync(password, 10);
+    // hash password
+    user.hash = bcrypt.hashSync(password, 10);
 
-  const newUser = await prisma.user.create({ data: user });
+    const newUser = await prisma.user.create({ data: user });
 
-  return res.status(200).json(newUser.data);
+    return res.status(200).json(newUser.data);
+  } catch (error) {
+    console.log("handle error: ", error);
+  }
 }

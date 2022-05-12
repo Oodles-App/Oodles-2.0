@@ -10,7 +10,7 @@ import { Layout } from "../../components/account";
 import { userService, alertService } from "../../services";
 
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/user";
+import { postUser } from "../../redux/user";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -53,13 +53,13 @@ function Register() {
       //TODO: Add registration successful alert here
       router.push("edit-profile"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
-      console.log(error, "error to be in alert once connected");
+      console.log(user.error, "error to be in alert once connected");
       //TODO: Add registration failed alert here
     }
   }, [user, router]);
 
   const onSubmit = (user) => {
-    dispatch(register({ ...user, businessType, address }));
+    dispatch(postUser({ ...user, businessType, address }));
   };
 
   // function onSubmit(user) {

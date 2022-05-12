@@ -36,6 +36,7 @@ export const login = (email, password) => {
         email,
         password,
       });
+      console.log(user, "user after log in thunk");
       userSubject.next(user);
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(setUser(user));
@@ -46,14 +47,12 @@ export const login = (email, password) => {
   };
 };
 
-// function register(user) {
-//   return fetchWrapper.post(`${baseUrl}/register`, user);
-// }
-export const register = () => {
+export const postUser = (user) => {
   return async (dispatch) => {
     try {
+      const { email, password } = user;
       const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
-      console.log(newUser);
+      dispatch(login(email, password));
     } catch (error) {
       //if user tries to sign up with invalid credentials user object with have a key 'error' with error message
       dispatch(setUser({ error }));
