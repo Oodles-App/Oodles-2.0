@@ -1,8 +1,7 @@
 import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
-import { async, BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import Router from "next/router";
-import { useDispatch } from "react-redux";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
@@ -17,6 +16,16 @@ const SET_USER = "SET_USER";
 //ACTION CREATORS
 const setUser = (user) => {
   return { type: SET_USER, user };
+};
+
+export const logout = () => {
+  localStorage.removeItem("user");
+  userSubject.next(null);
+  Router.push("/account/login");
+  return {
+    type: SET_USER,
+    user: {},
+  };
 };
 
 //THUNKS
@@ -37,19 +46,20 @@ export const login = (email, password) => {
   };
 };
 
+// function register(user) {
+//   return fetchWrapper.post(`${baseUrl}/register`, user);
+// }
 export const register = () => {
-  // TODO: add register thunk here
-  // (then call log-in: stretch goal for logging in and redirecting users automatically to edit profile view)
-};
-
-export const logout = () => {
-  localStorage.removeItem("user");
-  userSubject.next(null);
-  Router.push("/account/login");
-  return {
-    type: SET_USER,
-    user: {},
+  return async (dispatch) => {
+    try {
+      const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
+      console.log(newUser);
+    } catch (error) {
+      //if user tries to sign up with invalid credentials user object with have a key 'error' with error message
+      dispatch(setUser({ error }));
+    }
   };
+  // (then call log-in: stretch goal for logging in and redirecting users automatically to edit profile view)
 };
 
 //REDUCER
