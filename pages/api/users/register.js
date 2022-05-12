@@ -10,7 +10,7 @@ export default apiHandler({
 });
 
 async function register(req, res) {
-  // split out password from user details
+  // split out password from user details (security measure)
   const { password, ...user } = req.body;
 
   const existingUser = await prisma.user.findUnique({
