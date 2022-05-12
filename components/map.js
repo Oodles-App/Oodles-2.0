@@ -7,6 +7,9 @@ import { useState, useRef} from 'react';
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
+  // const [position, setPosition] = useState([40.735360, -73.989970]);
+  // const [bbox, setBbox] = useState([]);
+
 
   return (
     <div>
@@ -64,10 +67,10 @@ function Markers( {data} ) {
   );
 }
 
-function LocationMarker() {
+function LocationMarker(props) {
   const [position, setPosition] = useState(null);
   const [bbox, setBbox] = useState([]);
-
+  console.log("props here", props)
   const map = useMap();
 
   useEffect(() => {
