@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export async function getStaticProps() {
     const articles = await prisma.article.findMany();
     return {
-        props:{ 
+        props: { 
             initialArticles: articles
         }
     }

@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import dynamic from "next/dynamic"
-// import "../components/map.module.css"
+// import "../components/map.module.css"'
+import {PrismaClient} from '@prisma/client'
+const prisma = new PrismaClient();
+
+
 
 const Map = dynamic(() => import ("../components/map"), {ssr:false})
 
-function Browse() {
+export async function getStaticProps() {
+  const restaurants = await prisma.user.findMany();
+  return {
+    props: {
+    initialRestaurants: JSON.parse(JSON.stringify(restaurants))
+  }
+}
+}
+
+function Browse({initialRestaurants}) {
+  const [restaurants, setRestaurants] = useState(initialRestaurants)
+  console.log(restaurants)
 
   return (
       <div>
@@ -13,10 +28,8 @@ function Browse() {
           <button type="button" name="List">List</button>
           <button type="button" name="Map">Map</button>
           <div id="map">   
-            <Map/> 
+            <Map /> 
           </div>
-  
-       
           <p>Restaurant Info</p>
 
       </div>

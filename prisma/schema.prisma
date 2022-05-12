@@ -19,6 +19,8 @@ model User {
   businessName  String  @unique
   username  String
   address   String
+  lat       Float
+  lng       Float
   contactNum  String
   biography String
   businessType Business 
