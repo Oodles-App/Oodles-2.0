@@ -6,10 +6,11 @@ import { userLoginSchema } from "../../helpers/validationSchema";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/user";
+import { createAlert } from "../../redux/alerts";
+import { setUser } from "../../redux/user";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
-import { userService, alertService } from "../../services";
 import { useEffect } from "react";
 
 export default Login;
@@ -31,13 +32,29 @@ function Login() {
 
   useEffect(() => {
     if (user.id) {
-      // get return url from query parameters or default to '/'
+      // get return url from query parameters or default to homepage: '/'
       const returnUrl = router.query.returnUrl || "/";
       router.push(returnUrl);
     } else if (user.error) {
-      alertService.error;
+      dispatch(
+        createAlert("error", user.error, {
+          id: "invalid-credentials",
+          autoClose: false,
+          keepAfterRouteChange: false,
+        })
+      );
     }
-  }, [user, router]);
+    const clearUserErrorOnRouteChange = () => {
+      if (user.error) {
+        dispatch(setUser({}));
+      }
+    };
+    router.events.on("routeChangeStart", clearUserErrorOnRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", clearUserErrorOnRouteChange);
+    };
+  }, [user, router, dispatch]);
 
   return (
     <Layout>

@@ -7,13 +7,12 @@ import { userRegistrationSchema } from "../../helpers/validationSchema";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
-import { userService, alertService } from "../../services";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
+import { createAlert } from "../../redux/alerts";
 
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { TextField, Autocomplete } from "@mui/material";
 
 export default Register;
 
@@ -31,7 +30,8 @@ function Register() {
   const [address, setAddress] = useState("");
   const [addressSuggestions, setAddressSuggestions] = useState([]);
 
-  ///TODO: move this API call (address autocomplete API) to redux/ a services file?
+  /// TODO: move this API call (address autocomplete API) to redux/ a services file?
+  // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
     if (address.length > 2) {
       fetch(
@@ -50,29 +50,28 @@ function Register() {
 
   useEffect(() => {
     if (user.id) {
-      //TODO: Add registration successful alert here
+      dispatch(
+        createAlert("success", "Registered successfully.", {
+          id: "registration-success",
+          autoClose: 5000,
+          keepAfterRouteChange: true,
+        })
+      );
       router.push("edit-profile"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
-      console.log(user.error, "error to be in alert once connected");
-      //TODO: Add registration failed alert here
+      dispatch(
+        createAlert("error", user.error, {
+          id: "registration-failed",
+          autoClose: false,
+          keepAfterRouteChange: false,
+        })
+      );
     }
-  }, [user, router]);
+  }, [user, router, dispatch]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));
   };
-
-  // function onSubmit(user) {
-  //   return userService
-  //     .register({ ...user, businessType, address })
-  //     .then((user) => {
-  //       alertService.success("Registration successful", {
-  //         keepAfterRouteChange: true,
-  //       });
-  //       router.push("login");
-  //     })
-  //     .catch(alertService.error);
-  // }
 
   return (
     <Layout>
