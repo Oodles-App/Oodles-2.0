@@ -5,9 +5,11 @@ import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { createWrapper } from "next-redux-wrapper";
 import userReducer from "../user";
+import alertsReducer from "../alerts";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  alerts: alertsReducer,
 });
 
 // middleware
