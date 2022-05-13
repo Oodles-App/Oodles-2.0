@@ -23,7 +23,6 @@ const Alert = () => {
     }
 
     const clearAlertsOnRouteChange = () => {
-      console.log("clear alerts on route change triggered");
       dispatch(clearAlerts());
     };
     router.events.on("routeChangeStart", clearAlertsOnRouteChange);

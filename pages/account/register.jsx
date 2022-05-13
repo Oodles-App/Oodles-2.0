@@ -60,7 +60,6 @@ function Register() {
       );
       router.push("/"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
-      console.log(user.error, "error to be in alert once connected");
       dispatch(
         createAlert("error", user.error, {
           id: "registration-failed",
