@@ -12,8 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
 
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { TextField, Autocomplete } from "@mui/material";
 
 export default Register;
 

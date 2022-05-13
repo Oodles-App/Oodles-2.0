@@ -16,6 +16,10 @@
   border-radius: 0.25rem;
 }
 
+.fade {
+  transition: opacity 0.7s linear;
+}
+
 .fade.alert {
   opacity: 0;
 }
@@ -70,8 +74,4 @@
 .close:hover {
   color: #000;
   text-decoration: none;
-}
-
-.fade {
-  transition: opacity 0.7s linear;
 }
