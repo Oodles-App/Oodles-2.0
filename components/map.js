@@ -1,19 +1,28 @@
 import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
+// import {useMapEvents} from 'react-leaflet/hooks'
 import { useState, useRef} from 'react';
-// import LocateControl from 'react-leaflet-locate-control'
+// import 'leaflet/dist/leaflet.css'
+
 
 
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
   const [display, setDisplay] = useState("")
+  // const [toggle, setToggle] = useState(false)
+  const [defaultCenter, setDefaultCenter] = useState([40.735360, -73.989970])
+  const defaultZoom = 11.5
 
   return (
     <div>
-      <div id="map" >
-        <MapContainer center={[40.735360, -73.989970]} zoom={11} scrollWheelZoom={false} >
+      {/* <button type="button" style={{border: "1px solid black"}} onClick={()=> {toggle? setToggle(false): setToggle(true)}}>Toggle Live location</button> */}
+      <div id="map">
+        <MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={false} >
+          {/* connect an locate me icon to location Marker with "flyto" property */}
+          {/* bug in LocationMarker. Will persist to go to current location even if I press on markers */}
         <LocationMarker />
+
         <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -23,9 +32,11 @@ export default function Map(props) {
           <Markers data={restaurants}/>
         </MapContainer>
       </div>
+      <div className="leaflet-controlpanel">
+
+      </div>
       <div id="Restaurant Info">
           <p>Restaurant</p>
-          <p>{display}</p>
 
       </div>
     </div>
@@ -64,8 +75,9 @@ function Markers( {data} ) {
         >
           <Popup>
             <span>{restaurant.businessName}</span>
+            <br></br>
+            <span>More Information here</span>
           </Popup>
-          {/* <setDisplay restaurant={restaurant}/> */}
         </Marker>
       );
     })
@@ -76,6 +88,7 @@ function Markers( {data} ) {
 function LocationMarker(props) {
   const [position, setPosition] = useState(null);
   const [bbox, setBbox] = useState([]);
+  // const [toggleCurrentLocation, setToggleLCurrentLocation] = useState(props.toggle)
   // console.log("props here", props)
   const map = useMap();
 
@@ -92,14 +105,14 @@ function LocationMarker(props) {
 
   return position === null ? null : (
     <Marker position={position}>
-      <Popup>
+      {/* <Popup>
         You are here. <br />
         Map bbox: <br />
         <b>Southwest lng</b>: {bbox[0]} <br />
         <b>Southwest lat</b>: {bbox[1]} <br />
         <b>Northeast lng</b>: {bbox[2]} <br />
         <b>Northeast lat</b>: {bbox[3]}
-      </Popup>
+      </Popup> */}
     </Marker>
   );
 }
