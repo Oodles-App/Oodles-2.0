@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import { userLoginSchema } from "../../helpers/validationSchema";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/user";
@@ -18,12 +19,7 @@ function Login() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  // form validation rules
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
-  const formOptions = { resolver: yupResolver(validationSchema) };
+  const formOptions = { resolver: yupResolver(userLoginSchema) };
 
   // get functions to build form with useForm() hook
   const { register, handleSubmit, formState } = useForm(formOptions);
@@ -42,17 +38,6 @@ function Login() {
       alertService.error;
     }
   }, [user, router]);
-
-  // function onSubmit({ email, password }) {
-  //   return userService
-  //     .login(email, password)
-  //     .then(() => {
-  //       // get return url from query parameters or default to '/'
-  //       const returnUrl = router.query.returnUrl || "/";
-  //       router.push(returnUrl);
-  //     })
-  //     .catch(alertService.error);
-  // }
 
   return (
     <Layout>

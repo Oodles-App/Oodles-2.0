@@ -56,5 +56,3 @@ function saveData() {
     JSON.stringify(users, null, 4)
   );
 }
-
-console.log(__dirname, "dirname");

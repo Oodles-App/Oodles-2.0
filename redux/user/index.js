@@ -1,8 +1,7 @@
 import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
-import { async, BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import Router from "next/router";
-import { useDispatch } from "react-redux";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
@@ -19,6 +18,16 @@ const setUser = (user) => {
   return { type: SET_USER, user };
 };
 
+export const logout = () => {
+  localStorage.removeItem("user");
+  userSubject.next(null);
+  Router.push("/account/login");
+  return {
+    type: SET_USER,
+    user: {},
+  };
+};
+
 //THUNKS
 export const login = (email, password) => {
   return async (dispatch) => {
@@ -29,6 +38,7 @@ export const login = (email, password) => {
       });
       userSubject.next(user);
       localStorage.setItem("user", JSON.stringify(user));
+
       dispatch(setUser(user));
     } catch (error) {
       //if user tries to log in with invalid credentials user object with have a key 'error' with error message
@@ -37,18 +47,16 @@ export const login = (email, password) => {
   };
 };
 
-export const register = () => {
-  // TODO: add register thunk here
-  // (then call log-in: stretch goal for logging in and redirecting users automatically to edit profile view)
-};
-
-export const logout = () => {
-  localStorage.removeItem("user");
-  userSubject.next(null);
-  Router.push("/account/login");
-  return {
-    type: SET_USER,
-    user: {},
+export const postUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const { email, password } = user;
+      const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
+      dispatch(login(email, password));
+    } catch (error) {
+      //if user tries to sign up with invalid credentials user object with have a key 'error' with error message
+      dispatch(setUser({ error }));
+    }
   };
 };
 
