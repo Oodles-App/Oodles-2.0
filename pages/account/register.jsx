@@ -57,7 +57,7 @@ function Register() {
           keepAfterRouteChange: true,
         })
       );
-      router.push("/"); //TODO: replace with edit profile path when component is created
+      router.push("edit-profile"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
       dispatch(
         createAlert("error", user.error, {
