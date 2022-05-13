@@ -4,8 +4,6 @@ import dynamic from "next/dynamic"
 import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 
-
-
 const Map = dynamic(() => import ("../components/map"), {ssr:false})
 
 export async function getStaticProps() {
@@ -19,17 +17,24 @@ export async function getStaticProps() {
 
 function Browse({initialRestaurants}) {
   const [restaurants, setRestaurants] = useState(initialRestaurants)
+  const [toggleList, setToggleList] = useState(true)
 
   return (
       <div>
+        <div className="Browse">
           <h1>Browse</h1>
           <p>Location: </p>
-          <button type="button" name="List">List</button>
-          <button type="button" name="Map">Map</button>
-          <div id="map">   
-            <Map restaurants={restaurants}/> 
-          </div>
-          <p>Restaurant Info</p>
+        </div>
+        <div className="browseButtons">
+          <button id="list" type="button" name="List" onClick={()=> {setToggleList(true)}}>List</button>
+          <button  id="mapId" type="button" name="Map" onClick={() => {setToggleList(false)}}>Map</button>
+        </div>
+        
+        {toggleList ?
+          <p>List of Restaurants</p> : <Map restaurants={restaurants}></Map>}
+          {/* <div id="map">   
+          <Map restaurants={restaurants}/> 
+          </div> */}
 
       </div>
   )

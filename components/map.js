@@ -7,34 +7,38 @@ import { useState, useRef} from 'react';
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
-  // const [position, setPosition] = useState([40.735360, -73.989970]);
-  // const [bbox, setBbox] = useState([]);
-
+  const [display, setDisplay] = useState("")
 
   return (
     <div>
+      <div id="map" >
+        <MapContainer center={[40.735360, -73.989970]} zoom={11} scrollWheelZoom={false} >
+        <LocationMarker />
+        <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
+        />
+        
+          <Markers data={restaurants}/>
+        </MapContainer>
+      </div>
+      <div id="Restaurant Info">
+          <p>Restaurant</p>
+          <p>{display}</p>
 
-
-    <div id="map" >
-      <MapContainer center={[40.735360, -73.989970]} zoom={11} scrollWheelZoom={false} >
-      <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
-      />
-      <Markers data={restaurants}/>
-      <LocationMarker/>
-      </MapContainer>
-    </div>
+      </div>
     </div>
   )
 }
 
 function Markers( {data} ) {
   const map = useMap();
+  // console.log("data", data)
   return (
     data.length > 0 &&
     data.map((restaurant) => {
+      // setDisplay(restaurant)
       return (
         <Marker
           eventHandlers={{
@@ -61,16 +65,18 @@ function Markers( {data} ) {
           <Popup>
             <span>{restaurant.businessName}</span>
           </Popup>
+          {/* <setDisplay restaurant={restaurant}/> */}
         </Marker>
       );
     })
   );
 }
 
+
 function LocationMarker(props) {
   const [position, setPosition] = useState(null);
   const [bbox, setBbox] = useState([]);
-  console.log("props here", props)
+  // console.log("props here", props)
   const map = useMap();
 
   useEffect(() => {
