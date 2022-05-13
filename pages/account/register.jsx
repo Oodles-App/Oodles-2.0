@@ -7,10 +7,10 @@ import { userRegistrationSchema } from "../../helpers/validationSchema";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
-import { userService, alertService } from "../../services";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
+import { createAlert } from "../../redux/alerts";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -51,13 +51,19 @@ function Register() {
 
   useEffect(() => {
     if (user.id) {
-      //TODO: Add registration successful alert here
-      router.push("edit-profile"); //TODO: replace with edit profile path when component is created
+      dispatch(
+        createAlert("success", "Registered successfully.", {
+          id: "registration-success",
+          autoClose: 5000,
+          keepAfterRouteChange: true,
+        })
+      );
+      router.push("/"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
       console.log(user.error, "error to be in alert once connected");
       //TODO: Add registration failed alert here
     }
-  }, [user, router]);
+  }, [user, router, dispatch]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));

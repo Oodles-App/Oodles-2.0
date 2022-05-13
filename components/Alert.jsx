@@ -16,6 +16,12 @@ const Alert = () => {
   const [fadeAlerts, setfadeAlerts] = useState([]);
 
   useEffect(() => {
+    const newestAlert = alerts[alerts.length - 1] || undefined;
+
+    if (newestAlert && newestAlert.autoClose) {
+      setTimeout(() => fadeAlert(newestAlert.id), newestAlert.autoClose);
+    }
+
     const clearAlertsOnRouteChange = () => {
       setTimeout(() => clearAlerts(), 1000);
     };
@@ -24,7 +30,8 @@ const Alert = () => {
     return () => {
       router.events.off("routeChangeStart", clearAlertsOnRouteChange);
     };
-  }, [alerts, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerts]);
 
   function fadeAlert(id) {
     setfadeAlerts([...fadeAlerts, id]);
