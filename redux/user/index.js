@@ -60,6 +60,21 @@ export const postUser = (user) => {
   };
 };
 
+export const fetchUserProfile = (userId) => {
+  return async (dispatch) => {
+    try {
+      const profileData = await fetchWrapper.get(`${baseUrl}/${userId}`);
+    } catch (error) {
+      if (error.status === 404) {
+        error.message = "User not found.";
+      }
+      if (error.status === 401) {
+        error.message = "Not authorized.";
+      }
+    }
+  };
+};
+
 //REDUCER
 export default function userReducer(user = {}, action) {
   switch (action.type) {
