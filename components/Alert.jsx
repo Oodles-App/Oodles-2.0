@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import styles from "../styles/Alert.module.css";
@@ -14,12 +14,10 @@ const Alert = () => {
   const router = useRouter();
   const alerts = useSelector((state) => state.alerts);
 
+  //add alerts to be faded to this array by ID
+  const [fadeAlerts, setfadeAlerts] = useState([]);
+
   useEffect(() => {
-    alerts.map((alert) => {
-      if (alert.autoClose) {
-        setTimeout(() => fadeAlert(alert.id), alert.autoClose);
-      }
-    });
     const clearAlertsOnRouteChange = () => {
       setTimeout(() => clearAlerts(), 1000);
     };
@@ -35,16 +33,13 @@ const Alert = () => {
   }, [alerts]);
 
   function fadeAlert(id) {
-    alerts.map((alert) => {
-      if (alert.id === id) {
-        alert.fade = true;
-      }
-    });
+    setfadeAlerts([...fadeAlerts, id]);
 
     // remove alert after faded out
     setTimeout(() => {
-      dispatch(removeAlert(alert));
-    }, 3000);
+      dispatch(removeAlert(id));
+      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
+    }, 700);
   }
 
   function cssClasses(alert) {
@@ -64,12 +59,10 @@ const Alert = () => {
       alertTypeClass[alert.type],
     ];
 
-    if (alert.fade) {
-      console.log("pushing fade styles", styles.fade);
+    if (fadeAlerts.includes(alert.id)) {
       classes.push(styles.fade);
     }
 
-    console.log(classes);
     return classes.join(" ");
   }
 

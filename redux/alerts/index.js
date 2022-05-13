@@ -14,11 +14,11 @@ export const clearAlerts = () => {
   };
 };
 
-export const removeAlert = (alert) => {
+export const removeAlert = (id) => {
   console.log("inside remove alert in redux");
   return {
     type: REMOVE_ALERT,
-    id: alert.id,
+    id,
   };
 };
 
@@ -36,8 +36,9 @@ export const createAlert = (type, message, options) => {
 export default function alertsReducer(alerts = [], action) {
   switch (action.type) {
     case ADD_ALERT:
-      if (alerts[-1]) {
-        action.alert.id += alert[-1].id + 1;
+      if (alerts.length) {
+        action.alert.id = alerts[alerts.length - 1].id + 1;
+        console.log(action.alert.id, "new id");
       } else if (alerts.length === 0) {
         action.alert.id = 1;
       }

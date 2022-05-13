@@ -8,7 +8,7 @@
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  opacity: 1;
+  transition: opacity 0.7s linear;
 }
 
 .alertDismissible {
@@ -64,14 +64,4 @@
 
 .fade {
   opacity: 0;
-  animation: fadeOutAnimation ease 3s;
-}
-
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
