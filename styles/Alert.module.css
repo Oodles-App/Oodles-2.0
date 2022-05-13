@@ -1,0 +1,77 @@
+.m1 {
+  margin: 1rem;
+}
+
+.alertContainer {
+  position: absolute;
+  width: 100%;
+  bottom: 0.5rem;
+}
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.fade {
+  transition: opacity 0.7s linear;
+}
+
+.fade.alert {
+  opacity: 0;
+}
+
+.alertDismissible {
+  padding-right: 4rem;
+}
+
+.alertDismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1.25rem;
+  color: inherit;
+}
+
+.alertSuccess {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alertInfo {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.alertWarning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alertDanger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  padding: 0;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+}
