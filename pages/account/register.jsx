@@ -61,25 +61,19 @@ function Register() {
       router.push("/"); //TODO: replace with edit profile path when component is created
     } else if (user.error) {
       console.log(user.error, "error to be in alert once connected");
-      //TODO: Add registration failed alert here
+      dispatch(
+        createAlert("error", user.error, {
+          id: "registration-failed",
+          autoClose: false,
+          keepAfterRouteChange: false,
+        })
+      );
     }
   }, [user, router, dispatch]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));
   };
-
-  // function onSubmit(user) {
-  //   return userService
-  //     .register({ ...user, businessType, address })
-  //     .then((user) => {
-  //       alertService.success("Registration successful", {
-  //         keepAfterRouteChange: true,
-  //       });
-  //       router.push("login");
-  //     })
-  //     .catch(alertService.error);
-  // }
 
   return (
     <Layout>
