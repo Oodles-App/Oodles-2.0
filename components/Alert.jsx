@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import styles from "../styles/Alert.module.css";
@@ -16,29 +16,24 @@ const Alert = () => {
   const [fadeAlerts, setfadeAlerts] = useState([]);
   const [routeChanged, setRouteChanged] = useState(false);
 
-  const fadeAlertsNow = fadeAlerts;
-
-  console.log(fadeAlerts, "fade alerts");
-
   useEffect(() => {
     const newestAlert = alerts[alerts.length - 1] || undefined;
 
     if (newestAlert && newestAlert.autoClose) {
-      console.log(newestAlert.id, "adding time out for alert with id");
       setTimeout(() => fadeAlert(newestAlert.id), newestAlert.autoClose);
     }
 
     const clearAlertsOnRouteChange = () => {
+      setRouteChanged(true);
       const alertsToFade = alerts.filter(
         (alert) => !alert.keepAfterRouteChange
       );
-      alertsToFade.map((alert) => fadeAlert(alert.id));
-      //resetFadeAlerts once route changes
-      setfadeAlerts([]);
+      alertsToFade.map((alert) => fadeAlert(alert.id)).then;
     };
     router.events.on("routeChangeStart", clearAlertsOnRouteChange);
 
     return () => {
+      setRouteChanged(false);
       router.events.off("routeChangeStart", clearAlertsOnRouteChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,13 +42,13 @@ const Alert = () => {
   function fadeAlert(id) {
     setfadeAlerts([...fadeAlerts, id]);
 
-    // remove alert after faded out
     setTimeout(() => {
       dispatch(removeAlert(id));
-      // if (!routeChanged) {
-
-      // }
-      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
+      if (routeChanged) {
+        setfadeAlerts([]);
+      } else {
+        setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
+      }
     }, 700);
   }
 

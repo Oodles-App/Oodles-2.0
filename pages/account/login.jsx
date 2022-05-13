@@ -7,6 +7,7 @@ import { userLoginSchema } from "../../helpers/validationSchema";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
+import { setUser } from "../../redux/user";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
@@ -43,6 +44,16 @@ function Login() {
         })
       );
     }
+    const clearUserErrorOnRouteChange = () => {
+      if (user.error) {
+        dispatch(setUser({}));
+      }
+    };
+    router.events.on("routeChangeStart", clearUserErrorOnRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", clearUserErrorOnRouteChange);
+    };
   }, [user, router, dispatch]);
 
   return (
