@@ -13,8 +13,6 @@ const Alert = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const alerts = useSelector((state) => state.alerts);
-
-  //add alerts to be faded to this array by ID
   const [fadeAlerts, setfadeAlerts] = useState([]);
 
   useEffect(() => {
@@ -23,14 +21,10 @@ const Alert = () => {
     };
     router.events.on("routeChangeStart", clearAlertsOnRouteChange);
 
-    // clean up function that runs when the component unmounts
     return () => {
-      // unsubscribe to avoid memory leaks
       router.events.off("routeChangeStart", clearAlertsOnRouteChange);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alerts]);
+  }, [alerts, router]);
 
   function fadeAlert(id) {
     setfadeAlerts([...fadeAlerts, id]);
@@ -38,7 +32,7 @@ const Alert = () => {
     // remove alert after faded out
     setTimeout(() => {
       dispatch(removeAlert(id));
-      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
+      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== alert.id));
     }, 700);
   }
 
@@ -69,11 +63,11 @@ const Alert = () => {
   if (!alerts.length) return null;
 
   return (
-    <div className="container">
-      <div className="m1">
+    <div className={styles.alertContainer}>
+      <div className={styles.m1}>
         {alerts.map((alert, index) => (
           <div key={index} className={cssClasses(alert)}>
-            <a className="close" onClick={() => fadeAlert(alert.id)}>
+            <a className={styles.close} onClick={() => fadeAlert(alert.id)}>
               &times;
             </a>
             <span>{alert.message}</span>

@@ -3,19 +3,18 @@ const defaultId = "default-alert";
 //ACTION TYPES
 const ADD_ALERT = "ADD_ALERT";
 const REMOVE_ALERT = "REMOVE_ALERT";
-const CLEAR_ALERTS = "SET_ALERTS";
+const CLEAR_ALERTS = "CLEAR_ALERTS";
 
 //ACTION CREATORS
 
 export const clearAlerts = () => {
   return {
-    type: SET_ALERTS,
+    type: CLEAR_ALERTS,
     alerts: [],
   };
 };
 
 export const removeAlert = (id) => {
-  console.log("inside remove alert in redux");
   return {
     type: REMOVE_ALERT,
     id,
@@ -36,11 +35,9 @@ export const createAlert = (type, message, options) => {
 export default function alertsReducer(alerts = [], action) {
   switch (action.type) {
     case ADD_ALERT:
-      if (alerts.length) {
-        action.alert.id = alerts[alerts.length - 1].id + 1;
-        console.log(action.alert.id, "new id");
-      } else if (alerts.length === 0) {
-        action.alert.id = 1;
+      const existingMessages = alerts.map((alert) => alert.message);
+      if (existingMessages.includes(action.alert.message)) {
+        return alerts;
       }
       return [...alerts, action.alert];
     case REMOVE_ALERT:

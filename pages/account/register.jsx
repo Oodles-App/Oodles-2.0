@@ -31,7 +31,8 @@ function Register() {
   const [address, setAddress] = useState("");
   const [addressSuggestions, setAddressSuggestions] = useState([]);
 
-  ///TODO: move this API call (address autocomplete API) to redux/ a services file?
+  /// TODO: move this API call (address autocomplete API) to redux/ a services file?
+  // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
     if (address.length > 2) {
       fetch(

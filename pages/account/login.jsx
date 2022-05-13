@@ -35,7 +35,13 @@ function Login() {
       const returnUrl = router.query.returnUrl || "/";
       router.push(returnUrl);
     } else if (user.error) {
-      dispatch(createAlert("error", user.error));
+      dispatch(
+        createAlert("error", user.error, {
+          id: "invalid-credentials",
+          autoClose: false,
+          keepAfterRouteChange: false,
+        })
+      );
     }
   }, [user, router, dispatch]);
 
