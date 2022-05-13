@@ -7,7 +7,6 @@ const REMOVE_ALERT = "REMOVE_ALERT";
 //ACTION CREATORS
 
 export const removeAlert = (id) => {
-  console.log(id, "remove alert id");
   return {
     type: REMOVE_ALERT,
     id,
