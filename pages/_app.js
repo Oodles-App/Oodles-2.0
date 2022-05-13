@@ -3,6 +3,7 @@ import { wrapper, store, Persistor } from "../redux/store";
 import { Provider } from "react-redux";
 import "../styles/globals.css";
 import Head from "next/head";
+import Layout from "../components/Layout";
 import { PersistGate } from "redux-persist/integration/react";
 
 function MyApp({ Component, pageProps }) {
@@ -16,7 +17,7 @@ function MyApp({ Component, pageProps }) {
               name="description"
               content="Donate Food to Nonprofit Organizations"
             />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/utensilHeart.png" />
           </Head>
           <Alert />
           <Component {...pageProps} />
