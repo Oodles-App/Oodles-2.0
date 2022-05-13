@@ -1,15 +1,24 @@
 import { PrismaClient } from "@prisma/client"
 
-export default function addProduct(req, res){
+export default async function addProduct(req, res){
   const prisma = new PrismaClient({log: ["query"]})
   try {
-    const product = await.prisma.
+    const { product: productData } = req.body;
+    console.log(productData);
+    const product = await prisma.product.create({
+      data: {
+        name: productData.name,
+        amount: productData.amount,
+        measurement: productData.measurement
+      }
+    });
+    res.status(201);
+    res.json({product});
   } catch(error) {
     res.status(500);
     res.json({error: "Unable to save product to database"})
   } finally {
-    await prisma.disconnect();
+    await prisma.$disconnect()
   }
 
-  res.json({name: "saved"})
 }

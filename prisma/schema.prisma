@@ -15,33 +15,33 @@ model User {
   businessName  String  @unique
   username  String?
   address   String
+  lat       Float
+  lng       Float
   contactNum  String
   biography String?
   businessType String
   imageUrl  String?
   is501c3 Boolean? @default(false)
-  tags Tag[]
   sentMessages      Message[]  @relation("sentMessages")
   receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
   reservations      Reservation[]
 }
 
-model Tag {
-  id      Int         @id @default(autoincrement())
-  name    String      @unique
-  products Product[]
-  users User[]
-}
+// model Tag {
+//   id      Int         @id @default(autoincrement())
+//   name    String      @unique
+//   products Product[]
+//   users User[]
+// }
 
 model Product {
   id      Int         @id @default(autoincrement())
-	user			  User    @relation(fields:[userId], references:[id])
-  userId      Int
+	user			  User?    @relation(fields:[userId], references:[id])
+  userId      Int?
   name        String
   amount      Int
   measurement String
-  tags        Tag[]
 }
 
 enum Status {

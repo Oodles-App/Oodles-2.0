@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import getConfig from "next/config";
-import Router from "next/router";
-
 import { fetchWrapper } from "../helpers";
 
 const { publicRuntimeConfig } = getConfig();
@@ -17,8 +15,6 @@ export const userService = {
   get userValue() {
     return userSubject.value;
   },
-  login,
-  logout,
   register,
   getAll,
   getById,
@@ -26,24 +22,29 @@ export const userService = {
   delete: _delete,
 };
 
-function login(email, password) {
-  return fetchWrapper
-    .post(`${baseUrl}/authenticate`, { email, password })
-    .then((user) => {
-      // publish user to subscribers and store in local storage to stay logged in between page refreshes
-      userSubject.next(user);
-      localStorage.setItem("user", JSON.stringify(user));
+//NOTE: login and logout functionality moved to redux; ------
+//keeping here for reference in case of bugs
 
-      return user;
-    });
-}
+// function login(email, password) {
+//   return fetchWrapper
+//     .post(`${baseUrl}/authenticate`, { email, password })
+//     .then((user) => {
+//       // publish user to subscribers and store in local storage to stay logged in between page refreshes
+//       userSubject.next(user);
+//       localStorage.setItem("user", JSON.stringify(user));
 
-function logout() {
-  // remove user from local storage, publish null to user subscribers and redirect to login page
-  localStorage.removeItem("user");
-  userSubject.next(null);
-  Router.push("/account/login");
-}
+//       return user;
+//     });
+// }
+
+// function logout() {
+//   // remove user from local storage, publish null to user subscribers and redirect to login page
+//   localStorage.removeItem("user");
+//   userSubject.next(null);
+//   Router.push("/account/login");
+// }
+
+// ----------------------------------------------------------
 
 function register(user) {
   return fetchWrapper.post(`${baseUrl}/register`, user);
