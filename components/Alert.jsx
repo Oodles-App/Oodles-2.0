@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import styles from "../styles/Alert.module.css";
 
 import { useDispatch } from "react-redux";
-import { clearAlerts, removeAlert } from "../redux/alerts";
 import { useSelector } from "react-redux";
+import { removeAlert } from "../redux/alerts";
 
 export { Alert };
 
@@ -14,16 +14,27 @@ const Alert = () => {
   const router = useRouter();
   const alerts = useSelector((state) => state.alerts);
   const [fadeAlerts, setfadeAlerts] = useState([]);
+  const [routeChanged, setRouteChanged] = useState(false);
+
+  const fadeAlertsNow = fadeAlerts;
+
+  console.log(fadeAlerts, "fade alerts");
 
   useEffect(() => {
     const newestAlert = alerts[alerts.length - 1] || undefined;
 
     if (newestAlert && newestAlert.autoClose) {
+      console.log(newestAlert.id, "adding time out for alert with id");
       setTimeout(() => fadeAlert(newestAlert.id), newestAlert.autoClose);
     }
 
     const clearAlertsOnRouteChange = () => {
-      dispatch(clearAlerts());
+      const alertsToFade = alerts.filter(
+        (alert) => !alert.keepAfterRouteChange
+      );
+      alertsToFade.map((alert) => fadeAlert(alert.id));
+      //resetFadeAlerts once route changes
+      setfadeAlerts([]);
     };
     router.events.on("routeChangeStart", clearAlertsOnRouteChange);
 
@@ -39,14 +50,16 @@ const Alert = () => {
     // remove alert after faded out
     setTimeout(() => {
       dispatch(removeAlert(id));
-      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== alert.id));
+      // if (!routeChanged) {
+
+      // }
+      setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
     }, 700);
   }
 
   function cssClasses(alert) {
     if (!alert) return;
 
-    //TODO: create color code styles for different alert types
     const alertTypeClass = {
       ["success"]: styles.alertSuccess,
       ["error"]: styles.alertDanger,

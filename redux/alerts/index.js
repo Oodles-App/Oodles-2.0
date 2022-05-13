@@ -3,18 +3,11 @@ const defaultId = "default-alert";
 //ACTION TYPES
 const ADD_ALERT = "ADD_ALERT";
 const REMOVE_ALERT = "REMOVE_ALERT";
-const CLEAR_ALERTS = "CLEAR_ALERTS";
 
 //ACTION CREATORS
 
-export const clearAlerts = () => {
-  return {
-    type: CLEAR_ALERTS,
-    alerts: [],
-  };
-};
-
 export const removeAlert = (id) => {
+  console.log(id, "remove alert id");
   return {
     type: REMOVE_ALERT,
     id,
@@ -41,10 +34,7 @@ export default function alertsReducer(alerts = [], action) {
       }
       return [...alerts, action.alert];
     case REMOVE_ALERT:
-      const newAlerts = alerts.filter((alert) => alert.id !== action.id);
-      return newAlerts;
-    case CLEAR_ALERTS:
-      return alerts.filter((alert) => alert.keepAfterRouteChange);
+      return alerts.filter((alert) => alert.id !== action.id);
     default:
       return alerts;
   }
