@@ -16,20 +16,22 @@ export default apiHandler({
 async function getById(req, res) {
   try {
     const reqId = parseInt(req.query.id);
-    console.log(reqId, "req id in api");
-    const user = await prisma.user.findUnique({ where: { id: reqId } });
-    // select: {
-    //   id: true,
-    //   email: true,
-    //   businessName: true,
-    //   address: true,
-    //   contactNum: true,
-    //   biography: true,
-    //   imageUrl: true,
-    //   // tags: true,
-    // },
-    console.log(user, "user inside api call");
-    // if (!user) throw 404;
+    const user = await prisma.user.findUnique({
+      where: { id: reqId },
+      select: {
+        id: true,
+        email: true,
+        businessName: true,
+        address: true,
+        contactNum: true,
+        biography: true,
+        imageUrl: true,
+        // tags: true,
+      },
+    });
+
+    if (!user) throw 404;
+
     return res.status(200).json(user);
   } catch (error) {
     //TODO: make an user-specific error generator function and call it in error catches (?)
@@ -41,6 +43,7 @@ async function getById(req, res) {
       console.log(error);
       error = { ...error, status: 500, message: "Internal server error." };
     }
+
     res.status(error.status).send(error);
   }
 }

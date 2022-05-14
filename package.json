@@ -21,6 +21,7 @@
     "@redux-devtools/extension": "^3.2.2",
     "@reduxjs/toolkit": "^1.8.1",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.1",
     "express-jwt": "^7.7.0",
     "leaflet": "^1.8.0",
     "leaflet.locatecontrol": "^0.76.1",

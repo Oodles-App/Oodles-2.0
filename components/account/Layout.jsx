@@ -12,8 +12,6 @@ function Layout({ children }) {
   const isLoggedIn = useSelector((state) => state.user.id !== undefined);
 
   useEffect(() => {
-    console.log(router, "router object");
-    console.log(router.pathname, "path name");
     // redirect to home if logged in user tries to access login/register
     if (
       (router.pathname.includes("login") ||
