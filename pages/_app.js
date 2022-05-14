@@ -20,7 +20,9 @@ function MyApp({ Component, pageProps }) {
             <link rel="icon" href="/utensilHeart.png" />
           </Head>
           <Alert />
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </PersistGate>
       </Provider>
     </>

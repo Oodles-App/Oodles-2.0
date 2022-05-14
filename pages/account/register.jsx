@@ -13,6 +13,7 @@ import { postUser } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
 
 import { TextField, Autocomplete } from "@mui/material";
+import styles from "../../styles/Register.module.css";
 
 export default Register;
 
@@ -75,10 +76,10 @@ function Register() {
 
   return (
     <Layout>
-      <div className="card">
-        <h4 className="card-header">Register</h4>
-        <div className="card-body">
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.card}>
+        <h4 className={styles.cardHeader}>Register</h4>
+        <div className={styles.cardBody}>
+          <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
             <div>
               <div>
                 <label htmlFor="businessType"></label>
@@ -94,7 +95,7 @@ function Register() {
               </select>
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <div>
                 <TextField
                   label="Email"
@@ -102,12 +103,18 @@ function Register() {
                   {...register("email")}
                   autoComplete="new-password"
                   disabled={businessType === ""}
-                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                  className={
+                    errors.email
+                      ? `${styles.formControl} ${styles.isInvalid}`
+                      : `${styles.formControl}`
+                  }
                 />
               </div>
-              <div className="invalid-feedback">{errors.email?.message}</div>
+              <div className={styles.invalidFeedback}>
+                {errors.email?.message}
+              </div>
             </div>
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <div>
                 <TextField
                   label="Password"
@@ -115,16 +122,18 @@ function Register() {
                   type="password"
                   disabled={businessType === ""}
                   {...register("password")}
-                  className={`form-control ${
-                    errors.lastName ? "is-invalid" : ""
-                  }`}
+                  className={
+                    errors.password
+                      ? `${styles.formControl} ${styles.isInvalid}`
+                      : `${styles.formControl}`
+                  }
                 />
-                <div className="invalid-feedback">
+                <div className={styles.invalidFeedback}>
                   {errors.password?.message}
                 </div>
               </div>
             </div>
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <div>
                 <TextField
                   label="Business Name"
@@ -132,9 +141,14 @@ function Register() {
                   type="text"
                   {...register("businessName")}
                   disabled={businessType === ""}
+                  className={
+                    errors.businessName
+                      ? `${styles.formControl} ${styles.isInvalid}`
+                      : `${styles.formControl}`
+                  }
                 />
               </div>
-              <div className="invalid-feedback">
+              <div className={styles.invalidFeedback}>
                 {errors.businessName?.message}
               </div>
             </div>
@@ -168,9 +182,11 @@ function Register() {
                 type="text"
                 disabled={businessType === ""}
                 {...register("contactNum")}
-                className={`form-control ${
-                  errors.lastName ? "is-invalid" : ""
-                }`}
+                className={
+                  errors.contactNum
+                    ? `${styles.formControl} ${styles.isInvalid}`
+                    : `${styles.formControl}`
+                }
               />
             </div>
             <button
