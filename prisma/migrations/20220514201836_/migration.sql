@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "Business" AS ENUM ('ORGANIZATION', 'RESTAURANT');
-
--- CreateEnum
 CREATE TYPE "Status" AS ENUM ('ACTIVE', 'PENDING', 'CONFIRM', 'COMPLETED');
 
 -- CreateTable
@@ -9,14 +6,17 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "email" TEXT NOT NULL,
+    "hash" TEXT NOT NULL,
     "businessName" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
+    "username" TEXT,
     "address" TEXT NOT NULL,
+    "lat" DOUBLE PRECISION,
+    "lng" DOUBLE PRECISION,
     "contactNum" TEXT NOT NULL,
-    "biography" TEXT NOT NULL,
-    "businessType" "Business" NOT NULL,
-    "imageUrl" TEXT NOT NULL,
-    "is501c3" BOOLEAN NOT NULL DEFAULT false,
+    "biography" TEXT,
+    "businessType" TEXT NOT NULL,
+    "imageUrl" TEXT,
+    "is501c3" BOOLEAN DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -64,7 +64,7 @@ CREATE TABLE "Message" (
 
 -- CreateTable
 CREATE TABLE "Article" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "author" TEXT NOT NULL,
     "url" TEXT NOT NULL,

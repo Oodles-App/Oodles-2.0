@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
-// import {useMapEvents} from 'react-leaflet/hooks'
 import { useState, useRef} from 'react';
-// import 'leaflet/dist/leaflet.css'
 
 
 
@@ -10,7 +8,6 @@ import { useState, useRef} from 'react';
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
   const [display, setDisplay] = useState("")
-  // const [toggle, setToggle] = useState(false)
   const [defaultCenter, setDefaultCenter] = useState([40.735360, -73.989970])
   const defaultZoom = 11.5
 
@@ -45,11 +42,9 @@ export default function Map(props) {
 
 function Markers( {data} ) {
   const map = useMap();
-  // console.log("data", data)
   return (
     data.length > 0 &&
     data.map((restaurant) => {
-      // setDisplay(restaurant)
       return (
         <Marker
           eventHandlers={{
@@ -88,8 +83,7 @@ function Markers( {data} ) {
 function LocationMarker(props) {
   const [position, setPosition] = useState(null);
   const [bbox, setBbox] = useState([]);
-  // const [toggleCurrentLocation, setToggleLCurrentLocation] = useState(props.toggle)
-  // console.log("props here", props)
+
   const map = useMap();
 
   useEffect(() => {

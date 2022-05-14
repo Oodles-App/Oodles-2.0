@@ -8,20 +8,24 @@ const prisma = new PrismaClient();
 const Map = dynamic(() => import ("../components/map"), {ssr:false})
 
 export async function getStaticProps() {
-  const restaurants = await prisma.user.findMany();
+  const restaurants = await prisma.user.findMany({
+    where: {
+      businessType: {
+        equals: 'RESTAURANT'
+      }
+    }
+  });
   return {
     props: {
-    initialRestaurants: JSON.parse(JSON.stringify(restaurants))
+      initialRestaurants: JSON.parse(JSON.stringify(restaurants))
+    }
   }
-}
 }
 
 function Browse({initialRestaurants}) {
   const [restaurants, setRestaurants] = useState(initialRestaurants)
   const [toggleMap, setToggleMap] = useState(true)
   const [search, setSearch] = useState("")
-  console.log(typeof restaurants)
-  console.log(restaurants[0])
 
   return (
       <div>
