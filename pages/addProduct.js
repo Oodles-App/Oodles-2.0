@@ -9,6 +9,7 @@ export default function addProduct() {
   const [amount, setAmount] = useState(0);
   const [measurement, setMeasurement] = useState("");
   const [product, setProduct] = useState("");
+  console.log("USERRR", user);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +19,6 @@ export default function addProduct() {
           amount: amount,
           measurement: measurement,
           name: product,
-          user: user,
           userId: user.id
         }
         }),
