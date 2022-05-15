@@ -41,6 +41,8 @@ export default function Layout({children}) {
                   </Link>
               </li>
             </ul>
+              )
+            }
 
             <button className={isOpen === false ?
                                     styles.hamburger : styles.hamburger +' '+ styles.active}

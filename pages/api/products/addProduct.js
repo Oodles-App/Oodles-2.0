@@ -9,7 +9,7 @@ export default async function addProduct(req, res){
     const product = await prisma.product.create({
       data: {
         name: productObj.product.name,
-        amount: productObj.product.amount,
+        amount: Number(productObj.product.amount),
         measurement: productObj.product.measurement
       }
     });
