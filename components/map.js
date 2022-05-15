@@ -1,32 +1,55 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
-import { useState } from 'react';
+// import {useMapEvents} from 'react-leaflet/hooks'
+import { useState, useRef} from 'react';
+// import 'leaflet/dist/leaflet.css'
+
+
 
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
-  // console.log("props here", restaurants)
+  const [display, setDisplay] = useState("")
+  // const [toggle, setToggle] = useState(false)
+  const [defaultCenter, setDefaultCenter] = useState([40.735360, -73.989970])
+  const defaultZoom = 11.5
 
   return (
-    <div id="map" >
-      <MapContainer center={[40.735360, -73.989970]} zoom={11} scrollWheelZoom={false} >
-      <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
-      />
-      <Markers data={restaurants}/>
-      </MapContainer>
+    <div>
+      {/* <button type="button" style={{border: "1px solid black"}} onClick={()=> {toggle? setToggle(false): setToggle(true)}}>Toggle Live location</button> */}
+      <div id="map">
+        <MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={false} >
+          {/* connect an locate me icon to location Marker with "flyto" property */}
+          {/* bug in LocationMarker. Will persist to go to current location even if I press on markers */}
+        <LocationMarker />
+
+        <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
+        />
+        
+          <Markers data={restaurants}/>
+        </MapContainer>
+      </div>
+      <div className="leaflet-controlpanel">
+
+      </div>
+      <div id="Restaurant Info">
+          <p>Restaurant</p>
+
+      </div>
     </div>
-    
   )
 }
 
 function Markers( {data} ) {
   const map = useMap();
+  // console.log("data", data)
   return (
     data.length > 0 &&
     data.map((restaurant) => {
+      // setDisplay(restaurant)
       return (
         <Marker
           eventHandlers={{
@@ -52,9 +75,44 @@ function Markers( {data} ) {
         >
           <Popup>
             <span>{restaurant.businessName}</span>
+            <br></br>
+            <span>More Information here</span>
           </Popup>
         </Marker>
       );
     })
+  );
+}
+
+
+function LocationMarker(props) {
+  const [position, setPosition] = useState(null);
+  const [bbox, setBbox] = useState([]);
+  // const [toggleCurrentLocation, setToggleLCurrentLocation] = useState(props.toggle)
+  // console.log("props here", props)
+  const map = useMap();
+
+  useEffect(() => {
+    map.locate().on("locationfound", function (e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
+      const radius = e.accuracy;
+      const circle = L.circle(e.latlng, radius);
+      circle.addTo(map);
+      setBbox(e.bounds.toBBoxString().split(","));
+    });
+  }, [map]);
+
+  return position === null ? null : (
+    <Marker position={position}>
+      {/* <Popup>
+        You are here. <br />
+        Map bbox: <br />
+        <b>Southwest lng</b>: {bbox[0]} <br />
+        <b>Southwest lat</b>: {bbox[1]} <br />
+        <b>Northeast lng</b>: {bbox[2]} <br />
+        <b>Northeast lat</b>: {bbox[3]}
+      </Popup> */}
+    </Marker>
   );
 }

@@ -23,6 +23,7 @@
     "bcryptjs": "^2.4.3",
     "express-jwt": "^7.7.0",
     "leaflet": "^1.8.0",
+    "leaflet.locatecontrol": "^0.76.1",
     "next": "12.1.6",
     "next-auth": "^4.3.4",
     "next-redux-wrapper": "^7.0.5",
@@ -37,6 +38,7 @@
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "rxjs": "^7.5.5",
     "yup": "^0.32.11"
