@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
 import dynamic from "next/dynamic"
-// import "../components/map.module.css"'
 import {PrismaClient} from '@prisma/client'
+import Restaurants from './restaurants';
 const prisma = new PrismaClient();
 
 
-const Map = dynamic(() => import ("../components/map"), {ssr:false})
+const Map = dynamic(() => import ("../../components/map"), {ssr:false})
 
 export async function getStaticProps() {
   const restaurants = await prisma.user.findMany({
@@ -50,27 +50,11 @@ function Browse({initialRestaurants}) {
           : (<div className="restaurants">
             <br></br>
             <ul>
-              {/* Lists will be searched more by tags and restaurant names */}
-              {/* {search ? restaurants.filter((restaurant) => restaurant.businessName.toLowerCase().includes(search.toLowerCase()) )
-              : restaurants.map((restaurant) => {
-                return (
-                  <div key ={restaurant.id} >
-                    {/* when restaurant clicks, it will have a dropdown menu listing products tags and a link directly to the restaurant.*/}
-                    {/* <li style={{textAlign:"center"}}> {restaurant.businessName}</li>
-                  </div>
-             
-                )
-              })} */}
-              {/* {restaurants.filter((restaurant) => restaurant.businessName === search) } */}
-              {restaurants && restaurants.map((restaurant) => {
-                return (
-                  <div key ={restaurant.id} >
-                    {/*{when restaurant clicks, it will have a dropdown menu listing products tags and a link directly to the restaurant.*/}
-                  <li style={{textAlign:"center"}}> {restaurant.businessName}</li>
-                  </div>
-             
-                )
-              })}
+              {/* 
+              filter searchbar by restaurants.
+              filter tags with a dropdown bar
+               */}
+              <Restaurants restaurants={restaurants}/>
             </ul>
 
           </div>) }
