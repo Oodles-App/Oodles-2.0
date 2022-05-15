@@ -5,10 +5,22 @@ import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
 import { fetchEditProfile } from "../../redux/profile";
 
+import Image from "next/image";
+import styles from "../../styles/EditProfile.module.css";
+
 const EditProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const profile = useSelector((state) => state.profile);
+
+  const initialState = {
+    businessName: profile.businessName,
+    email: profile.email,
+    address: profile.address,
+    contactNum: profile.contactNum,
+    biography: profile.biography || "",
+    imageUrl: profile.imageUrl || "",
+  };
 
   useEffect(() => {
     if (user.id) {
@@ -32,9 +44,21 @@ const EditProfile = () => {
   const placeholderSrc =
     "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png";
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit form");
+  };
   return (
     <Layout>
-      Hello World. This is the edit profile page for user:
+      <div className={styles.imageContainer}>
+        <Image
+          src={image || placeholderSrc}
+          alt="User profile image"
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+      <form onSubmit={handleFormSubmit}></form>
       {profile.businessName}
     </Layout>
   );
