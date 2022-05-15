@@ -28,19 +28,13 @@ export default function Layout({children}) {
                         <a onClick={() => setOpen(false)} className={styles.navlink}>Browse</a>
                       </Link>
 
-              </li>
-              <li className={styles.navitem}>
-                  <Link href='/articles'>
-                    <a onClick={() => setOpen(false)} className={styles.navlink}>Articles</a>
-                  </Link>
-              </li>
-
-              <li className={styles.navitem}>
-                  <Link href='/addProduct'>
-                    <a onClick={() => setOpen(false)} className={styles.navlink}>Add Product</a>
-                  </Link>
-              </li>
-            </ul>
+                  </li>
+                  <li className={styles.navitem}>
+                      <Link href='/articles'>
+                        <a onClick={() => setOpen(false)} className={styles.navlink}>Articles</a>
+                      </Link>
+                  </li>
+                </ul>
               )
             }
 

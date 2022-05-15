@@ -17,7 +17,9 @@ export default function addProduct() {
         body: JSON.stringify({ product: {
           amount: amount,
           measurement: measurement,
-          name: product
+          name: product,
+          user: user,
+          userId: user.id
         }
         }),
         method: 'POST'

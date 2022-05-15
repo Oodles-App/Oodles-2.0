@@ -10,7 +10,9 @@ export default async function addProduct(req, res){
       data: {
         name: productObj.product.name,
         amount: Number(productObj.product.amount),
-        measurement: productObj.product.measurement
+        measurement: productObj.product.measurement,
+        user: productObj.product.user,
+        userId: productObj.product.userId
       }
     });
     res.status(201);
