@@ -14,7 +14,7 @@ const userSubject = new BehaviorSubject(
 const SET_USER = "SET_USER";
 
 //ACTION CREATORS
-const setUser = (user) => {
+export const setUser = (user) => {
   return { type: SET_USER, user };
 };
 

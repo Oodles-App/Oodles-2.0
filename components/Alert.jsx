@@ -1,99 +1,75 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import PropTypes from "prop-types";
 
-import { alertService, AlertType } from "../services";
+import styles from "../styles/Alert.module.css";
+
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { removeAlert } from "../redux/alerts";
 
 export { Alert };
 
-Alert.propTypes = {
-  id: PropTypes.string,
-  fade: PropTypes.bool,
-};
-
-Alert.defaultProps = {
-  id: "default-alert",
-  fade: true,
-};
-
-function Alert({ id, fade }) {
+const Alert = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [alerts, setAlerts] = useState([]);
+  const alerts = useSelector((state) => state.alerts);
+  const [fadeAlerts, setfadeAlerts] = useState([]);
+  const [routeChanged, setRouteChanged] = useState(false);
 
   useEffect(() => {
-    // subscribe to new alert notifications
-    const subscription = alertService.onAlert(id).subscribe((alert) => {
-      // clear alerts when an empty alert is received
-      if (!alert.message) {
-        setAlerts((alerts) => {
-          // filter out alerts without 'keepAfterRouteChange' flag
-          const filteredAlerts = alerts.filter((x) => x.keepAfterRouteChange);
+    const newestAlert = alerts[alerts.length - 1] || undefined;
 
-          // set 'keepAfterRouteChange' flag to false on the rest
-          filteredAlerts.forEach((x) => delete x.keepAfterRouteChange);
-          return filteredAlerts;
-        });
-      } else {
-        // add alert to array
-        setAlerts((alerts) => [...alerts, alert]);
-
-        // auto close alert if required
-        if (alert.autoClose) {
-          setTimeout(() => removeAlert(alert), 3000);
-        }
-      }
-    });
-
-    // clear alerts on location change
-    const clearAlerts = () => {
-      setTimeout(() => alertService.clear(id));
-    };
-    router.events.on("routeChangeStart", clearAlerts);
-
-    // clean up function that runs when the component unmounts
-    return () => {
-      // unsubscribe to avoid memory leaks
-      subscription.unsubscribe();
-      router.events.off("routeChangeStart", clearAlerts);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  function removeAlert(alert) {
-    if (fade) {
-      // fade out alert
-      const alertWithFade = { ...alert, fade: true };
-      setAlerts((alerts) =>
-        alerts.map((x) => (x === alert ? alertWithFade : x))
-      );
-
-      // remove alert after faded out
-      setTimeout(() => {
-        setAlerts((alerts) => alerts.filter((x) => x !== alertWithFade));
-      }, 250);
-    } else {
-      // remove alert
-      setAlerts((alerts) => alerts.filter((x) => x !== alert));
+    if (newestAlert && newestAlert.autoClose) {
+      setTimeout(() => fadeAlert(newestAlert.id), newestAlert.autoClose);
     }
+
+    const clearAlertsOnRouteChange = () => {
+      setRouteChanged(true);
+      const alertsToFade = alerts.filter(
+        (alert) => !alert.keepAfterRouteChange
+      );
+      alertsToFade.map((alert) => fadeAlert(alert.id)).then;
+    };
+    router.events.on("routeChangeStart", clearAlertsOnRouteChange);
+
+    return () => {
+      setRouteChanged(false);
+      router.events.off("routeChangeStart", clearAlertsOnRouteChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerts]);
+
+  function fadeAlert(id) {
+    setfadeAlerts([...fadeAlerts, id]);
+
+    setTimeout(() => {
+      dispatch(removeAlert(id));
+      if (routeChanged) {
+        setfadeAlerts([]);
+      } else {
+        setfadeAlerts(fadeAlerts.filter((fadeId) => fadeId !== id));
+      }
+    }, 700);
   }
 
   function cssClasses(alert) {
     if (!alert) return;
 
-    const classes = ["alert", "alert-dismissable"];
-
     const alertTypeClass = {
-      [AlertType.Success]: "alert-success",
-      [AlertType.Error]: "alert-danger",
-      [AlertType.Info]: "alert-info",
-      [AlertType.Warning]: "alert-warning",
+      ["success"]: styles.alertSuccess,
+      ["error"]: styles.alertDanger,
+      ["info"]: styles.alertInfo,
+      ["warning"]: styles.alertWarning,
     };
 
-    classes.push(alertTypeClass[alert.type]);
+    const classes = [
+      styles.alert,
+      styles.alertDismissible,
+      alertTypeClass[alert.type],
+    ];
 
-    if (alert.fade) {
-      classes.push("fade");
+    if (fadeAlerts.includes(alert.id)) {
+      classes.push(styles.fade);
     }
 
     return classes.join(" ");
@@ -102,17 +78,17 @@ function Alert({ id, fade }) {
   if (!alerts.length) return null;
 
   return (
-    <div className="container">
-      <div className="m-3">
+    <div className={styles.alertContainer}>
+      <div className={styles.m1}>
         {alerts.map((alert, index) => (
           <div key={index} className={cssClasses(alert)}>
-            <a className="close" onClick={() => removeAlert(alert)}>
+            <a className={styles.close} onClick={() => fadeAlert(alert.id)}>
               &times;
             </a>
-            <span dangerouslySetInnerHTML={{ __html: alert.message }}></span>
+            <span>{alert.message}</span>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
