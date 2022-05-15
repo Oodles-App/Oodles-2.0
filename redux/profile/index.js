@@ -29,6 +29,22 @@ export const fetchEditProfile = (user) => {
   };
 };
 
+export const updateUser = (user, newProfile) => {
+  return async (dispatch) => {
+    try {
+      const updatedUser = await fetchWrapper.put(
+        `${baseUrl}/${user.id}`,
+        user,
+        newProfile
+      );
+      console.log(updatedUser, "updated user redux");
+      dispatch(setProfile(updatedUser));
+    } catch (error) {
+      console.log(error); //TODO: replace with better error handling
+    }
+  };
+};
+
 export default function profileReducer(profile = {}, action) {
   switch (action.type) {
     case SET_PROFILE:

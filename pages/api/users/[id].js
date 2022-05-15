@@ -9,7 +9,7 @@ import { apiHandler } from "../../../helpers/api";
 
 export default apiHandler({
   get: getById,
-  // put: update,
+  put: update,
   // delete: _delete,
 });
 
@@ -48,28 +48,18 @@ async function getById(req, res) {
   }
 }
 
-function update(req, res) {
-  const user = usersRepo.getById(req.query.id);
+async function update(req, res) {
+  const reqId = parseInt(req.query.id);
+  const user = await prisma.user.update({
+    where: { id: reqId },
+    data: req.body,
+  });
 
-  if (!user) throw "User Not Found";
+  //TODO: include validation?
 
-  // split out password from user details
-  const { password, ...params } = req.body;
+  if (!user) throw "Error updating"; //TODO: update error handling
 
-  // validate
-  if (
-    user.username !== params.username &&
-    usersRepo.find((x) => x.username === params.username)
-  )
-    throw `User with the username "${params.username}" already exists`;
-
-  // only update hashed password if entered
-  if (password) {
-    user.hash = bcrypt.hashSync(password, 10);
-  }
-
-  usersRepo.update(req.query.id, params);
-  return res.status(200).json({});
+  return res.status(200).json(user);
 }
 
 function _delete(req, res) {

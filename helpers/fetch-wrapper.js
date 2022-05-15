@@ -9,7 +9,7 @@ const { publicRuntimeConfig } = getConfig();
 export const fetchWrapper = {
   get,
   post,
-  // put,
+  put,
   // delete: _delete,
 };
 
@@ -31,14 +31,14 @@ function post(url, body) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-// function put(url, body) {
-//   const requestOptions = {
-//     method: "PUT",
-//     headers: { "Content-Type": "application/json", ...authHeader(url) },
-//     body: JSON.stringify(body),
-//   };
-//   return fetch(url, requestOptions).then(handleResponse);
-// }
+function put(url, auth, body) {
+  const requestOptions = {
+    method: "PUT",
+    headers: authHeader(url, auth),
+    body,
+  };
+  return fetch(url, requestOptions).then(handleResponse);
+}
 
 // prefixed with underscored because delete is a reserved word in javascript
 // function _delete(url) {
