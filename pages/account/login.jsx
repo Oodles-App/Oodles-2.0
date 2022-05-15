@@ -76,6 +76,7 @@ function Login() {
               )}
               Login
             </button>
+            <div className="g-signin2" data-onsuccess="onSignIn"></div>
             <Link href="/account/register" className="btn btn-link">
               Register
             </Link>

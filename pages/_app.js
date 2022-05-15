@@ -3,6 +3,7 @@ import { wrapper, store } from "../redux/store";
 import { Provider } from "react-redux";
 import "../styles/globals.css";
 import Head from "next/head";
+import Script from "next/script";
 
 
 function MyApp({ Component, pageProps }) {
@@ -12,9 +13,11 @@ function MyApp({ Component, pageProps }) {
         <Head>
           <title>Oodles</title>
           <meta name="description" content="Donate Food to Nonprofit Organizations" />
+          <meta name="google-signin-client_id" content="304868782951-o0gqd2osf1fcjbhv9ibf63r6lru98p36.apps.googleusercontent.com"/>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Alert />
+        <Script src="https://apis.google.com/js/platform.js"/>
         <Component {...pageProps} />
       </Provider>
     </>
