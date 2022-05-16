@@ -6,24 +6,32 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps = async({params}) => {
-    const restaurant = await prisma.user.findUnique({
-        where: {
-            id: parseInt(params.id)
+        const restaurant = await prisma.user.findUnique({
+            where: {
+                id: parseInt(params.id)
+            }
+        })
+        const products = await prisma.product.findMany({
+            where: {
+                userId: parseInt(params.id)
+            }
+        })
+        return {
+            props: {
+                restaurantInfo: JSON.parse(JSON.stringify(restaurant)),
+                productsList: JSON.parse(JSON.stringify(products))
+            },
         }
-    })
-    console.log(restaurant)
-    return {
-        props: {
-            restaurantInfo: JSON.parse(JSON.stringify(restaurant))
-        },
-    }
-
+   
 }
 
-const Restaurant = ({restaurantInfo}) => {
+const Restaurant = ({restaurantInfo, productsList}) => {
     const [restaurant, setRestaurants] = useState(restaurantInfo)
+    const [products, setProducts] = useState(productsList)
     const router = useRouter();
+    // const [data, setData] = useState(products)
 
+    
     return (
         <div>
             <div>
@@ -34,8 +42,17 @@ const Restaurant = ({restaurantInfo}) => {
                 <div>
                     <p>Bio:</p>
                 </div>
+                <div>
+                    <p>Products</p>
+                    {products.map((product) => (
+                        <div key={product.id}>
+                            <p>{product.name}</p>
+                        </div>
+                    ))}
+                </div>
+
             </div>
-            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation")}}>Reserve</button>
+            <Link href={{pathname: "/reservation", query: products}}>Reserve</Link>
             <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/browse")}}>Back</button>
 
         </div>
@@ -43,4 +60,8 @@ const Restaurant = ({restaurantInfo}) => {
     )
 }
 
+
+
 export default Restaurant;
+
+
