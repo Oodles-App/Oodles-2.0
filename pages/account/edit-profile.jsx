@@ -38,9 +38,7 @@ const EditProfile = () => {
 
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  console.log(orgTags.length >= 6, "org tags");
+  // const [loading, setLoading] = useState(false);
 
   const allTags = useSelector((state) => state.tags);
 
@@ -110,6 +108,7 @@ const EditProfile = () => {
       value: input.toLowerCase(),
       label: input.slice(0, 1).toUpperCase() + input.slice(1),
     };
+    setOrgTags([...orgTags, newTag]);
     dispatch(postTag(newTag, user));
     setLoading(false);
   };
@@ -210,6 +209,7 @@ const EditProfile = () => {
               isMulti
               options={allTags}
               name="tags"
+              value={orgTags}
               onCreateOption={handleCreateTag}
               onChange={(tags) => setOrgTags(tags)}
             />
