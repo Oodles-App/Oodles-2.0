@@ -1,42 +1,51 @@
 import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
-// import {useMapEvents} from 'react-leaflet/hooks'
 import { useState, useRef} from 'react';
-// import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+import Link from 'next/link';
 
 
-
+const defaultZoom = 11.5
+const defaultCenter = [40.735360, -73.989970]
 
 export default function Map(props) {
   const [restaurants, setRestaurants] = useState(props.restaurants)
   const [display, setDisplay] = useState("")
-  // const [toggle, setToggle] = useState(false)
-  const [defaultCenter, setDefaultCenter] = useState([40.735360, -73.989970])
-  const defaultZoom = 11.5
+  const [map, setMap] = useState(null)
 
   return (
     <div>
-      {/* <button type="button" style={{border: "1px solid black"}} onClick={()=> {toggle? setToggle(false): setToggle(true)}}>Toggle Live location</button> */}
       <div id="map">
-        <MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={false} >
+        <MapContainer center={defaultCenter} ref={setMap} zoom={defaultZoom} scrollWheelZoom={false}  >
+        {/* <button type="button" style={{border: "1px solid black"}} onClick={()=> {toggle? setToggle(false): }}>Toggle Live location</button> */}
+
           {/* connect an locate me icon to location Marker with "flyto" property */}
           {/* bug in LocationMarker. Will persist to go to current location even if I press on markers */}
-        <LocationMarker />
+        {/* <LocationMarker />. */}
+        {/* <button type="button" style={{border: "1px solid black", position: 'absolute', zIndex:500 }} onClick={()=> {LocationMarker()}}>Toggle Live location</button> */}
 
         <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             accessToken='pk.eyJ1IjoiYnVzdWh0ODMiLCJhIjoiY2wzMXE5NmdvMjIzMjNsbXV2bmdocXduMiJ9.xgMMsvbz_5VqqpadcYpmzg'
         />
-        
-          <Markers data={restaurants}/>
+
+          <Markers data={restaurants}/>      
         </MapContainer>
+        <div>
+            <button type="button" style={{border: "1px solid black", zIndex:1000}} onClick={() => {
+            map.setView(
+              [
+                defaultCenter[0],
+                defaultCenter[1]
+              ],
+              defaultZoom
+            );
+          }}>
+            Reset</button>
+          </div>
       </div>
       <div className="leaflet-controlpanel">
-
-      </div>
-      <div id="Restaurant Info">
-          <p>Restaurant</p>
 
       </div>
     </div>
@@ -45,11 +54,9 @@ export default function Map(props) {
 
 function Markers( {data} ) {
   const map = useMap();
-  // console.log("data", data)
   return (
     data.length > 0 &&
     data.map((restaurant) => {
-      // setDisplay(restaurant)
       return (
         <Marker
           eventHandlers={{
@@ -76,7 +83,7 @@ function Markers( {data} ) {
           <Popup>
             <span>{restaurant.businessName}</span>
             <br></br>
-            <span>More Information here</span>
+            <Link href="/browse/restaurants/[id]" as={`/browse/restaurants/${restaurant.id}`}key={restaurant.id} restaurant={restaurant.id} state={{restaurant:restaurant}}>More Information here</Link>
           </Popup>
         </Marker>
       );
@@ -88,8 +95,7 @@ function Markers( {data} ) {
 function LocationMarker(props) {
   const [position, setPosition] = useState(null);
   const [bbox, setBbox] = useState([]);
-  // const [toggleCurrentLocation, setToggleLCurrentLocation] = useState(props.toggle)
-  // console.log("props here", props)
+
   const map = useMap();
 
   useEffect(() => {

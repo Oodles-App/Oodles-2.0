@@ -9,7 +9,7 @@ async function createAdmin() {
     businessName: "Oodles",
     contactNum: "1118675309",
     address: "2202 Oodles Street, New York, NY",
-    businessType: "organization",
+    businessType: "ORGANIZATION",
   };
 
   const password = "oodles2202";
