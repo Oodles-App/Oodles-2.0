@@ -17,6 +17,7 @@ import { Spinner } from "../../components";
 
 //TODO: validation and error handling
 //TODO: address auto complete?
+//TODO: populate react-select element with already-chosen tags if any
 //TODO (stretch): allow users to upload image instead of using url?
 
 const EditProfile = () => {
@@ -38,17 +39,24 @@ const EditProfile = () => {
 
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
+  const [newChanges, setNewChanges] = useState(false);
   // const [loading, setLoading] = useState(false);
 
+  console.log(newChanges, "new changes?");
+  console.log(formContent, "form content");
   const allTags = useSelector((state) => state.tags);
 
   useEffect(() => {
     if (!allTags.length) {
       dispatch(fetchTags(user));
     }
-  });
+    if (!newChanges) {
+      setNewChanges(true);
+    }
+  }, [formContent]);
 
   useEffect(() => {
+    console.log("fetching profile");
     if (user.id) {
       dispatch(fetchEditProfile(user));
     }
@@ -64,7 +72,7 @@ const EditProfile = () => {
         })
       );
     }
-    if (profile.businessName) {
+    if (profile.businessName && newChanges) {
       setFormContent({
         businessName: profile.businessName,
         email: profile.email,
@@ -100,6 +108,7 @@ const EditProfile = () => {
         tags: { connect: connectTags },
       })
     );
+    setNewChanges(false);
   };
 
   const handleCreateTag = (input) => {
@@ -215,7 +224,9 @@ const EditProfile = () => {
             />
           </div>
         )}
-        <button type="submit">Save Changes</button>
+        <button type="submit" disabled={!newChanges}>
+          {newChanges ? "Save Changes" : "Changes Saved"}
+        </button>
       </form>
       {/* {loading && <Spinner />} */}
     </Layout>
