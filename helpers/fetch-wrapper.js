@@ -21,10 +21,10 @@ function get(url, auth) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-function post(url, body) {
+function post(url, body, auth) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json", ...authHeader(url) },
+    headers: { "Content-Type": "application/json", ...authHeader(url, auth) },
     credentials: "include",
     body: JSON.stringify(body),
   };

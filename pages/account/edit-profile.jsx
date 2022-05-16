@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
@@ -11,6 +12,8 @@ import Image from "next/image";
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
+import { postTag } from "../../redux/tags";
+import { Spinner } from "../../components";
 
 //TODO: validation and error handling
 //TODO: address auto complete?
@@ -35,14 +38,9 @@ const EditProfile = () => {
 
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const allTags = useSelector((state) => state.tags);
-  const options = allTags.map((tag) => {
-    return {
-      value: tag.name,
-      label: tag.name,
-    };
-  });
 
   useEffect(() => {
     if (!allTags.length) {
@@ -84,6 +82,19 @@ const EditProfile = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser(user, { id: user.id, ...formContent }));
+  };
+
+  const handleCreateTag = (input) => {
+    setLoading(true);
+    console.log(
+      input.slice(0, 1).toUpperCase() + input.slice(1),
+      "capitalized input"
+    );
+    const newTag = {
+      value: input.toLowerCase(),
+      label: input.slice(0, 1).toUpperCase() + input.slice(1),
+    };
+    dispatch(postTag(newTag, user));
   };
 
   return (
@@ -177,11 +188,16 @@ const EditProfile = () => {
         </div>
         {user.businessType === "organization" && (
           <div>
-            <Select options={options} isMulti />
+            <CreatableSelect
+              isMulti
+              options={allTags}
+              onCreateOption={handleCreateTag}
+            />
           </div>
         )}
         <button type="submit">Save Changes</button>
       </form>
+      {/* {loading && <Spinner />} */}
     </Layout>
   );
 };

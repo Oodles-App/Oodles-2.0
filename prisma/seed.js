@@ -18,7 +18,11 @@ async function createAdmin() {
 }
 
 async function createTags() {
-  const dummyTags = [{ name: "Tag1" }, { name: "Tag2" }, { name: "Tag3" }];
+  const dummyTags = [
+    { label: "Tag1", value: "1" },
+    { label: "Tag2", value: "2" },
+    { label: "Tag3", value: "3" },
+  ];
   await Promise.all(dummyTags.map((tag) => prisma.tag.create({ data: tag })));
 }
 

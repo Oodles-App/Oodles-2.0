@@ -32,10 +32,6 @@ export const fetchEditProfile = (user) => {
 export const updateUser = (user, newProfile) => {
   return async (dispatch) => {
     try {
-      // const updatedUser = await fetch(`${baseUrl}/${user.id}`, {
-      //   method: "PUT",
-      //   body: newProfile,
-      // });
       const updatedUser = await fetchWrapper.put(
         `${baseUrl}/${user.id}`,
         user,
