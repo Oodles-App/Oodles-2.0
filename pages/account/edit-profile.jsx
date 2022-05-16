@@ -53,7 +53,7 @@ const EditProfile = () => {
     if (!newChanges) {
       setNewChanges(true);
     }
-  }, [formContent]);
+  }, [formContent, orgTags]);
 
   useEffect(() => {
     console.log("fetching profile");
