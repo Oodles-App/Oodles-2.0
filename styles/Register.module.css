@@ -26,11 +26,13 @@
 }
 
 .invalidFeedback {
-  display: none;
+  /* display: none; */
+  margin-top: 30px;
   width: 100%;
-  margin-top: 0.25rem;
+  margin-top: 1.1rem;
   font-size: 80%;
   color: #dc3545;
+  z-index: 10;
 }
 
 .formControl {
@@ -69,5 +71,39 @@
 #formContainer {
   display: flex !important;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
+}
+
+.formWidth {
+  width: 100%;
+}
+
+.autocompletePadding {
+  padding: 16.5px 14px;
+}
+
+.button {
+  border-radius: 0;
+  border: 2px solid black;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  width: 200px;
+}
+
+.button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+.cancel {
+  text-align: right;
+  font-size: small;
+  color: rgba(255, 0, 0, 0.509);
+}
+
+.cancel:hover {
+  color: red;
 }
