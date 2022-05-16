@@ -32,8 +32,8 @@ model User {
 model Tag {
   id      Int         @id @default(autoincrement())
   name    String?     @unique
-  label   String        
-  value   String
+  label   String      @unique      
+  value   String      @unique
   products Product[]
   users User[]
 }

@@ -40,6 +40,8 @@ const EditProfile = () => {
   const [orgTags, setOrgTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  console.log(orgTags.length >= 6, "org tags");
+
   const allTags = useSelector((state) => state.tags);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const EditProfile = () => {
       dispatch(fetchTags(user));
     }
   });
+
   useEffect(() => {
     if (user.id) {
       dispatch(fetchEditProfile(user));
@@ -81,20 +84,34 @@ const EditProfile = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(user, { id: user.id, ...formContent }));
+    if (orgTags.length > 6) {
+      dispatch(
+        createAlert("error", "You may choose up to 6 product tags.", {
+          autoClose: 5000,
+        })
+      );
+      return;
+    }
+    const connectTags = orgTags.map((tag) => {
+      return { value: tag.value };
+    });
+    dispatch(
+      updateUser(user, {
+        id: user.id,
+        ...formContent,
+        tags: { connect: connectTags },
+      })
+    );
   };
 
   const handleCreateTag = (input) => {
     setLoading(true);
-    console.log(
-      input.slice(0, 1).toUpperCase() + input.slice(1),
-      "capitalized input"
-    );
     const newTag = {
       value: input.toLowerCase(),
       label: input.slice(0, 1).toUpperCase() + input.slice(1),
     };
     dispatch(postTag(newTag, user));
+    setLoading(false);
   };
 
   return (
@@ -187,11 +204,14 @@ const EditProfile = () => {
           />
         </div>
         {user.businessType === "organization" && (
-          <div>
+          <div className={styles.formGroup}>
+            <label htmlFor="tags">What are your most-needed items? (6)</label>
             <CreatableSelect
               isMulti
               options={allTags}
+              name="tags"
               onCreateOption={handleCreateTag}
+              onChange={(tags) => setOrgTags(tags)}
             />
           </div>
         )}
