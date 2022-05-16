@@ -11,6 +11,7 @@ import { createWrapper } from "next-redux-wrapper";
 import userReducer from "../user";
 import alertsReducer from "../alerts";
 import profileReducer from "../profile";
+import tagsReducer from "../tags";
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   alerts: alertsReducer,
   profile: profileReducer,
+  tags: tagsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

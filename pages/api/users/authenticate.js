@@ -33,6 +33,7 @@ async function authenticate(req, res) {
     id: user.id,
     email: user.email,
     businessName: user.businessName,
+    businessType: user.businessType,
     token,
   });
 }

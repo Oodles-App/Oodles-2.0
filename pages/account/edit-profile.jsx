@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 
 import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
@@ -9,6 +10,7 @@ import { TextField, TextareaAutosize } from "@mui/material";
 import Image from "next/image";
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
+import { fetchTags } from "../../redux/tags";
 
 //TODO: validation and error handling
 //TODO: address auto complete?
@@ -28,8 +30,25 @@ const EditProfile = () => {
     imageUrl: "",
   };
 
-  const [formContent, setFormContent] = useState(initialForm);
+  const placeholderSrc =
+    "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png";
 
+  const [formContent, setFormContent] = useState(initialForm);
+  const [orgTags, setOrgTags] = useState([]);
+
+  const allTags = useSelector((state) => state.tags);
+  const options = allTags.map((tag) => {
+    return {
+      value: tag.name,
+      label: tag.name,
+    };
+  });
+
+  useEffect(() => {
+    if (!allTags.length) {
+      dispatch(fetchTags(user));
+    }
+  });
   useEffect(() => {
     if (user.id) {
       dispatch(fetchEditProfile(user));
@@ -57,10 +76,6 @@ const EditProfile = () => {
       });
     }
   }, [profile, dispatch]);
-
-  const [image, setImage] = useState(null);
-  const placeholderSrc =
-    "https://wtwp.com/wp-content/uploads/2015/06/placeholder-image.png";
 
   const handleFormChange = (e) => {
     setFormContent({ ...formContent, [e.target.name]: e.target.value });
@@ -160,6 +175,11 @@ const EditProfile = () => {
             onChange={handleFormChange}
           />
         </div>
+        {user.businessType === "organization" && (
+          <div>
+            <Select options={options} isMulti />
+          </div>
+        )}
         <button type="submit">Save Changes</button>
       </form>
     </Layout>
