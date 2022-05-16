@@ -14,6 +14,7 @@ import { fetchTags } from "../../redux/tags";
 import { postTag } from "../../redux/tags";
 
 //TODO: validation and error handling
+//TODO: allow users to remove a tag (back end delete association)
 //TODO: address auto complete?
 //TODO (stretch): allow users to upload image instead of using url?
 
@@ -37,7 +38,6 @@ const EditProfile = () => {
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
   const [newChanges, setNewChanges] = useState(false);
-
   const allTags = useSelector((state) => state.tags);
 
   useEffect(() => {
@@ -106,14 +106,12 @@ const EditProfile = () => {
   };
 
   const handleCreateTag = (input) => {
-    setLoading(true);
     const newTag = {
       value: input.toLowerCase(),
       label: input.slice(0, 1).toUpperCase() + input.slice(1),
     };
     setOrgTags([...orgTags, newTag]);
     dispatch(postTag(newTag, user));
-    setLoading(false);
   };
 
   return (
