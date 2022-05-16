@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatableSelect from "react-select/creatable";
-import AsyncCreatableSelect from "react-select/async-creatable";
 
 import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
 import { fetchEditProfile } from "../../redux/profile";
 import { TextField, TextareaAutosize } from "@mui/material";
 
-import Image from "next/image";
+// import Image from "next/image"; // => TODO: figure out optimization for using Next Image
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
 import { postTag } from "../../redux/tags";
-import { Spinner } from "../../components";
 
 //TODO: validation and error handling
 //TODO: address auto complete?
@@ -81,6 +79,7 @@ const EditProfile = () => {
         biography: profile.biography || "",
         imageUrl: profile.imageUrl || "",
       });
+      setOrgTags(profile.tags);
     }
   }, [profile, dispatch]);
 

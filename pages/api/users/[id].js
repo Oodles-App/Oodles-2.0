@@ -26,7 +26,7 @@ async function getById(req, res) {
         contactNum: true,
         biography: true,
         imageUrl: true,
-        // tags: true,
+        tags: true,
       },
     });
 
