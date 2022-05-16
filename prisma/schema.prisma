@@ -1,4 +1,4 @@
-// require ("dotenv") 
+// require ("dotenv")
 
 generator client {
   provider = "prisma-client-js"
@@ -21,37 +21,35 @@ model User {
   lng       Float?
   contactNum  String
   biography String?
-  businessType String 
+  businessType String
   imageUrl  String?
   is501c3 Boolean? @default(false)
-  tags Tag[]
   sentMessages      Message[]  @relation("sentMessages")
-  receivedMessages  Message[]  @relation("receivedMessages") 
+  receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
   reservations      Reservation[]
 }
 
-model Tag {
-  id      Int         @id @default(autoincrement())
-  name    String      @unique
-  products Product[]
-  users User[]
-}
+// model Tag {
+//   id      Int         @id @default(autoincrement())
+//   name    String      @unique
+//   products Product[]
+//   users User[]
+// }
 
 model Product {
   id      Int         @id @default(autoincrement())
-	imageUrl		String
-	user			  User    @relation(fields:[userId], references:[id])
-  userId      Int
+	user			  User?    @relation(fields:[userId], references:[id])
+  userId      Int?
   name        String
-  description String
-  tags        Tag[]
+  amount      Int
+  measurement String
 }
 
 enum Status {
   ACTIVE
   PENDING
-  CONFIRM 
+  CONFIRM
   COMPLETED
 }
 
