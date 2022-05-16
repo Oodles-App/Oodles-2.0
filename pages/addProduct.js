@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {useQuery, useMutation} from "react-query";
 
-export default function addProduct() {
+export default function AddProduct() {
   const {register, handleSubmit, errors, reset} = useForm();
   const user = useSelector(state => state.user);
   const [amount, setAmount] = useState(0);
