@@ -7,12 +7,14 @@ import { userRegistrationSchema } from "../../helpers/validationSchema";
 
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
+import { Spinner } from "../../components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
 
-import { TextField, Autocomplete } from "@mui/material";
+import { TextField, Autocomplete, Button } from "@mui/material";
+import styles from "../../styles/Register.module.css";
 
 export default Register;
 
@@ -75,74 +77,99 @@ function Register() {
 
   return (
     <Layout>
-      <div className="card">
-        <h4 className="card-header">Register</h4>
-        <div className="card-body">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <div>
-                <label htmlFor="businessType"></label>
+      <div className={styles.card}>
+        <h4 className={styles.cardHeader}>Register</h4>
+        <div>
+          <div>
+            <label htmlFor="businessType"></label>
+          </div>
+          <select
+            name="businessType"
+            value={businessType}
+            onChange={(e) => setBusinessType(e.target.value)}
+          >
+            <option value="">Register as:</option>
+            <option value="organization">Organization</option>
+            <option value="restaurant">Restaurant</option>
+          </select>
+        </div>
+        <div className={styles.cardBody}>
+          <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
+            <div className={styles.formGroup}>
+              <TextField
+                label="Email"
+                name="email"
+                {...register("email")}
+                autoComplete="new-password"
+                disabled={businessType === ""}
+                className={
+                  errors.email
+                    ? `${styles.formControl} ${styles.isInvalid}`
+                    : `${styles.formControl}`
+                }
+              />
+              <div className={styles.invalidFeedback}>
+                {errors.email?.message}
               </div>
-              <select
-                name="businessType"
-                value={businessType}
-                onChange={(e) => setBusinessType(e.target.value)}
-              >
-                <option value="">Register as:</option>
-                <option value="organization">Organization</option>
-                <option value="restaurant">Restaurant</option>
-              </select>
             </div>
+            <div className={styles.formGroup}>
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                disabled={businessType === ""}
+                {...register("password")}
+                className={
+                  errors.password
+                    ? `${styles.formControl} ${styles.isInvalid}`
+                    : `${styles.formControl}`
+                }
+              />
+              <div className={styles.invalidFeedback}>
+                {errors.password?.message}
+              </div>
+            </div>
+            <div className={styles.formGroup}>
+              <TextField
+                fullWidth={true}
+                label="Business Name"
+                name="businessName"
+                type="text"
+                {...register("businessName")}
+                disabled={businessType === ""}
+                className={
+                  errors.businessName
+                    ? `${styles.formControl} ${styles.isInvalid}`
+                    : `${styles.formControl}`
+                }
+              />
 
-            <div className="form-group">
-              <div>
-                <TextField
-                  label="Email"
-                  name="email"
-                  {...register("email")}
-                  autoComplete="new-password"
-                  disabled={businessType === ""}
-                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                />
-              </div>
-              <div className="invalid-feedback">{errors.email?.message}</div>
-            </div>
-            <div className="form-group">
-              <div>
-                <TextField
-                  label="Password"
-                  name="password"
-                  type="password"
-                  disabled={businessType === ""}
-                  {...register("password")}
-                  className={`form-control ${
-                    errors.lastName ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">
-                  {errors.password?.message}
-                </div>
-              </div>
-            </div>
-            <div className="form-group">
-              <div>
-                <TextField
-                  label="Business Name"
-                  name="businessName"
-                  type="text"
-                  {...register("businessName")}
-                  disabled={businessType === ""}
-                />
-              </div>
-              <div className="invalid-feedback">
+              <div className={styles.invalidFeedback}>
                 {errors.businessName?.message}
+              </div>
+            </div>
+            <div>
+              <TextField
+                label="Phone Number"
+                name="contacNum"
+                type="text"
+                disabled={businessType === ""}
+                {...register("contactNum")}
+                className={
+                  errors.contactNum
+                    ? `${styles.formControl} ${styles.isInvalid}`
+                    : `${styles.formControl}`
+                }
+              />
+              <div className={styles.invalidFeedback}>
+                {errors.contactNum?.message}
               </div>
             </div>
             <div>
               <Autocomplete
                 id="address-search"
+                fullWidth={true}
                 options={addressSuggestions}
-                sx={{ width: 300 }}
                 onSelect={(e) => setAddress(e.target.value)}
                 freeSolo={true}
                 disabled={businessType === ""}
@@ -150,6 +177,7 @@ function Register() {
                   <TextField
                     {...params}
                     label="Address"
+                    className={styles.autocompletePadding}
                     onChange={(e) => {
                       setAddress(e.target.value);
                     }}
@@ -161,29 +189,11 @@ function Register() {
                 )}
               />
             </div>
-            <div>
-              <TextField
-                label="Phone Number"
-                name="contacNum"
-                type="text"
-                disabled={businessType === ""}
-                {...register("contactNum")}
-                className={`form-control ${
-                  errors.lastName ? "is-invalid" : ""
-                }`}
-              />
-            </div>
-            <button
-              disabled={formState.isSubmitting}
-              className="btn btn-primary"
-            >
-              {formState.isSubmitting && (
-                <span className="spinner-border spinner-border-sm mr-1"></span>
-              )}
-              Register
-            </button>
-            <Link href="/account/login" className="btn btn-link">
-              Cancel
+            <Button variant="outlined" type="submit">
+              {formState.isSubmitting ? <Spinner /> : "Register"}
+            </Button>
+            <Link href="/account/login" className={styles.cancel}>
+              &times; Cancel
             </Link>
           </form>
         </div>

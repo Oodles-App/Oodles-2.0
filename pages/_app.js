@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
               name="description"
               content="Donate Food to Nonprofit Organizations"
             />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/utensilHeart.png" />
           </Head>
           <Layout>
             <Alert />
