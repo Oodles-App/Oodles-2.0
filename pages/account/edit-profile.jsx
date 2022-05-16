@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 
 import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
@@ -11,10 +11,8 @@ import { TextField, TextareaAutosize } from "@mui/material";
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
-import { postTag } from "../../redux/tags";
 
 //TODO: validation and error handling
-//TODO: allow users to remove a tag (back end delete association)
 //TODO: address auto complete?
 //TODO (stretch): allow users to upload image instead of using url?
 
@@ -92,26 +90,31 @@ const EditProfile = () => {
       );
       return;
     }
+
     const connectTags = orgTags.map((tag) => {
       return { value: tag.value };
     });
+
+    const deleteTags = () => {
+      const oldTagValues = profile.tags.map((tag) => tag.value);
+      const newTagValues = orgTags.map((tag) => tag.value);
+      const tagsToDelete = oldTagValues
+        .filter((tag) => !newTagValues.includes(tag))
+        .map((tag) => {
+          return { value: tag };
+        });
+      console.log(tagsToDelete, "tags to delte");
+      return tagsToDelete;
+    };
+
     dispatch(
       updateUser(user, {
         id: user.id,
         ...formContent,
-        tags: { connect: connectTags },
+        tags: { connect: connectTags, disconnect: deleteTags() },
       })
     );
     setNewChanges(false);
-  };
-
-  const handleCreateTag = (input) => {
-    const newTag = {
-      value: input.toLowerCase(),
-      label: input.slice(0, 1).toUpperCase() + input.slice(1),
-    };
-    setOrgTags([...orgTags, newTag]);
-    dispatch(postTag(newTag, user));
   };
 
   return (
@@ -203,15 +206,14 @@ const EditProfile = () => {
             onChange={handleFormChange}
           />
         </div>
-        {user.businessType === "organization" && (
+        {user.businessType === "ORGANIZATION" && (
           <div className={styles.formGroup}>
             <label htmlFor="tags">What are your most-needed items? (6)</label>
-            <CreatableSelect
+            <Select
               isMulti
               options={allTags}
               name="tags"
               value={orgTags}
-              onCreateOption={handleCreateTag}
               onChange={(tags) => setOrgTags(tags)}
             />
           </div>

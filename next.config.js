@@ -16,7 +16,7 @@ const nextConfig = {
     apiUrl:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/api" // development API
-        : "https://oodles-2-1.vercel.app/", // production API
+        : "https://oodles-2-1.vercel.app/api", // production API
   },
 };
 
