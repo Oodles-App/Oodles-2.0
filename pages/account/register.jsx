@@ -20,6 +20,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  FormControl,
 } from "@mui/material";
 import styles from "../../styles/Register.module.css";
 
@@ -86,22 +87,26 @@ function Register() {
     <Layout>
       <div className={styles.card}>
         <h4 className={styles.cardHeader}>Register</h4>
-        <div>
-          <InputLabel htmlFor="businessType">Business Type</InputLabel>
-          <Select
-            labelId="select-label"
-            name="businessType"
-            fullWidth
-            value={businessType || ""}
-            onChange={(e) => setBusinessType(e.target.value)}
-          >
-            <MenuItem value="organization">Organization</MenuItem>
-            <MenuItem value="restaurant">Restaurant</MenuItem>
-          </Select>
-        </div>
         <div className={styles.cardBody}>
           <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
-            <div className={styles.formGroup}>
+            <FormControl className={styles.formGroup}>
+              <InputLabel id="select-label">Business Type</InputLabel>
+              <Select
+                label="Business Type"
+                id="select"
+                name="businessType"
+                fullWidth
+                value={businessType || ""}
+                onChange={(e) => setBusinessType(e.target.value)}
+              >
+                <MenuItem value="organization">Organization</MenuItem>
+                <MenuItem value="restaurant">Restaurant</MenuItem>
+              </Select>
+            </FormControl>
+            <div
+              className={styles.formGroup}
+              style={businessType === "" ? { display: "none" } : {}}
+            >
               <TextField
                 label="Email"
                 name="email"
@@ -118,7 +123,10 @@ function Register() {
                 {errors.email?.message}
               </div>
             </div>
-            <div className={styles.formGroup}>
+            <div
+              className={styles.formGroup}
+              style={businessType === "" ? { display: "none" } : {}}
+            >
               <TextField
                 label="Password"
                 name="password"
@@ -135,7 +143,10 @@ function Register() {
                 {errors.password?.message}
               </div>
             </div>
-            <div className={styles.formGroup}>
+            <div
+              className={styles.formGroup}
+              style={businessType === "" ? { display: "none" } : {}}
+            >
               <TextField
                 fullWidth={true}
                 label="Business Name"
@@ -154,11 +165,12 @@ function Register() {
                 {errors.businessName?.message}
               </div>
             </div>
-            <div>
+            <div style={businessType === "" ? { display: "none" } : {}}>
               <TextField
                 label="Phone Number"
                 name="contacNum"
                 type="text"
+                style={businessType === "" ? { display: "none" } : {}}
                 disabled={businessType === ""}
                 {...register("contactNum")}
                 className={
@@ -171,7 +183,7 @@ function Register() {
                 {errors.contactNum?.message}
               </div>
             </div>
-            <div>
+            <div style={businessType === "" ? { display: "none" } : {}}>
               <Autocomplete
                 id="address-search"
                 fullWidth={true}
@@ -195,7 +207,11 @@ function Register() {
                 )}
               />
             </div>
-            <Button variant="outlined" type="submit">
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={businessType === ""}
+            >
               {formState.isSubmitting ? <Spinner /> : "Register"}
             </Button>
             <Link href="/account/login" className={styles.cancel}>
