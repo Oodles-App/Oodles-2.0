@@ -10,12 +10,14 @@ import Image from "next/image";
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 
+//TODO: validation and error handling
+//TODO: address auto complete?
+//TODO (stretch): allow users to upload image instead of using url?
+
 const EditProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const profile = useSelector((state) => state.profile);
-
-  console.log(formContent, "form content");
 
   const initialForm = {
     businessName: "",
@@ -27,8 +29,6 @@ const EditProfile = () => {
   };
 
   const [formContent, setFormContent] = useState(initialForm);
-
-  console.log(formContent, "form content");
 
   useEffect(() => {
     if (user.id) {
@@ -68,22 +68,29 @@ const EditProfile = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("form submitted");
-    console.log(user, "auth submission");
     dispatch(updateUser(user, { id: user.id, ...formContent }));
   };
 
   return (
     <Layout>
       <div className={styles.imageContainer}>
+        <img
+          src={profile.imageUrl || placeholderSrc}
+          className={styles.image}
+        />
+        {/* Next.js image element doesn't allow external URls except those that are denoted in next.config
         <Image
-          src={image || placeholderSrc}
+          src={profile.imageUrl || placeholderSrc}
           alt="User profile image"
           layout="fill"
           objectFit="cover"
-        />
+        /> */}
       </div>
       <form onSubmit={handleFormSubmit} className={styles.form}>
+        <div>
+          <h3 className={styles.title}>Edit Profile</h3>
+          <hr />
+        </div>
         <div className={styles.formGroup}>
           <label htmlFor="businessName" className={styles.label}>
             Business Name:
@@ -121,16 +128,37 @@ const EditProfile = () => {
           />
         </div>
         <div className={styles.formGroup}>
+          <label htmlFor="address" className={styles.label}>
+            Address:
+          </label>
+          <TextField
+            name="address"
+            type="text"
+            value={formContent.address}
+            onChange={handleFormChange}
+          />
+        </div>
+        <div className={styles.formGroup}>
           <label htmlFor="biography" className={styles.label}>
             Biography:
           </label>
-          <TextareaAutosize name="biography" minRows={3} />
+          <TextareaAutosize
+            name="biography"
+            minRows={3}
+            value={formContent.biography || ""}
+            onChange={handleFormChange}
+            className={styles.textarea}
+          />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="imageUrl" className={styles.label}>
             Profile Image (Link)
           </label>
-          <TextField label="Profile Image (Link)" name="imageUrl" />
+          <TextField
+            name="imageUrl"
+            value={formContent.imageUrl || ""}
+            onChange={handleFormChange}
+          />
         </div>
         <button type="submit">Save Changes</button>
       </form>

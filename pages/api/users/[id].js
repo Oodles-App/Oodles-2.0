@@ -50,6 +50,8 @@ async function getById(req, res) {
 
 async function update(req, res) {
   const reqId = parseInt(req.query.id);
+  const data = req.body;
+
   const user = await prisma.user.update({
     where: { id: reqId },
     data: req.body,

@@ -31,11 +31,11 @@ function post(url, body) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-function put(url, auth, body) {
+function put(url, auth, newInfo) {
   const requestOptions = {
     method: "PUT",
-    headers: authHeader(url, auth),
-    body,
+    headers: { "Content-Type": "application/json", ...authHeader(url, auth) },
+    body: JSON.stringify(newInfo),
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
