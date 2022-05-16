@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CreatableSelect from "react-select/creatable";
+import Select from "react-select/creatable";
 
 import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
@@ -105,15 +105,6 @@ const EditProfile = () => {
     setNewChanges(false);
   };
 
-  const handleCreateTag = (input) => {
-    const newTag = {
-      value: input.toLowerCase(),
-      label: input.slice(0, 1).toUpperCase() + input.slice(1),
-    };
-    setOrgTags([...orgTags, newTag]);
-    dispatch(postTag(newTag, user));
-  };
-
   return (
     <Layout>
       <div className={styles.imageContainer}>
@@ -203,15 +194,14 @@ const EditProfile = () => {
             onChange={handleFormChange}
           />
         </div>
-        {user.businessType === "organization" && (
+        {user.businessType === "ORGANIZATION" && (
           <div className={styles.formGroup}>
             <label htmlFor="tags">What are your most-needed items? (6)</label>
-            <CreatableSelect
+            <Select
               isMulti
               options={allTags}
               name="tags"
               value={orgTags}
-              onCreateOption={handleCreateTag}
               onChange={(tags) => setOrgTags(tags)}
             />
           </div>
