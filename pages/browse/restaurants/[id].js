@@ -35,6 +35,7 @@ const Restaurant = ({restaurantInfo}) => {
                     <p>Bio:</p>
                 </div>
             </div>
+            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation")}}>Reserve</button>
             <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/browse")}}>Back</button>
 
         </div>
