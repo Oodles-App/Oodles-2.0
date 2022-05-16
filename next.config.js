@@ -2,20 +2,21 @@
 
 const nextConfig = {
   reactStrictMode: true,
+
   serverRuntimeConfig: {
-    // Will only be available on the server side
-    mySecret: "secret",
-    secondSecret: process.env.SECOND_SECRET, // Pass through env variables
+    mySecret: "secret", //TODO: change this to something more secretive lol
+    secondSecret: process.env.SECOND_SECRET,
   },
-  // publicRuntimeConfig: {
-  //   // Will be available on both server and client
-  //   staticFolder: "/static",
-  // },
+
+  images: {
+    domains: ["wtwp.com"],
+  },
+
   publicRuntimeConfig: {
     apiUrl:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/api" // development API
-        : "http://localhost:3000/api", //TODO: replace production API with correct route
+        : "https://oodles-2-1.vercel.app/", // production API
   },
 };
 

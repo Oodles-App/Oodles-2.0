@@ -31,8 +31,7 @@ async function authenticate(req, res) {
   // return basic user details and token
   return res.status(200).json({
     id: user.id,
-    email: user.email,
-    businessName: user.businessName,
+    businessType: user.businessType,
     token,
   });
 }
