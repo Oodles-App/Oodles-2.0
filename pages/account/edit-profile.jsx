@@ -50,7 +50,6 @@ const EditProfile = () => {
   }, [formContent, orgTags]);
 
   useEffect(() => {
-    console.log("fetching profile");
     if (user.id) {
       dispatch(fetchEditProfile(user));
     }
