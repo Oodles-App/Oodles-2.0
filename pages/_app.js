@@ -2,8 +2,9 @@ import { Alert } from "../components/Alert";
 import { wrapper, store, Persistor } from "../redux/store";
 import { Provider } from "react-redux";
 import "../styles/globals.css";
-import Layout from "../components/Layout"
 import Head from "next/head";
+import Layout from "../components/Layout";
+
 import { PersistGate } from "redux-persist/integration/react";
 
 function MyApp({ Component, pageProps }) {
