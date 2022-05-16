@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { MapContainer, TileLayer, Popup, Marker, useMap, useLeaflet} from 'react-leaflet';
 import { useState, useRef} from 'react';
 import L from 'leaflet'
+import Link from 'next/link';
 
 
 const defaultZoom = 11.5
@@ -82,7 +83,7 @@ function Markers( {data} ) {
           <Popup>
             <span>{restaurant.businessName}</span>
             <br></br>
-            <span>More Information here</span>
+            <Link href="/browse/restaurants/[id]" as={`/browse/restaurants/${restaurant.id}`}key={restaurant.id} restaurant={restaurant.id} state={{restaurant:restaurant}}>More Information here</Link>
           </Popup>
         </Marker>
       );
