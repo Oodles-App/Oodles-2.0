@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import "../styles/globals.css";
 import Layout from "../components/Layout"
 import Head from "next/head";
+
 import { PersistGate } from "redux-persist/integration/react";
 
 function MyApp({ Component, pageProps }) {
