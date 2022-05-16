@@ -12,6 +12,10 @@
   border-radius: 0.25rem;
 }
 
+.card.login {
+  margin: 0 auto;
+}
+
 .cardHeader {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
@@ -106,4 +110,32 @@
 
 .cancel:hover {
   color: red;
+}
+
+.loginContainer {
+  height: calc(100vh - 86px);
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.loginButton {
+  width: 100px;
+  margin: 0 auto !important;
+}
+
+.registerLink {
+  font-size: 12px;
+  text-align: center;
+}
+
+.registerLink a {
+  color: navy;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
 }

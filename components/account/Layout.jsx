@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { createAlert } from "../../redux/alerts";
 import { useDispatch } from "react-redux";
 
+import styles from "../../styles/Register.module.css";
+
 export { Layout };
 
 function Layout({ children }) {
@@ -38,5 +40,5 @@ function Layout({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div className="col-md-6 offset-md-3 mt-5">{children}</div>;
+  return <div>{children}</div>;
 }

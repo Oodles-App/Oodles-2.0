@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -9,9 +10,14 @@ import { login } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
 import { setUser } from "../../redux/user";
 
+import { Spinner } from "../../components";
 import { Link } from "../../components";
 import { Layout } from "../../components/account";
+
 import { useEffect } from "react";
+
+import { TextField, Button } from "@mui/material";
+import styles from "../../styles/Register.module.css";
 
 export default Login;
 
@@ -58,45 +64,62 @@ function Login() {
 
   return (
     <Layout>
-      <div className="card">
-        <h4 className="card-header">Login</h4>
-        <div className="card-body">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                name="email"
-                type="text"
-                {...register("email")}
-                className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              />
-              <div className="invalid-feedback">{errors.email?.message}</div>
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                {...register("password")}
-                className={`form-control ${
-                  errors.password ? "is-invalid" : ""
-                }`}
-              />
-              <div className="invalid-feedback">{errors.password?.message}</div>
-            </div>
-            <button
-              disabled={formState.isSubmitting}
-              className="btn btn-primary"
-            >
-              {formState.isSubmitting && (
-                <span className="spinner-border spinner-border-sm mr-1"></span>
-              )}
-              Login
-            </button>
-            <Link href="/account/register" className="btn btn-link">
-              Register
-            </Link>
-          </form>
+      <div className={styles.loginContainer}>
+        <div className={`${styles.card} ${styles.login}`}>
+          <h4 className={styles.cardHeader}>Login</h4>
+          <div className={styles.cardBody}>
+            <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
+              <div className={styles.formGroup}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  {...register("email")}
+                  autoComplete="new-password"
+                  className={
+                    errors.email
+                      ? `${styles.formControl} ${styles.isInvalid}`
+                      : `${styles.formControl}`
+                  }
+                />
+                <div className={styles.invalidFeedback}>
+                  {errors.email?.message}
+                </div>
+              </div>
+              <div className={styles.formGroup}>
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  {...register("password")}
+                  className={
+                    errors.password
+                      ? `${styles.formControl} ${styles.isInvalid}`
+                      : `${styles.formControl}`
+                  }
+                />
+                <div className={styles.invalidFeedback}>
+                  {errors.password?.message}
+                </div>
+              </div>
+              <Button
+                variant="outlined"
+                type="submit"
+                disabled={formState.isSubmitting}
+                className={styles.loginButton}
+              >
+                {formState.isSubmitting ? <Spinner /> : "Login"}
+              </Button>
+            </form>
+          </div>
+        </div>
+        <div className={styles.registerLink}>
+          <p>
+            Don't have an account?
+            <span>
+              <Link href="/account/register"> Click here </Link>
+            </span>
+            to register.
+          </p>
         </div>
       </div>
     </Layout>
