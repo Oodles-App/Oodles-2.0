@@ -11,7 +11,6 @@ import { TextField, TextareaAutosize } from "@mui/material";
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
-import { postTag } from "../../redux/tags";
 
 //TODO: validation and error handling
 //TODO: address auto complete?

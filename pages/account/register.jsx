@@ -13,7 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
 import { createAlert } from "../../redux/alerts";
 
-import { TextField, Autocomplete, Button } from "@mui/material";
+import {
+  TextField,
+  Autocomplete,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
 import styles from "../../styles/Register.module.css";
 
 export default Register;
@@ -80,18 +87,17 @@ function Register() {
       <div className={styles.card}>
         <h4 className={styles.cardHeader}>Register</h4>
         <div>
-          <div>
-            <label htmlFor="businessType"></label>
-          </div>
-          <select
+          <InputLabel htmlFor="businessType">Business Type</InputLabel>
+          <Select
+            labelId="select-label"
             name="businessType"
-            value={businessType}
+            fullWidth
+            value={businessType || ""}
             onChange={(e) => setBusinessType(e.target.value)}
           >
-            <option value="">Register as:</option>
-            <option value="organization">Organization</option>
-            <option value="restaurant">Restaurant</option>
-          </select>
+            <MenuItem value="organization">Organization</MenuItem>
+            <MenuItem value="restaurant">Restaurant</MenuItem>
+          </Select>
         </div>
         <div className={styles.cardBody}>
           <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
