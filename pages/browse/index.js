@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import dynamic from "next/dynamic"
+import Link from 'next/link'
+
 import {PrismaClient} from '@prisma/client'
-import Restaurants from './restaurants';
 const prisma = new PrismaClient();
 
 
@@ -25,8 +26,19 @@ export async function getStaticProps() {
 function Browse({initialRestaurants}) {
   const [restaurants, setRestaurants] = useState(initialRestaurants)
   const [toggleMap, setToggleMap] = useState(true)
-  const [search, setSearch] = useState("")
+  const [filteredResults, setFilteredResults] = useState(initialRestaurants)
 
+  function searchRestaurant(value) {
+    if(value !== "") {
+      const filteredRestaurants = restaurants.filter((restaurant) => {
+        return Object.values(restaurant).join('').toLowerCase().includes(value.toLowerCase())
+      })
+      setFilteredResults(filteredRestaurants)
+    } else {
+      setFilteredResults(restaurants)
+    }
+  }
+  
   return (
       <div>
         <br></br>
@@ -40,27 +52,29 @@ function Browse({initialRestaurants}) {
           <button id="mapId" type="button" name="Map" onClick={()=> {setToggleMap(true)}}>Map</button>
           <button  id="list" type="button" name="List" onClick={() => {setToggleMap(false)}}>List</button>
         </div>
-      {/* Search Bar */}
-      <br></br>
-      <input id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={e => setSearch(e.target.value)} />
-
-
-      {/* maps will be used more for closer distance */}
-          {toggleMap ? <div><br></br><Map restaurants={restaurants}></Map> </div>
-          : (<div className="restaurants">
-            <br></br>
-            <ul>
-              {/* 
-              filter searchbar by restaurants.
-              filter tags with a dropdown bar
-               */}
-              <Restaurants restaurants={restaurants}/>
-            </ul>
-
-          </div>) }
-  
-      </div>
+        <br></br>
+        <div>
+          {toggleMap ? <div><Map restaurants={restaurants}></Map> </div>
+          : <div>
+            <input id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={(e)=>searchRestaurant(e.target.value)} />
+            <div>
+              <br></br>
+              {filterRestaurants(filteredResults)}
+            </div>
+            </div>
+           }
+        </div>
+        </div>
   )
+}
+
+function filterRestaurants(filteredResults) {
+  const filter = filteredResults.map((restaurant) => (
+    <Link href="/browse/restaurants/[id]" as={`/browse/restaurants/${restaurant.id}`}key={restaurant.id} restaurant={restaurant.id} state={{restaurant:restaurant}}>
+    <p key={restaurant.id}>{restaurant.businessName}</p>
+    </Link> 
+  ))
+  return filter
 }
 
 export default React.memo(Browse)
