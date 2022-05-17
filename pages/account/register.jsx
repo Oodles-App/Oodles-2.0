@@ -44,33 +44,18 @@ function Register() {
   const [address, setAddress] = useState("");
   const [addressSuggestions, setAddressSuggestions] = useState([]);
 
-  /// TODO: move this API call (address autocomplete API) to redux/ a services file?
-  // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
     const fetchAddresses = async () => {
-      const result = await fetch(`${baseUrl}/address/${address}`);
-      console.log(result.data);
+      const res = await fetch(`${baseUrl}/address/${address}`);
+      const result = await res.json();
+      setAddressSuggestions(
+        result.features.map((location) => location.properties.formatted)
+      );
     };
     if (address.length > 2) {
       fetchAddresses();
     }
   }, [address]);
-
-  // useEffect(() => {
-  //   if (address.length > 2) {
-  //     fetch(
-  //       `https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=589d58eb199f4f898d2194bfad9ec7b5`,
-  //       { method: "GET" }
-  //     )
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         setAddressSuggestions(
-  //           result.features.map((location) => location.properties.formatted)
-  //         );
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [address]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));
