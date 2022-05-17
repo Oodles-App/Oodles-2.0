@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 import Head from "next/head";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -23,7 +24,9 @@ function MyApp({ Component, pageProps }) {
           </Head>
           <Layout>
             <Alerts />
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           </Layout>
         </PersistGate>
       </Provider>
