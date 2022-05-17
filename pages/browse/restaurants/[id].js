@@ -4,6 +4,7 @@ import Link from 'next/link';
 const prisma = new PrismaClient();
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+// import { prisma } from '../../../lib/db';
 
 export const getServerSideProps = async({params}) => {
         const restaurant = await prisma.user.findUnique({
@@ -29,9 +30,7 @@ const Restaurant = ({restaurantInfo, productsList}) => {
     const [restaurant, setRestaurants] = useState(restaurantInfo)
     const [products, setProducts] = useState(productsList)
     const router = useRouter();
-    // const [data, setData] = useState(products)
 
-    
     return (
         <div>
             <div>
@@ -52,7 +51,7 @@ const Restaurant = ({restaurantInfo, productsList}) => {
                 </div>
 
             </div>
-            <Link href={{pathname: "/reservation", query: products}}>Reserve</Link>
+            <Link href={{pathname: `/reservation/${restaurant.id}`}}>Reserve</Link>
             <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/browse")}}>Back</button>
 
         </div>
