@@ -103,7 +103,6 @@ const EditProfile = () => {
         .map((tag) => {
           return { value: tag };
         });
-      console.log(tagsToDelete, "tags to delte");
       return tagsToDelete;
     };
 

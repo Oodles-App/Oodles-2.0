@@ -2,6 +2,7 @@ import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
 import { BehaviorSubject } from "rxjs";
 import Router from "next/router";
+import { createAlert } from "../alerts/index";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
@@ -41,8 +42,12 @@ export const login = (email, password) => {
 
       dispatch(setUser(user));
     } catch (error) {
-      //if user tries to log in with invalid credentials user object with have a key 'error' with error message
-      dispatch(setUser({ error }));
+      dispatch(
+        createAlert({
+          message: error.message,
+          key: new Date().getTime(),
+        })
+      );
     }
   };
 };
@@ -53,9 +58,17 @@ export const postUser = (user) => {
       const { email, password } = user;
       const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
       dispatch(login(email, password));
+      dispatch(
+        createAlert({
+          message: "Registration successful.",
+          keepAfterRouteChange: true,
+        })
+      );
+      Router.push("/account/edit-profile");
     } catch (error) {
-      //if user tries to sign up with invalid credentials user object with have a key 'error' with error message
-      dispatch(setUser({ error }));
+      dispatch(
+        createAlert({ message: error.message, key: new Date().getTime() })
+      );
     }
   };
 };

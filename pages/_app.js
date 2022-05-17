@@ -1,8 +1,9 @@
-import { Alert } from "../components/Alert";
+// import { Alert } from "../components/Alert";
+import { Alerts } from "../components";
 import { wrapper, store, Persistor } from "../redux/store";
 import { Provider } from "react-redux";
 import "../styles/globals.css";
-import Layout from "../components/Layout"
+import Layout from "../components/Layout";
 import Head from "next/head";
 
 import { PersistGate } from "redux-persist/integration/react";
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }) {
             <link rel="icon" href="/utensilHeart.png" />
           </Head>
           <Layout>
-            <Alert />
+            <Alerts />
             <Component {...pageProps} />
           </Layout>
         </PersistGate>
