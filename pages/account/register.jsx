@@ -47,16 +47,12 @@ function Register() {
   /// TODO: move this API call (address autocomplete API) to redux/ a services file?
   // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
+    const fetchAddresses = async () => {
+      const result = await fetch(`${baseUrl}/address/${address}`);
+      console.log(result.data);
+    };
     if (address.length > 2) {
-      console.log(address, "address before call");
-      fetch(`${baseUrl}/address`, { body: { address: address }, method: "GET" })
-        .then((result) => {
-          console.log(result, "result");
-          // setAddressSuggestions(
-          //   result.features.map((location) => location.properties.formatted)
-          // );
-        })
-        .catch((err) => console.log(err));
+      fetchAddresses();
     }
   }, [address]);
 

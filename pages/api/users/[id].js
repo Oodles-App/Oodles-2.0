@@ -13,7 +13,6 @@ export default apiHandler({
 });
 
 async function getById(req, res) {
-  // try {
   const reqId = parseInt(req.query.id);
   const user = await prisma.user.findUnique({
     where: { id: reqId },
