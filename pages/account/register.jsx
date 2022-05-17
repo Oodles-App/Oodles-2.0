@@ -48,16 +48,33 @@ function Register() {
   // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
     if (address.length > 2) {
-      fetch(`${baseUrl}/address`, { address: address })
+      console.log(address, "address before call");
+      fetch(`${baseUrl}/address`, { body: { address: address }, method: "GET" })
         .then((result) => {
           console.log(result, "result");
-          setAddressSuggestions(
-            result.features.map((location) => location.properties.formatted)
-          );
+          // setAddressSuggestions(
+          //   result.features.map((location) => location.properties.formatted)
+          // );
         })
         .catch((err) => console.log(err));
     }
   }, [address]);
+
+  // useEffect(() => {
+  //   if (address.length > 2) {
+  //     fetch(
+  //       `https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=589d58eb199f4f898d2194bfad9ec7b5`,
+  //       { method: "GET" }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((result) => {
+  //         setAddressSuggestions(
+  //           result.features.map((location) => location.properties.formatted)
+  //         );
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [address]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));
