@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 200px;
   min-width: 0;
   width: 80%;
   word-wrap: break-word;
@@ -10,17 +11,27 @@
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  transition: height 0.7s ease-in-out;
+  overflow-y: hidden;
+}
+
+.card.expand {
+  height: 580px;
 }
 
 .card.login {
   margin: 0 auto;
+  height: auto;
 }
 
 .cardHeader {
   padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  align-items: center;
 }
 
 .cardBody {
@@ -90,11 +101,9 @@
   border-radius: 0;
   border: 2px solid black;
   margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
   cursor: pointer;
-  width: 200px;
+  width: 100px !important;
+  margin: 0 auto !important;
 }
 
 .button:focus {
@@ -112,7 +121,7 @@
   color: red;
 }
 
-.loginContainer {
+.cardContainer {
   height: calc(100vh - 86px);
   display: flex;
   flex-direction: column;
@@ -120,6 +129,11 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.registerContainer {
+  height: auto;
+  min-height: calc(100vh - 86px);
 }
 
 .loginButton {
@@ -138,4 +152,12 @@
 
 .registerLink a:hover {
   text-decoration: underline;
+}
+
+.centerVertical {
+  margin: auto 0;
+}
+
+.link {
+  height: 1rem;
 }

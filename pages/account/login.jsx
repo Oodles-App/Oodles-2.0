@@ -64,7 +64,7 @@ function Login() {
 
   return (
     <Layout>
-      <div className={styles.loginContainer}>
+      <div className={styles.cardContainer}>
         <div className={`${styles.card} ${styles.login}`}>
           <h4 className={styles.cardHeader}>Login</h4>
           <div className={styles.cardBody}>
