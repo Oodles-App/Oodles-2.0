@@ -14,43 +14,40 @@ export default apiHandler({
 });
 
 async function getById(req, res) {
-  try {
-    const reqId = parseInt(req.query.id);
-    const user = await prisma.user.findUnique({
-      where: { id: reqId },
-      select: {
-        id: true,
-        email: true,
-        businessName: true,
-        address: true,
-        contactNum: true,
-        biography: true,
-        imageUrl: true,
-        tags: true,
-      },
-    });
+  // try {
+  const reqId = parseInt(req.query.id);
+  const user = await prisma.user.findUnique({
+    where: { id: reqId },
+    select: {
+      id: true,
+      email: true,
+      businessName: true,
+      address: true,
+      contactNum: true,
+      biography: true,
+      imageUrl: true,
+      tags: true,
+    },
+  });
 
-    if (!user) throw 404;
-
-    return res.status(200).json(user);
-  } catch (error) {
-    //TODO: make an user-specific error generator function and call it in error catches (?)
-    if (error === 404) {
-      error = { status: 404, message: "User not found." };
-    } else if (error === 401) {
-      error = { status: 401, message: "Not authorized." };
-    } else {
-      console.log(error);
-      error = { ...error, status: 500, message: "Internal server error." };
-    }
-
-    res.status(error.status).send(error);
+  if (!user) {
+    throw { message: "User not found.", status: 404 };
   }
+
+  return res.status(200).json(user);
+  // } catch (error) {
+  //   if (error.status === 401) {
+  //     error.message = "Not authorized.";
+  //   } else if (error.status === 500) {
+  //     error.message = "Internal server error.";
+  //   }
+  //   console.log(error, "error");
+  //   res.status(error.status).send(error);
+  // }
 }
 
 async function update(req, res) {
   const reqId = parseInt(req.query.id);
-  const data = req.body;
 
   const user = await prisma.user.update({
     where: { id: reqId },
@@ -62,7 +59,12 @@ async function update(req, res) {
 
   //TODO: include validation?
 
-  if (!user) throw "Error updating"; //TODO: update error handling
+  if (!user) {
+    const error = new Error();
+    error.message = "User not found.";
+    error.status = 404;
+    throw error;
+  }
 
   return res.status(200).json(user);
 }

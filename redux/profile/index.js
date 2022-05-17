@@ -1,6 +1,8 @@
 import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
 
+import { createAlert } from "../alerts";
+
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
 
@@ -23,7 +25,7 @@ export const fetchEditProfile = (user) => {
     } catch (error) {
       console.error(error);
       dispatch(
-        setProfile({ error: { message: error.message, id: error.status } })
+        createAlert({ message: error.message, key: new Date().getTime() })
       );
     }
   };

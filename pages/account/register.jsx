@@ -59,26 +59,26 @@ function Register() {
     }
   }, [address]);
 
-  useEffect(() => {
-    if (user.id) {
-      dispatch(
-        createAlert("success", "Registered successfully.", {
-          id: "registration-success",
-          autoClose: 5000,
-          keepAfterRouteChange: true,
-        })
-      );
-      router.push("edit-profile"); //TODO: replace with edit profile path when component is created
-    } else if (user.error) {
-      dispatch(
-        createAlert("error", user.error, {
-          id: "registration-failed",
-          autoClose: false,
-          keepAfterRouteChange: false,
-        })
-      );
-    }
-  }, [user, router, dispatch]);
+  // useEffect(() => {
+  //   if (user.id) {
+  //     dispatch(
+  //       createAlert({
+  //         id: "registration-success",
+  //         autoClose: 5000,
+  //         keepAfterRouteChange: true,
+  //       })
+  //     );
+  //     router.push("edit-profile"); //TODO: replace with edit profile path when component is created
+  //   } else if (user.error) {
+  //     dispatch(
+  //       createAlert("error", user.error, {
+  //         id: "registration-failed",
+  //         autoClose: false,
+  //         keepAfterRouteChange: false,
+  //       })
+  //     );
+  //   }
+  // }, [user, router, dispatch]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));
