@@ -18,7 +18,6 @@ import { useEffect } from "react";
 
 import { TextField, Button } from "@mui/material";
 import styles from "../../styles/Register.module.css";
-import { removeListener } from "@reduxjs/toolkit";
 
 export default Login;
 
