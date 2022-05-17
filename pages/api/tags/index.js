@@ -5,7 +5,6 @@ import { apiHandler } from "../../../helpers/api";
 
 export default apiHandler({
   get: getTags,
-  post: createTag,
 });
 
 async function getTags(req, res) {
@@ -14,14 +13,5 @@ async function getTags(req, res) {
     res.status(200).json(allTags);
   } catch (error) {
     console.log(error); //TODO: error handling
-  }
-}
-
-async function createTag(req, res) {
-  try {
-    const newTag = await prisma.tag.create({ data: req.body });
-    res.status(201).json(newTag);
-  } catch (error) {
-    console.log(error);
   }
 }

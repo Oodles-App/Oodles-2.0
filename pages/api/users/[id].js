@@ -54,6 +54,9 @@ async function update(req, res) {
 
   const user = await prisma.user.update({
     where: { id: reqId },
+    include: {
+      tags: true,
+    },
     data: req.body,
   });
 

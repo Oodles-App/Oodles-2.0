@@ -1,10 +1,10 @@
 .card {
+  margin: 20px auto;
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   width: 80%;
-  margin: 0 auto;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
