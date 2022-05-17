@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { createAlert } from "../../redux/alerts";
@@ -10,33 +10,44 @@ function Layout({ children }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.id !== undefined);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     // redirect to home if logged in user tries to access login/register
-    if (
-      (router.pathname.includes("login") ||
-        router.pathname.includes("register")) &&
-      isLoggedIn
-    ) {
-      router.push("/");
-    }
-
-    //redirect to home and send alert if non-logged in user tries to access edit-profile
-    if (router.pathname === "/account/edit-profile") {
-      if (!isLoggedIn) {
+    if (["/account/register", "/account/login"].includes(router.pathname)) {
+      if (isLoggedIn) {
         dispatch(
-          createAlert("error", "Unauthorized.", {
-            id: "unauthorized-editProfile",
+          createAlert({
+            key: new Date().getTime(),
             autoClose: 3000,
+            message: "You are already logged in.",
             keepAfterRouteChange: true,
           })
         );
-        router.push("/");
+        const returnUrl = router.query.returnUrl || "/";
+        router.push(returnUrl);
+      } else if (!isLoggedIn) {
+        setLoading(false);
       }
     }
-
+    if (router.pathname === "/account/edit-profile") {
+      if (!isLoggedIn) {
+        dispatch(
+          createAlert({
+            key: new Date().getTime(),
+            autoClose: 3000,
+            message: "Please log in to view this page.",
+            keepAfterRouteChange: true,
+          })
+        );
+        const returnUrl = router.query.returnUrl || "/";
+        router.push(returnUrl);
+      } else if (isLoggedIn) {
+        setLoading(false);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div className="col-md-6 offset-md-3 mt-5">{children}</div>;
+  return <>{isLoading ? <div></div> : <div>{children}</div>}</>;
 }

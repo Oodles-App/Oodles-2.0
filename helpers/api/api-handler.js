@@ -15,7 +15,6 @@ export function apiHandler(handler) {
       // route handler
       await handler[method](req, res);
     } catch (err) {
-      // global error handler
       errorHandler(err, res);
     }
   };
