@@ -104,18 +104,6 @@ export default function Reservation ({productsList}) {
                 />
               ) : null}
           </div>
-        // <div>
-        // <div>Available Days:</div>
-        // {/* <DatePicker 
-        // // https://kiarash-z.github.io/react-modern-calendar-datepicker/docs/core-concepts
-        //   value={selectedDay} 
-        //   onChange={setSelectedDay}
-        //   inputPlaceholder="Select a day"
-        //   /> */}
-        //   <DatePicker value={selectedDay} onChange={setSelectedDay} />
-
-            
-        // </div>) 
         )}
         
       </div>
