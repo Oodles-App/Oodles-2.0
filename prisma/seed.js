@@ -17,6 +17,15 @@ async function createAdmin() {
   await prisma.user.create({ data: admin });
 }
 
+async function createTags() {
+  const dummyTags = [
+    { label: "Tag1", value: "1" },
+    { label: "Tag2", value: "2" },
+    { label: "Tag3", value: "3" },
+  ];
+  await Promise.all(dummyTags.map((tag) => prisma.tag.create({ data: tag })));
+}
+
 async function createArticles() {
   await prisma.Article.create({
     data: {
@@ -530,6 +539,7 @@ async function main() {
   await createArticles();
   await createRestaurants();
   await createAdmin();
+  await createTags();
 }
 
 main()

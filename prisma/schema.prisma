@@ -1,12 +1,10 @@
-// require ("dotenv")
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      =  env("DATABASE_URL")
 }
 
 model User {
@@ -28,14 +26,17 @@ model User {
   receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
   reservations      Reservation[]
+  tags              Tag[]
 }
 
-// model Tag {
-//   id      Int         @id @default(autoincrement())
-//   name    String      @unique
-//   products Product[]
-//   users User[]
-// }
+model Tag {
+  id      Int         @id @default(autoincrement())
+  name    String?     @unique
+  label   String      @unique      
+  value   String      @unique
+  products Product[]
+  users User[]
+}
 
 model Product {
   id      Int         @id @default(autoincrement())
@@ -44,6 +45,7 @@ model Product {
   name        String
   amount      Int
   measurement String
+  tags        Tag[]
 }
 
 enum Status {
