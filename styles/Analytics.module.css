@@ -1,0 +1,20 @@
+.chartLoadingWrapper,
+.chartWrapper {
+  height: calc(100vh - 86px);
+}
+
+.chartLoadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loadIconWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.chartWrapper {
+  height: calc(60vh);
+}
