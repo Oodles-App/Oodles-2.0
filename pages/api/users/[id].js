@@ -5,12 +5,11 @@ const prisma = new PrismaClient();
 
 const bcrypt = require("bcryptjs");
 
-import { apiHandler } from "../../../helpers/api";
+import { apiHandler, errorHandler } from "../../../helpers/api";
 
 export default apiHandler({
   get: getById,
   put: update,
-  // delete: _delete,
 });
 
 async function getById(req, res) {
@@ -35,15 +34,6 @@ async function getById(req, res) {
   }
 
   return res.status(200).json(user);
-  // } catch (error) {
-  //   if (error.status === 401) {
-  //     error.message = "Not authorized.";
-  //   } else if (error.status === 500) {
-  //     error.message = "Internal server error.";
-  //   }
-  //   console.log(error, "error");
-  //   res.status(error.status).send(error);
-  // }
 }
 
 async function update(req, res) {
@@ -57,19 +47,7 @@ async function update(req, res) {
     data: req.body,
   });
 
-  //TODO: include validation?
-
-  if (!user) {
-    const error = new Error();
-    error.message = "User not found.";
-    error.status = 404;
-    throw error;
-  }
+  if (!user) throw { message: "User not found.", status: 404 };
 
   return res.status(200).json(user);
-}
-
-function _delete(req, res) {
-  usersRepo.delete(req.query.id);
-  return res.status(200).json({});
 }

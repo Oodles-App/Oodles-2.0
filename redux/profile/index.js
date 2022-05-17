@@ -24,9 +24,7 @@ export const fetchEditProfile = (user) => {
       dispatch(setProfile(profile));
     } catch (error) {
       console.error(error);
-      dispatch(
-        createAlert({ message: error.message, key: new Date().getTime() })
-      );
+      dispatch(createAlert({ message: error.message }));
     }
   };
 };
@@ -41,7 +39,8 @@ export const updateUser = (user, newProfile) => {
       );
       dispatch(setProfile(updatedUser));
     } catch (error) {
-      console.log(error); //TODO: replace with better error handling
+      console.log(error);
+      dispatch(createAlert({ message: error.message }));
     }
   };
 };

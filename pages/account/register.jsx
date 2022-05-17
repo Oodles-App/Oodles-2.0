@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import getConfig from "next/config";
+
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -11,7 +13,6 @@ import { Spinner } from "../../components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/user";
-import { createAlert } from "../../redux/alerts";
 import { ImCancelCircle } from "react-icons/im";
 
 import {
@@ -31,6 +32,8 @@ function Register() {
   const router = useRouter();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { publicRuntimeConfig } = getConfig();
+  const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
   const formOptions = { resolver: yupResolver(userRegistrationSchema) };
 
@@ -45,12 +48,9 @@ function Register() {
   // TODO: render some sort of loading text or animation while data is fetching from API
   useEffect(() => {
     if (address.length > 2) {
-      fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${address}&apiKey=589d58eb199f4f898d2194bfad9ec7b5`,
-        { method: "GET" }
-      )
-        .then((res) => res.json())
+      fetch(`${baseUrl}/address`, { address: address })
         .then((result) => {
+          console.log(result, "result");
           setAddressSuggestions(
             result.features.map((location) => location.properties.formatted)
           );
@@ -58,27 +58,6 @@ function Register() {
         .catch((err) => console.log(err));
     }
   }, [address]);
-
-  // useEffect(() => {
-  //   if (user.id) {
-  //     dispatch(
-  //       createAlert({
-  //         id: "registration-success",
-  //         autoClose: 5000,
-  //         keepAfterRouteChange: true,
-  //       })
-  //     );
-  //     router.push("edit-profile"); //TODO: replace with edit profile path when component is created
-  //   } else if (user.error) {
-  //     dispatch(
-  //       createAlert("error", user.error, {
-  //         id: "registration-failed",
-  //         autoClose: false,
-  //         keepAfterRouteChange: false,
-  //       })
-  //     );
-  //   }
-  // }, [user, router, dispatch]);
 
   const onSubmit = (user) => {
     dispatch(postUser({ ...user, businessType, address }));

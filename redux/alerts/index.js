@@ -20,6 +20,7 @@ export const setAlerts = (alerts) => {
 };
 
 export const createAlert = (alert) => {
+  alert.key = new Date().getTime(); // ensures unique key for each alert
   alert.autoClose = alert.autoClose === undefined ? 5000 : alert.autoClose;
   alert.keepAfterRouteChange =
     alert.keepAfterRouteChange === undefined
@@ -35,13 +36,7 @@ export const createAlert = (alert) => {
 export default function alertsReducer(alerts = [], action) {
   switch (action.type) {
     case ADD_ALERT:
-      const existingMessages = alerts.map((alert) => alert.message);
-      if (existingMessages.includes(action.alert.message)) {
-        return alerts;
-      }
       return [...alerts, action.alert];
-    case REMOVE_ALERT:
-      return alerts.filter((alert) => alert.id !== action.id);
     case SET_ALERTS:
       return action.alerts;
     default:

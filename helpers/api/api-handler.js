@@ -15,7 +15,6 @@ export function apiHandler(handler) {
       // route handler
       await handler[method](req, res);
     } catch (err) {
-      console.log("about to call errorHandler inside api handler: ", err);
       errorHandler(err, res);
     }
   };

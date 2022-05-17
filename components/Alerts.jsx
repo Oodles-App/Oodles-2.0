@@ -16,8 +16,6 @@ const Alerts = () => {
   const [alertMessage, setAlertMessage] = useState(undefined);
   const dispatch = useDispatch();
 
-  console.log(alertMessage, "alert message");
-
   useEffect(() => {
     if (alerts.length && !alertMessage) {
       setAlertMessage({ ...alerts[0] });
@@ -49,7 +47,6 @@ const Alerts = () => {
   };
 
   const handleExited = () => {
-    console.log("handling exit");
     setAlertMessage(undefined);
   };
 
