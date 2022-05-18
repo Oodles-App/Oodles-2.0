@@ -2,8 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Taucharts from "taucharts";
 import styles from "../../styles/Analytics.module.css";
+import "taucharts/dist/plugins/tooltip";
 
-var defData = [
+const defData = [
   { team: "d", cycleTime: 1, effort: 1, count: 1, priority: "low" },
   {
     team: "d",
@@ -54,28 +55,30 @@ var defData = [
   },
 ];
 
+const chart = new Taucharts.Chart({
+  guide: {
+    x: { label: "Cycle Time in days" },
+    y: { label: "Effort in points" },
+    padding: { b: 40, l: 40, t: 10, r: 10 },
+    color: {
+      brewer: ["#B22222", "#228B22", "#1E90FF"],
+    },
+  },
+  data: defData,
+  type: "scatterplot",
+  x: "cycleTime",
+  y: "effort",
+  color: "team",
+  size: "count",
+  settings: {
+    fitModel: "normal",
+  },
+  plugins: [Taucharts.api.plugins.get("tooltip")()],
+});
+
 const TestChart = () => {
   const [loading, setLoading] = useState(true);
   const domRef = useRef();
-  const chart = new Taucharts.Chart({
-    guide: {
-      x: { label: "Cycle Time in days" },
-      y: { label: "Effort in points" },
-      padding: { b: 40, l: 40, t: 10, r: 10 },
-      color: {
-        brewer: ["color-red", "color-green", "color-blue"],
-      },
-    },
-    data: defData,
-    type: "scatterplot",
-    x: "cycleTime",
-    y: "effort",
-    color: "team",
-    size: "count",
-    settings: {
-      fitModel: "entire-view",
-    },
-  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {

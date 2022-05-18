@@ -17,4 +17,11 @@
 
 .chartWrapper {
   height: calc(60vh);
+  margin: 10px;
+  min-width: 300px;
+}
+
+.chartOptions {
+  display: flex;
+  justify-content: center;
 }

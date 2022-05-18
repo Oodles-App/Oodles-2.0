@@ -2,6 +2,7 @@
 import { Alerts } from "../components";
 import { wrapper, store, Persistor } from "../redux/store";
 import { Provider } from "react-redux";
+import * as d3 from "d3";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 import Head from "next/head";
