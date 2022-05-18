@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import prisma from "../../db";
+import { useSelector } from "react-redux";
 
 const Map = dynamic(() => import("../../components/map"), { ssr: false });
 
