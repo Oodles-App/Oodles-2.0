@@ -6,13 +6,14 @@ import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
 import { fetchEditProfile } from "../../redux/profile";
 import { TextField, TextareaAutosize } from "@mui/material";
+import ChartLoading from "../../components/analytics/ChartLoading";
 
 // import Image from "next/image"; // => TODO: figure out optimization for using Next Image
 import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
 
-//TODO: validation and error handling
+//TODO: validation and error handling => don't toggle submit unless update was successful
 //TODO: address auto complete?
 //TODO (stretch): allow users to upload image instead of using url?
 
@@ -35,12 +36,17 @@ const EditProfile = () => {
 
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [newChanges, setNewChanges] = useState(false);
+  const alerts = useSelector((state) => state.alerts);
   const allTags = useSelector((state) => state.tags);
 
+  console.log(newChanges, "new changes");
   useEffect(() => {
-    if (!allTags.length) {
-      dispatch(fetchTags(user));
+    if (!user.token) {
+      setLoading(true);
+
+      setTimeout(() => setLoading(false), 2000);
     }
     if (!newChanges) {
       setNewChanges(true);
@@ -49,20 +55,18 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (user.id) {
+      if (!allTags.length) {
+        dispatch(fetchTags(user));
+        if (!newChanges) {
+          setNewChanges(true);
+        }
+      }
       dispatch(fetchEditProfile(user));
+      setLoading(false);
     }
   }, [user, dispatch]);
 
   useEffect(() => {
-    if (profile.error) {
-      dispatch(
-        createAlert("error", profile.error.message, {
-          id: profile.error.id,
-          keepAfterRouteChange: true,
-          autoClose: 3000,
-        })
-      );
-    }
     if (profile.businessName && newChanges) {
       setFormContent({
         businessName: profile.businessName,
@@ -113,8 +117,14 @@ const EditProfile = () => {
         tags: { connect: connectTags, disconnect: deleteTags() },
       })
     );
-    setNewChanges(false);
+    if (!alerts.length) {
+      setNewChanges(false);
+    }
   };
+
+  if (loading) {
+    return <ChartLoading />;
+  }
 
   return (
     <Layout>

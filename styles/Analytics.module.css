@@ -1,0 +1,36 @@
+.analyticsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.chartLoadingWrapper,
+.chartWrapper {
+  height: calc(100vh - 86px);
+}
+
+.chartLoadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loadIconWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.chartWrapper {
+  height: calc(60vh);
+  margin: auto 10px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 900px;
+}
+
+.chartOptions {
+  display: flex;
+  justify-content: center;
+}
