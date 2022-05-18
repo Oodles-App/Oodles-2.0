@@ -1,9 +1,7 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+import prisma from "../../../db";
+import { apiHandler } from "../../../helpers/api";
 
 const bcrypt = require("bcryptjs");
-
-import { apiHandler } from "../../../helpers/api";
 
 export default apiHandler({
   post: register,

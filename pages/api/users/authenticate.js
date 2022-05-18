@@ -1,8 +1,6 @@
 import getConfig from "next/config";
 import { apiHandler } from "../../../helpers/api";
-
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+import prisma from "../../../db";
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

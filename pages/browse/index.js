@@ -1,21 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react'
-import dynamic from "next/dynamic"
-import Link from 'next/link'
-import { useSelector } from "react-redux";
+import React, { useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import prisma from "../../db";
 
-import {PrismaClient} from '@prisma/client'
-const prisma = new PrismaClient();
-
-
-const Map = dynamic(() => import ("../../components/map"), {ssr:false})
+const Map = dynamic(() => import("../../components/map"), { ssr: false });
 
 export async function getStaticProps() {
   const restaurants = await prisma.user.findMany({
     where: {
       businessType: {
-        equals: 'RESTAURANT'
-      }
-    }
+        equals: "RESTAURANT",
+      },
+    },
   });
   const organizations = await prisma.user.findMany({
     where:{ 
@@ -43,13 +39,16 @@ function Browse({initialRestaurants, initialOrganizations}) {
 
 
   function searchRestaurant(value) {
-    if(value !== "") {
+    if (value !== "") {
       const filteredRestaurants = restaurants.filter((restaurant) => {
-        return Object.values(restaurant).join('').toLowerCase().includes(value.toLowerCase())
-      })
-      setFilteredResults(filteredRestaurants)
+        return Object.values(restaurant)
+          .join("")
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      });
+      setFilteredResults(filteredRestaurants);
     } else {
-      setFilteredResults(restaurants)
+      setFilteredResults(restaurants);
     }
   }
   function handleChange(e) {
@@ -132,11 +131,17 @@ function Browse({initialRestaurants, initialOrganizations}) {
 
 function filterRestaurants(filteredResults) {
   const filter = filteredResults.map((restaurant) => (
-    <Link href="/browse/restaurants/[id]" as={`/browse/restaurants/${restaurant.id}`}key={restaurant.id} restaurant={restaurant.id} state={{restaurant:restaurant}}>
-    <p key={restaurant.id}>{restaurant.businessName}</p>
-    </Link> 
-  ))
-  return filter
+    <Link
+      href="/browse/restaurants/[id]"
+      as={`/browse/restaurants/${restaurant.id}`}
+      key={restaurant.id}
+      restaurant={restaurant.id}
+      state={{ restaurant: restaurant }}
+    >
+      <p key={restaurant.id}>{restaurant.businessName}</p>
+    </Link>
+  ));
+  return filter;
 }
 
-export default React.memo(Browse)
+export default React.memo(Browse);

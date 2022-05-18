@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../db";
 import Image from "next/image";
 import Link from "next/link";
-const prisma = new PrismaClient();
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export const getServerSideProps = async({params}) => {
         const restaurant = await prisma.user.findUnique({
