@@ -13,7 +13,7 @@ import styles from "../../styles/EditProfile.module.css";
 import { updateUser } from "../../redux/profile";
 import { fetchTags } from "../../redux/tags";
 
-//TODO: validation and error handling
+//TODO: validation and error handling => don't toggle submit unless update was successful
 //TODO: address auto complete?
 //TODO (stretch): allow users to upload image instead of using url?
 
@@ -38,39 +38,35 @@ const EditProfile = () => {
   const [orgTags, setOrgTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newChanges, setNewChanges] = useState(false);
+  const alerts = useSelector((state) => state.alerts);
   const allTags = useSelector((state) => state.tags);
 
+  console.log(newChanges, "new changes");
   useEffect(() => {
     if (!user.token) {
       setLoading(true);
 
       setTimeout(() => setLoading(false), 2000);
     }
-    if (!allTags.length && user.token) {
-      setLoading(false);
-      dispatch(fetchTags(user));
-      if (!newChanges) {
-        setNewChanges(true);
-      }
+    if (!newChanges) {
+      setNewChanges(true);
     }
-  }, [formContent, orgTags, user]);
+  }, [formContent, orgTags]);
 
   useEffect(() => {
     if (user.id) {
+      if (!allTags.length) {
+        dispatch(fetchTags(user));
+        if (!newChanges) {
+          setNewChanges(true);
+        }
+      }
       dispatch(fetchEditProfile(user));
+      setLoading(false);
     }
   }, [user, dispatch]);
 
   useEffect(() => {
-    if (profile.error) {
-      dispatch(
-        createAlert("error", profile.error.message, {
-          id: profile.error.id,
-          keepAfterRouteChange: true,
-          autoClose: 3000,
-        })
-      );
-    }
     if (profile.businessName && newChanges) {
       setFormContent({
         businessName: profile.businessName,
@@ -121,7 +117,9 @@ const EditProfile = () => {
         tags: { connect: connectTags, disconnect: deleteTags() },
       })
     );
-    setNewChanges(false);
+    if (!alerts.length) {
+      setNewChanges(false);
+    }
   };
 
   if (loading) {
