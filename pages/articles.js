@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
+import Image from 'next/image';
 
 export async function getStaticProps() {
     const articles = await prisma.article.findMany();
@@ -24,6 +25,7 @@ const Articles = ({initialArticles}) => {
                 <div className="search-container">
                     <form action="/action_page.php">
                     <input id="search" type="text" placeholder="Search by Title" name="search" onChange={e => setSearch(e.target.value)} />
+                    <br></br>
                     <ul>
                         {articles.filter(article => article.title.toLowerCase().includes(search.toLowerCase()))
                         .map((article) => (
