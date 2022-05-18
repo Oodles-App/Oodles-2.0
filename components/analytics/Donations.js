@@ -62,9 +62,6 @@ const config = {
   type: "bar",
   x: "day",
   y: "donations",
-  size: "donations",
-  //   color: "team",
-  //   size: "count",
   settings: {
     fitModel: "normal",
     animationSpeed: 1000,
@@ -80,9 +77,7 @@ const Donations = () => {
   const domRef = useRef();
 
   useEffect(() => {
-    console.log(time, "time");
     const data = time === "day" ? dummyDataWeek : dummyDataMonths;
-    console.log(data, "data");
     chart.updateConfig({
       guide: {
         x: { label: `Time (Mo.)` },
@@ -93,9 +88,6 @@ const Donations = () => {
       type: "bar",
       x: time,
       y: "donations",
-      size: "donations",
-      //   color: "team",
-      //   size: "count",
       settings: {
         fitModel: "normal",
         animationSpeed: 1000,
@@ -123,7 +115,7 @@ const Donations = () => {
   };
 
   return (
-    <div>
+    <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
       <div className={styles.chartOptions}>
         <ToggleButtonGroup
