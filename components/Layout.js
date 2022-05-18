@@ -114,9 +114,6 @@ export default function Layout({ children }) {
                     <a onClick={() => setOpen(false)} className={styles.navlink}>Analytics</a>
                   </Link>
               </li>
-
-                </li>
-
               </>
             )}
           </ul>
