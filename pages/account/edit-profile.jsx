@@ -41,7 +41,6 @@ const EditProfile = () => {
   const alerts = useSelector((state) => state.alerts);
   const allTags = useSelector((state) => state.tags);
 
-  console.log(newChanges, "new changes");
   useEffect(() => {
     if (!user.token) {
       setLoading(true);
