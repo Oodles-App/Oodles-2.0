@@ -4,54 +4,54 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://macbook:123noodles@localhost:5432/oodlesv2"
-}
-
-enum Business {
-  ORGANIZATION
-  RESTAURANT
+  url      =  env("DATABASE_URL")
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   email     String   @unique
+  hash      String
   businessName  String  @unique
-  username  String
+  username  String?
   address   String
+  lat       Float?
+  lng       Float?
   contactNum  String
-  biography String
-  businessType Business 
-  imageUrl  String
-  is501c3 Boolean @default(false)
-  tags Tag[]
+  biography String?
+  businessType String
+  imageUrl  String?
+  is501c3 Boolean? @default(false)
   sentMessages      Message[]  @relation("sentMessages")
-  receivedMessages  Message[]  @relation("receivedMessages") 
+  receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
   reservations      Reservation[]
+  tags              Tag[]
 }
 
 model Tag {
   id      Int         @id @default(autoincrement())
-  name    String      @unique
+  name    String?     @unique
+  label   String      @unique      
+  value   String      @unique
   products Product[]
   users User[]
 }
 
 model Product {
   id      Int         @id @default(autoincrement())
-	imageUrl		String
-	user			  User    @relation(fields:[userId], references:[id])
-  userId      Int
+	user			  User?    @relation(fields:[userId], references:[id])
+  userId      Int?
   name        String
-  description String
+  amount      Int
+  measurement String
   tags        Tag[]
 }
 
 enum Status {
   ACTIVE
   PENDING
-  CONFIRM 
+  CONFIRM
   COMPLETED
 }
 
@@ -75,7 +75,7 @@ model Message {
 }
 
 model Article {
-  id      Int  
+  id      Int  @id @default(autoincrement())
   title   String
   author  String
   url     String

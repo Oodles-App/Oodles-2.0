@@ -1,11 +1,11 @@
-import {PrismaClient} from '@prisma/client'
 import { useState } from 'react';
+import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 
 export async function getStaticProps() {
     const articles = await prisma.article.findMany();
     return {
-        props:{ 
+        props: { 
             initialArticles: articles
         }
     }
@@ -32,7 +32,7 @@ const Articles = ({initialArticles}) => {
                             <h4  onClick={() => newTab(article.url)}>{article.title}</h4> 
                            
                             <p>by {article.author}</p>
-                            </li>
+                        </li>
                         ))
                     }
                     </ul>
