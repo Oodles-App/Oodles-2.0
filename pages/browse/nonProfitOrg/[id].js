@@ -4,7 +4,6 @@ import Link from "next/link";
 const prisma = new PrismaClient();
 import { useState } from "react";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 
 export const getServerSideProps = async ({ params }) => {
   const organization = await prisma.user.findUnique({
