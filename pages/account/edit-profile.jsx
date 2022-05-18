@@ -6,6 +6,7 @@ import { Layout } from "../../components/account";
 import { createAlert } from "../../redux/alerts";
 import { fetchEditProfile } from "../../redux/profile";
 import { TextField, TextareaAutosize } from "@mui/material";
+import ChartLoading from "../../components/analytics/ChartLoading";
 
 // import Image from "next/image"; // => TODO: figure out optimization for using Next Image
 import styles from "../../styles/EditProfile.module.css";
@@ -35,17 +36,24 @@ const EditProfile = () => {
 
   const [formContent, setFormContent] = useState(initialForm);
   const [orgTags, setOrgTags] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [newChanges, setNewChanges] = useState(false);
   const allTags = useSelector((state) => state.tags);
 
   useEffect(() => {
-    if (!allTags.length) {
+    if (!user.token) {
+      setLoading(true);
+
+      setTimeout(() => setLoading(false), 2000);
+    }
+    if (!allTags.length && user.token) {
+      setLoading(false);
       dispatch(fetchTags(user));
+      if (!newChanges) {
+        setNewChanges(true);
+      }
     }
-    if (!newChanges) {
-      setNewChanges(true);
-    }
-  }, [formContent, orgTags]);
+  }, [formContent, orgTags, user]);
 
   useEffect(() => {
     if (user.id) {
@@ -115,6 +123,10 @@ const EditProfile = () => {
     );
     setNewChanges(false);
   };
+
+  if (loading) {
+    return <ChartLoading />;
+  }
 
   return (
     <Layout>
