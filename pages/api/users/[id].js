@@ -1,11 +1,7 @@
-//TODO: minimize PrismaClient creations (use redux, pass-down and/or export/import?)
-// (prisma doesn't seem to like a bunch of clients running at once)
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+import prisma from "../../../db";
+import { apiHandler, errorHandler } from "../../../helpers/api";
 
 const bcrypt = require("bcryptjs");
-
-import { apiHandler, errorHandler } from "../../../helpers/api";
 
 export default apiHandler({
   get: getById,

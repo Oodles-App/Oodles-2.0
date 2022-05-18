@@ -1,4 +1,4 @@
-import { prisma } from "./db";
+import prisma from "../../../db";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
