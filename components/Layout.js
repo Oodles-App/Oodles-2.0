@@ -36,7 +36,7 @@ export default function Layout({children}) {
                 :
               <>
               <li className={styles.navitem}>
-                  <Link href='/home'>
+                  <Link href='/'>
                     <a onClick={() => setOpen(false)} className={styles.navlink}>Home</a>
                   </Link>
               </li>
@@ -54,6 +54,16 @@ export default function Layout({children}) {
               <li className={styles.navitem}>
                   <Link href='/addProduct'>
                     <a onClick={() => setOpen(false)} className={styles.navlink}>Add Product</a>
+                  </Link>
+              </li>
+              <li className={styles.navitem}>
+                  <Link href='/account/edit-profile'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>Edit Profile</a>
+                  </Link>
+              </li>
+              <li className={styles.navitem}>
+                  <Link href='/account/analytics'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>Analytics</a>
                   </Link>
               </li>
               </>
