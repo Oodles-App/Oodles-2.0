@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 import DatePicker from 'sassy-datepicker';
 import { useSelector } from "react-redux";
+import { useRouter } from 'next/router';
+
 
 // export default async function makeReservation(req, res) {
 //   const prisma = new PrismaClient({log: ["query"]})
@@ -50,6 +52,7 @@ export default function Reservation ({productsList}) {
   const [cart, setCart] = useState({})
   const [value, setValue] = useState(0)
   const user = useSelector((state) => state.user); 
+  const router = useRouter();
   
   const togglePicker = () => setVisible((v) => !v);
   const handleDateSelect = (newDate) => {
@@ -151,9 +154,11 @@ export default function Reservation ({productsList}) {
                 ) : null}
             </div>
           )}
-        <button type="submit" disabled={cart.length === 0}>
+          <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation/submitted")}}>Reserve</button>
+
+        {/* <button type="submit" disabled={cart.length === 0}>
           Reserve
-        </button>
+        </button> */}
         </div>
         </form>
       </div>
