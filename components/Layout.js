@@ -52,14 +52,11 @@ export default function Layout({ children }) {
               </>
             ) : (
               <>
-                <li className={styles.navitem}>
-                  <Link href="/home">
-                    <a
-                      onClick={() => setOpen(false)}
-                      className={styles.navlink}
-                    >
-                      Home
-                    </a>
+
+              <li className={styles.navitem}>
+                  <Link href='/'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>Home</a>
+
                   </Link>
                 </li>
 
@@ -105,7 +102,18 @@ export default function Layout({ children }) {
                       Logout
                     </a>
                   </Link>
-                </li>
+              </li>
+
+              <li className={styles.navitem}>
+                  <Link href='/account/edit-profile'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>Edit Profile</a>
+                  </Link>
+              </li>
+              <li className={styles.navitem}>
+                  <Link href='/account/analytics'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>Analytics</a>
+                  </Link>
+              </li>
               </>
             )}
           </ul>
