@@ -27,8 +27,11 @@ const Articles = ({initialArticles}) => {
                     <ul>
                         {articles.filter(article => article.title.toLowerCase().includes(search.toLowerCase()))
                         .map((article) => (
-                            <li key={article.id}>
-                                <h3 onClick={() => newTab(article.url)}>{article.title} by {article.author}</h3>
+                            <li key={article.id} style={{padding:"10px", textAlign: "center", border: "1px solid black"}}>
+                            {/* <Image src="/default-placeholder.png" width="20px" height="20px" alt="Article picture"/> */}
+                            <h4  onClick={() => newTab(article.url)}>{article.title}</h4> 
+                           
+                            <p>by {article.author}</p>
                             </li>
                         ))
                     }
