@@ -191,7 +191,7 @@ function Register() {
                       }}
                       required
                       value={address}
-                      autoComplete="new-password"
+                      autoComplete="one-time-code"
                       disabled={businessType === ""}
                     />
                   )}

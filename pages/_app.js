@@ -2,9 +2,12 @@
 import { Alerts } from "../components";
 import { wrapper, store, Persistor } from "../redux/store";
 import { Provider } from "react-redux";
+import * as d3 from "d3";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 import Head from "next/head";
+import ErrorBoundary from "../components/ErrorBoundary";
+import Script from "next/script";
 
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -23,8 +26,25 @@ function MyApp({ Component, pageProps }) {
           </Head>
           <Layout>
             <Alerts />
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           </Layout>
+          <Script
+            src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"
+            charset="utf-8"
+            defer
+            crossOrigin=""
+          />
+          <Script
+            src="https://cdn.jsdelivr.net/npm/taucharts@2/dist/taucharts.min.js"
+            type="text/javascript"
+            defer
+            // onLoad={() => {
+            //   setTaucharts({ taucharts: window.Taucharts("pk_test_12345") });
+            // }}
+            crossOrigin=""
+          />
         </PersistGate>
       </Provider>
     </>

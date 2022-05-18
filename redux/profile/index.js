@@ -39,7 +39,7 @@ export const updateUser = (user, newProfile) => {
       );
       dispatch(setProfile(updatedUser));
     } catch (error) {
-      console.log(error);
+      error;
       dispatch(createAlert({ message: error.message }));
     }
   };
