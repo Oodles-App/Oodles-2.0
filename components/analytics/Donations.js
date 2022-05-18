@@ -52,7 +52,7 @@ const dummyDataWeek = [
   },
 ];
 
-const chart = new Taucharts.Chart({
+const config = {
   guide: {
     x: { label: `Time (Mo.)` },
     y: { label: "Effort in points" },
@@ -70,12 +70,39 @@ const chart = new Taucharts.Chart({
     animationSpeed: 1000,
   },
   plugins: [Taucharts.api.plugins.get("tooltip")()],
-});
+};
 
-const Donations = ({ time }) => {
+const chart = new Taucharts.Chart(config);
+
+const Donations = () => {
   const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState("day");
   const domRef = useRef();
-  console.log(loading, "loading");
+
+  useEffect(() => {
+    console.log(time, "time");
+    const data = time === "day" ? dummyDataWeek : dummyDataMonths;
+    console.log(data, "data");
+    chart.updateConfig({
+      guide: {
+        x: { label: `Time (Mo.)` },
+        y: { label: "Effort in points" },
+        padding: { b: 40, l: 40, t: 10, r: 10 },
+      },
+      data: data,
+      type: "bar",
+      x: time,
+      y: "donations",
+      size: "donations",
+      //   color: "team",
+      //   size: "count",
+      settings: {
+        fitModel: "normal",
+        animationSpeed: 1000,
+      },
+      plugins: [Taucharts.api.plugins.get("tooltip")()],
+    });
+  }, [time]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -89,13 +116,19 @@ const Donations = ({ time }) => {
     }
   }, [loading]);
 
+  const handleChange = (e, selection) => {
+    if (selection) {
+      setTime(selection);
+    }
+  };
+
   return (
     <div>
       <div className={styles.chartWrapper} ref={domRef}></div>
       <div className={styles.chartOptions}>
         <ToggleButtonGroup
           value={time}
-          onChange={(e, time) => setTime(time)}
+          onChange={handleChange}
           exclusive
           size="small"
         >
