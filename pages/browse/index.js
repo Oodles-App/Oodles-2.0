@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import prisma from "../../db";
+import styles from "../../styles/Browse.module.css";
 
 const Map = dynamic(() => import("../../components/map"), { ssr: false });
 
@@ -69,7 +70,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   }
 
   return (
-    <div>
+    <div className={styles.center}>
       <br></br>
       <div className="Browse">
         <h1 style={{ textAlign: "center" }}>Browse</h1>
@@ -114,7 +115,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
           <div>
           {toggleMap ? <div><Map restaurants={restaurants}></Map> </div>
           : <div>
-            <input id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={(e)=>searchRestaurant(e.target.value)} />
+            <input className={styles.roundedInput} id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={(e)=>searchRestaurant(e.target.value)} />
             <div>
               <br></br>
               {filterRestaurants(filteredResults)}
@@ -155,6 +156,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
 
 function filterRestaurants(filteredResults) {
   const filter = filteredResults.map((restaurant) => (
+    <div key={restaurant.id} className={styles.cardItem}>
     <Link
       href="/browse/restaurants/[id]"
       as={`/browse/restaurants/${restaurant.id}`}
@@ -164,12 +166,14 @@ function filterRestaurants(filteredResults) {
     >
       <p key={restaurant.id}>{restaurant.businessName}</p>
     </Link>
+    </div>
   ));
   return filter;
 }
 
 function filterOrganizations(filteredOrganizations) {
   const filter = filteredOrganizations.map((organization) => (
+    <div key={organization.id} className={styles.cardItem}>
     <Link
       href="/browse/nonProfitOrg/[id]"
       as={`/browse/nonProfitOrg/${organization.id}`}
@@ -178,6 +182,7 @@ function filterOrganizations(filteredOrganizations) {
     >
       <p key={organization.id}>{organization.businessName}</p>
     </Link>
+    </div>
   ));
   return filter;
 }

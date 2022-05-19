@@ -1,0 +1,23 @@
+.center {
+  margin: auto;
+  width: 55%;
+  padding: 10px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.children {
+  padding: 15px;
+  width: 100%;
+  margin: 10px 0;
+
+}
+
+
+
+
