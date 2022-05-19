@@ -49,6 +49,8 @@ const Restaurant = ({ restaurantInfo }) => {
         Back
       </button>
       <div></div>
+      <Link href={{pathname: `/reservation/${restaurant.id}`}} style={{border:"1px solid black"}}>Reserve</Link>
+
       <button
         type="button"
         style={{ border: "1px solid black" }}
