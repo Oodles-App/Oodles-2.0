@@ -214,7 +214,8 @@ const EditProfile = () => {
             onChange={handleFormChange}
           />
         </div>
-        {user.businessType === "ORGANIZATION" && (
+        {(user.businessType === "ORGANIZATION" ||
+          user.businessType === "organization") && (
           <div className={styles.formGroup}>
             <label htmlFor="tags">What are your most-needed items? (6)</label>
             <Select
