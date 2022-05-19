@@ -1,6 +1,8 @@
-import prisma from "../db";
+const { PrismaClient } = require("@prisma/client");
+let prisma = new PrismaClient();
 
 const bcrypt = require("bcryptjs");
+const tags = require("./data/tags");
 
 async function createAdmin() {
   const admin = {
@@ -8,7 +10,7 @@ async function createAdmin() {
     businessName: "Oodles",
     contactNum: "1118675309",
     address: "2202 Oodles Street, New York, NY",
-    businessType: "ORGANIZATION",
+    businessType: "organization",
   };
 
   const password = "oodles2202";

@@ -30,12 +30,12 @@ model User {
 }
 
 model Tag {
-  id      Int         @id @default(autoincrement())
-  label   String      @unique      
-  value   String      @unique
-  type    String
-  products Product[]
-  users User[]
+  id        Int         @id @default(autoincrement())
+  label     String      @unique      
+  value     String      @unique
+  category  String
+  products  Product[]
+  users     User[]
 }
 
 model Product {
