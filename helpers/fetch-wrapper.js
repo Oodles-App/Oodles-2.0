@@ -18,6 +18,7 @@ function get(url, auth) {
 }
 
 function post(url, body, auth) {
+  console.log(body, "body before fetch");
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json", ...authHeader(url, auth) },

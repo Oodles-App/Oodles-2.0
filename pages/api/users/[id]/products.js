@@ -5,8 +5,8 @@ export default apiHandler({
   get: getProductsByUser,
 });
 
-const getProductsByUser = async (req, res) => {
-  const userId = req.query.id;
+async function getProductsByUser(req, res) {
+  const reqId = parseInt(req.query.id);
   const userProducts = await prisma.user.findUnique({
     where: { id: reqId },
     select: {
@@ -17,5 +17,6 @@ const getProductsByUser = async (req, res) => {
   if (!userProducts) {
     throw { message: "User not found.", status: 404 };
   }
-  return res.status(200).json(userProducts);
-};
+  console.log(userProducts, "userProducts in APi");
+  return res.status(200).json(userProducts.products);
+}

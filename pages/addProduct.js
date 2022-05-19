@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { postProduct } from "../redux/userProducts";
 
 import ManageProducts from "../components/products/ManageProducts";
 
 export default function AddProduct() {
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors, reset } = useForm();
   const user = useSelector((state) => state.user);
   const [amount, setAmount] = useState(0);
@@ -14,21 +17,28 @@ export default function AddProduct() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    try {
-      fetch("./api/products/addProduct", {
-        body: JSON.stringify({
-          product: {
-            amount: amount,
-            measurement: measurement,
-            name: product,
-            userId: user.id,
-          },
-        }),
-        method: "POST",
-      });
-    } catch (error) {
-      console.log("error in creating new product", error);
-    }
+    const newProduct = {
+      amount: amount,
+      measurement: measurement,
+      name: product,
+      userId: user.id,
+    };
+    dispatch(postProduct(newProduct, user));
+    // try {
+    //   fetch("./api/products/addProduct", {
+    //     body: JSON.stringify({
+    //       product: {
+    //         amount: amount,
+    //         measurement: measurement,
+    //         name: product,
+    //         userId: user.id,
+    //       },
+    //     }),
+    //     method: "POST",
+    //   });
+    // } catch (error) {
+    //   console.log("error in creating new product", error);
+    // }
   };
 
   return (

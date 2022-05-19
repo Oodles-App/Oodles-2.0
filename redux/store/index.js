@@ -12,7 +12,7 @@ import userReducer from "../user";
 import alertsReducer from "../alerts";
 import profileReducer from "../profile";
 import tagsReducer from "../tags";
-import productsReducer from "../products";
+import userProductsReducer from "../userProducts";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   alerts: alertsReducer,
   profile: profileReducer,
   tags: tagsReducer,
-  products: productsReducer,
+  userProducts: userProductsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
