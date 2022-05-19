@@ -15,7 +15,7 @@ async function removeById(req, res) {
   await prisma.product.delete({
     where: { id: reqId },
   });
-  res.status(204).send({});
+  res.status(204).send();
 }
 
 //TODO: move verification into fetch wrapper for verifying tokens on certain routes?

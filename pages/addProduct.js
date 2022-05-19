@@ -24,21 +24,6 @@ export default function AddProduct() {
       userId: user.id,
     };
     dispatch(postProduct(newProduct, user));
-    // try {
-    //   fetch("./api/products/addProduct", {
-    //     body: JSON.stringify({
-    //       product: {
-    //         amount: amount,
-    //         measurement: measurement,
-    //         name: product,
-    //         userId: user.id,
-    //       },
-    //     }),
-    //     method: "POST",
-    //   });
-    // } catch (error) {
-    //   console.log("error in creating new product", error);
-    // }
   };
 
   return (
