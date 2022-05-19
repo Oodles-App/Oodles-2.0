@@ -1,6 +1,9 @@
 import prisma from "../../../db";
 import { apiHandler, errorHandler } from "../../../helpers/api";
+var jwt = require("jsonwebtoken");
+import getConfig from "next/config";
 
+const { serverRuntimeConfig } = getConfig();
 const bcrypt = require("bcryptjs");
 
 export default apiHandler({
@@ -33,7 +36,13 @@ async function getById(req, res) {
 
 async function update(req, res) {
   const reqId = parseInt(req.query.id);
-
+  const { token } = req.body;
+  const verification = jwt.verify(token, serverRuntimeConfig.mySecret);
+  if (verification.sub !== reqId) {
+    const error = { status: 401, message: "Unauthorized" };
+    throw error;
+  }
+  delete req.body.token;
   const user = await prisma.user.update({
     where: { id: reqId },
     include: {
