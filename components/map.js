@@ -21,7 +21,7 @@ export default function Map(props) {
 
           {/* connect an locate me icon to location Marker with "flyto" property */}
           {/* bug in LocationMarker. Will persist to go to current location even if I press on markers */}
-        {/* <LocationMarker />. */}
+        <LocationMarker />
         {/* <button type="button" style={{border: "1px solid black", position: 'absolute', zIndex:500 }} onClick={()=> {LocationMarker()}}>Toggle Live location</button> */}
 
         <TileLayer
