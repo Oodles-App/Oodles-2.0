@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchWrapper } from "../../helpers";
-import getConfig from "next/config";
 import { useSelector } from "react-redux";
 
 import { fetchUserProducts } from "../../redux/userProducts";
-
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+import { deleteProduct } from "../../redux/userProducts";
 
 const ManageProducts = () => {
   const dispatch = useDispatch();
@@ -26,7 +22,15 @@ const ManageProducts = () => {
     <div>
       <h1>Your Listings</h1>
       {products.map((product) => (
-        <div key={product.id}>{product.name}</div>
+        <div key={product.id}>
+          {product.name}
+          <button
+            type="button"
+            onClick={() => dispatch(deleteProduct(product.id, user))}
+          >
+            Remove
+          </button>
+        </div>
       ))}
     </div>
   );

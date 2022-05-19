@@ -23,6 +23,7 @@ const addProduct = (product) => {
   };
 };
 const removeProduct = (productId) => {
+  console.log("inside remove product");
   return {
     type: REMOVE_PRODUCT,
     productId,
@@ -38,6 +39,14 @@ export const postProduct = (newProduct, user) => {
     );
     console.log(product);
     dispatch(addProduct(product));
+  };
+};
+
+export const deleteProduct = (id, user) => {
+  return async function (dispatch) {
+    await fetchWrapper._delete(`${baseUrl}/products/${id}`, user);
+    console.log("inside delete product");
+    dispatch(removeProduct(id));
   };
 };
 
@@ -57,7 +66,7 @@ export default function userProductsReducer(products = [], action) {
     case ADD_PRODUCT:
       return [...products, action.product];
     case REMOVE_PRODUCT:
-      return products.filter((product) => product.id !== action.id);
+      return products.filter((product) => product.id !== action.productId);
     case SET_PRODUCTS:
       return action.products;
     default:

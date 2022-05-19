@@ -13,10 +13,10 @@ async function getProductsByUser(req, res) {
       products: true,
     },
   });
-  //TODO: this is not DRY :(
+
   if (!userProducts) {
     throw { message: "User not found.", status: 404 };
   }
-  console.log(userProducts, "userProducts in APi");
+
   return res.status(200).json(userProducts.products);
 }

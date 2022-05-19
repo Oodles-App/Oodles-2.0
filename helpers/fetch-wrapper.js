@@ -37,7 +37,7 @@ function put(url, auth, newInfo) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-function _delete(url) {
+function _delete(url, auth) {
   const requestOptions = {
     method: "DELETE",
     headers: authHeader(url, auth),

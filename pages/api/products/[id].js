@@ -10,17 +10,15 @@ export default apiHandler({
   delete: removeById,
 });
 
-//send a token so >:( mean >:( users can't delete random products with just ID
-const removeById = async (req, res) => {
-  const reqId = req.query.id;
-  const { token } = req.body;
-  console.log(reqId, "id in delete API route");
-  verifyAuth(token, req.body.userId);
+async function removeById(req, res) {
+  const reqId = parseInt(req.query.id);
   await prisma.product.delete({
     where: { id: reqId },
   });
-};
+  res.status(204).send({});
+}
 
+//TODO: move verification into fetch wrapper for verifying tokens on certain routes?
 const verifyAuth = (token, productUserId) => {
   const verification = jwt.verify(token, serverRuntimeConfig.mySecret);
   if (verification.sub !== productUserId) {
