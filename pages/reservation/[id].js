@@ -149,7 +149,7 @@ return (
         <br></br>
       <p>Please input the quantity in order for your reservation to proceed.</p>
       <br></br>
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleFormSubmit}> 
           {/* Tried to use this method: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_lists_description */}
           <div>
           {products.length !== 0 ? products.map((product) => (
@@ -212,7 +212,7 @@ return (
               )}
 
 
-            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation/submitted")}}>Reserve</button>
+            <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
     </form>
   </div>
       )
