@@ -35,6 +35,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   const [toggleMap, setToggleMap] = useState(true);
   const [display, setDisplay] = useState("Restaurants");
   const [filteredResults, setFilteredResults] = useState(initialRestaurants);
+  console.log(organizations[0].businessName)
 
   function searchRestaurant(value) {
     if (value !== "") {
@@ -110,9 +111,30 @@ function Browse({ initialRestaurants, initialOrganizations }) {
           }
         </div>
       ) : (
-        <p>Sorry, no organizations to show yet</p>      
+        // <p>Sorry, no organizations to show yet</p>     
+         
         //organizations
 
+        <div>
+          {toggleMap ? null : (
+            <div>
+              <p>List of organizations</p>
+              <ul>
+                {organizations.map((organization) => (
+                   <Link
+                   href="/browse/nonProfitOrg/[id]"
+                   as={`/browse/nonProfitOrg/${organization.id}`}
+                   key={organization.id}
+                   organization={organization.id}
+                 >
+                   <p key={organization.id}>{organization.businessName}</p>
+                 </Link>
+                ))}
+              </ul>
+              
+            </div>
+          )}
+        </div>
         // <div>
         //   {toggleMap ? <div><Map organizations={organizations}></Map> </div>
         //   : <div>
