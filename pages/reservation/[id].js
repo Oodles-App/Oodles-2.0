@@ -3,7 +3,7 @@ import prisma from "../../db";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import DatePicker from 'sassy-datepicker';
-
+import { useRouter } from "next/router";
 
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
@@ -31,6 +31,7 @@ const [visible, setVisible] = useState(false);
 const [cart, setCart] = useState({})
 const [value, setValue] = useState(0)
 const user = useSelector((state) => state.user); 
+const router = useRouter();
 
 const togglePicker = () => setVisible((v) => !v);
 const handleDateSelect = (newDate) => {
@@ -131,9 +132,8 @@ return (
                     ) : null}
                 </div>
               )}
-            <button type="submit" disabled={cart.length === 0}>
-              Reserve
-            </button>
+            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation/submitted")}}>Reserve</button>
+
             </div>
             </form>
           </div>
