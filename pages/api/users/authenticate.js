@@ -25,7 +25,7 @@ async function authenticate(req, res) {
       throw error;
     }
 
-    // create a jwt token that is valid for 30m
+    // create a jwt token that is valid for 2d
     const token = jwt.sign({ sub: user.id }, serverRuntimeConfig.mySecret, {
       expiresIn: "2d",
     });
