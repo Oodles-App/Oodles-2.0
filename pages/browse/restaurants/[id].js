@@ -10,16 +10,23 @@ export const getServerSideProps = async ({ params }) => {
       id: parseInt(params.id),
     },
   });
-  console.log(restaurant);
+  const products = await prisma.product.findMany({
+      where : {
+          userId: parseInt(params.id),
+      }
+  })
+
   return {
     props: {
       restaurantInfo: JSON.parse(JSON.stringify(restaurant)),
+      initialProducts: JSON.parse(JSON.stringify(products))
     },
   };
 };
 
-const Restaurant = ({ restaurantInfo }) => {
+const Restaurant = ({ restaurantInfo, initialProducts }) => {
   const [restaurant, setRestaurants] = useState(restaurantInfo);
+  const [products, setProducts] = useState(initialProducts)
   const router = useRouter();
 
   return (
@@ -37,6 +44,13 @@ const Restaurant = ({ restaurantInfo }) => {
         <p>{restaurant.contactNum}</p>
         <div>
           <p>Bio:</p>
+          <p>Products: </p>
+          <ul>
+              { products ? products.map((product) => (
+                  <li key={product.id}>{product.name}</li>
+              )) : null
+            }
+          </ul>
         </div>
       </div>
       <button
@@ -50,7 +64,6 @@ const Restaurant = ({ restaurantInfo }) => {
       </button>
       <div></div>
       <Link href={{pathname: `/reservation/${restaurant.id}`}} style={{border:"1px solid black"}}>Reserve</Link>
-
       <button
         type="button"
         style={{ border: "1px solid black" }}
