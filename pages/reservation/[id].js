@@ -24,8 +24,9 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-export default function Reservation ({initialProducts}) {
+export default function Reservation ({initialProducts, restaurantInfo}) {
 const [products, setProducts] = useState(initialProducts)
+const [restaurant] = useState(restaurantInfo)
 const [date, setDate] = useState(new Date())  
 const [visible, setVisible] = useState(false);
 const [cart, setCart] = useState({})
@@ -57,44 +58,95 @@ const handleFormSubmit = (e) => {
     console.log("error in creating new product", error);
   }
 }
-const handleValue = (event, product) => {
+
+const handleValue = (event, productInfo) => {
   const quantity = parseInt(event.target.value)
-  // console.log(typeof product.amount)
+  const product = productInfo
 
-
-  setValue(quantity)
-
-  if (quantity <= product.amount) {
-    if (cart[product.name]) {
-      cart[product.name].quantity = quantity
-    } else {
-      cart[product.name] = {product, quantity}
-    }
-    console.log("cart", cart)
-  } else {
-    console.log("Too much")
+  try {
+    fetch('../api/products/updateProduct', {
+      body:JSON.stringify({
+        product: {
+          product,
+          quantity,
+        }
+      }),
+      method:'PUT'
+    })
+  } catch (err) {
+    console.log("error in updating product in reservation", err)
   }
+
+
 }
 
+// const handleValue = (event, product) => {
+//   // change cart to {} if using this way.
+//   const quantity = parseInt(event.target.value)
+//   console.log(typeof product.amount)
+
+//   setValue(quantity)
+
+//   if (quantity <= product.amount) {
+//     if (cart[product.name]) {
+//       cart[product.name].quantity = quantity
+//     } else {
+//       cart[product.name] = {product, quantity}
+//     }
+//     console.log("cart", cart)
+//   } else {
+//     alert(`Exceeded amount from current Inventory. Please change your quantity.`)
+//   }
+// }
+
+// function handleChange(event, product) {
+//   const quantity = parseInt(event.target.value) 
+//   console.log(product)
+//   console.log(cart) 
+
+//   if (quantity <= product.amount) {
+//     if (cart[product.name]) {
+//       cart[product.name].quantity = quantity 
+//     } else {
+
+//     }
+//   }
+
+  
+
+// }
 
 return (
   <div>   
     <div style={{textAlign:"center"}}>Make a Reservation!</div>
-    <br></br>
-    <p>Products:</p>
-    <br></br>
-    <form onSubmit={handleFormSubmit}>
-        <p>Products:</p>
+    <h3>{restaurant.businessName}'s Products:</h3>
         <br></br>
-        <div>
+      <p>Please input the quantity in order for your reservation to proceed.</p>
+      <br></br>
+    <form onSubmit={handleFormSubmit}>
           {/* Tried to use this method: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_lists_description */}
+          <div>
           {products.length !== 0 ? products.map((product) => (
-                <div key={product.id}>
                   <div key={product.id} >
-                      <li>{product.name}</li>
+                      <li style={{listStyleType:"circle", display:"list-items"}}>{product.name}</li>
                       <p>Inventory: {product.amount}</p>
                       <>
-                        <label id="quantity-input" htmlFor="quantity">
+                      <div>
+              
+                          <label id="quantity-input" htmlFor="quantity">
+                            Quantity:
+                            <input
+                              type="number"
+                              id="quantity"
+                              min={0}
+                              max={product.amount}
+                              value={product.value}
+                              onChange={(event) => handleValue(event, product)}
+                            />
+                          </label>
+           
+                        </div>
+                        {/* <label id="quantity-input" htmlFor="quantity">
                           Quantity:
                           <input
                             type="string"
@@ -105,13 +157,13 @@ return (
                             onChange={(event) => handleValue(event, product)}
                             style={{width:"20px"}}
                           />
-                        </label>
+                        </label> */}
                       </>    
                   </div>
-                </div>
                 )) 
                 : (<p>No products available. Check again tomorrow!</p>)
               }
+          </div>
               {products.length === 0 ? null : (
                 <div>
                     <button
@@ -132,10 +184,10 @@ return (
                     ) : null}
                 </div>
               )}
-            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation/submitted")}}>Reserve</button>
 
-            </div>
-            </form>
-          </div>
+
+            <button type="button" style={{border:"1px solid black"}} onClick={() => {router.push("/reservation/submitted")}}>Reserve</button>
+    </form>
+  </div>
       )
 }
