@@ -32,6 +32,8 @@ export const fetchEditProfile = (user) => {
 export const updateUser = (user, newProfile) => {
   return async (dispatch) => {
     try {
+      const token = JSON.parse(window.localStorage.getItem("user")).token;
+      newProfile.token = token;
       const updatedUser = await fetchWrapper.put(
         `${baseUrl}/${user.id}`,
         user,
