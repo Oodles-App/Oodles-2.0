@@ -1,4 +1,5 @@
 import prisma from "../db";
+
 const bcrypt = require("bcryptjs");
 
 async function createAdmin() {
@@ -16,12 +17,7 @@ async function createAdmin() {
 }
 
 async function createTags() {
-  const dummyTags = [
-    { label: "Tag1", value: "1" },
-    { label: "Tag2", value: "2" },
-    { label: "Tag3", value: "3" },
-  ];
-  await Promise.all(dummyTags.map((tag) => prisma.tag.create({ data: tag })));
+  await Promise.all(tags.map((tag) => prisma.tag.create({ data: tag })));
 }
 
 async function createArticles() {
