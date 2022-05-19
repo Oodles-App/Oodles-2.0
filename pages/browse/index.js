@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import prisma from "../../db";
-import { useSelector } from "react-redux";
 
 const Map = dynamic(() => import("../../components/map"), { ssr: false });
 
@@ -36,7 +35,6 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   const [display, setDisplay] = useState("Restaurants");
   const [filteredResults, setFilteredResults] = useState(initialRestaurants);
   const [filteredOrganizations, setFilteredResultsO] = useState(initialOrganizations)
-  console.log(organizations[0].businessName)
 
   function searchRestaurant(value) {
     if (value !== "") {
@@ -53,7 +51,6 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   }
 
   function searchOrganizations(value) {
-    // console.log(value)
     if (value !== "") {
       const filteredOrganizations = organizations.filter((organization) => {
         return Object.values(organization)
@@ -114,7 +111,6 @@ function Browse({ initialRestaurants, initialOrganizations }) {
       <br></br>
 
         {display === "Restaurants" ? (
-        //restaurants 
           <div>
           {toggleMap ? <div><Map restaurants={restaurants}></Map> </div>
           : <div>
@@ -127,16 +123,11 @@ function Browse({ initialRestaurants, initialOrganizations }) {
           }
         </div>
       ) : (
-        // <p>Sorry, no organizations to show yet</p>     
-         
-        //organizations
-
         <div>
           {toggleMap ? null : (
             <div>
             <input id="search" type="text" placeholder="Search by Organization" name="search" onChange={(e)=>searchOrganizations(e.target.value)} />
             <div>
-              <h4>List of organizations</h4>
                 {filterOrganizations(filteredOrganizations)}
               {/* <ul>
                 {organizations.map((organization) => (
