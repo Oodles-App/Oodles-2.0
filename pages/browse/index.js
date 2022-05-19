@@ -13,17 +13,28 @@ export async function getStaticProps() {
       },
     },
   });
+  const organizations = await prisma.user.findMany({
+    where: {
+      businessType: {
+        equals: "organization",
+      },
+    },
+  });
   return {
     props: {
       initialRestaurants: JSON.parse(JSON.stringify(restaurants)),
+      initialOrganizations: JSON.parse(JSON.stringify(organizations)),
     },
   };
 }
 
-function Browse({ initialRestaurants }) {
+function Browse({ initialRestaurants, initialOrganizations }) {
   const [restaurants, setRestaurants] = useState(initialRestaurants);
+  const [organizations, setOrganizations] = useState(initialOrganizations);
   const [toggleMap, setToggleMap] = useState(true);
+  const [display, setDisplay] = useState("Restaurants");
   const [filteredResults, setFilteredResults] = useState(initialRestaurants);
+  const [filteredOrganizations, setFilteredResultsO] = useState(initialOrganizations)
 
   function searchRestaurant(value) {
     if (value !== "") {
@@ -37,6 +48,24 @@ function Browse({ initialRestaurants }) {
     } else {
       setFilteredResults(restaurants);
     }
+  }
+
+  function searchOrganizations(value) {
+    if (value !== "") {
+      const filteredOrganizations = organizations.filter((organization) => {
+        return Object.values(organization)
+          .join("")
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      });
+      setFilteredResultsO(filteredOrganizations);
+    } else {
+      setFilteredResultsO(organizations);
+    }
+  }
+
+  function handleChange(e) {
+    setDisplay(e.target.value)
   }
 
   return (
@@ -71,28 +100,56 @@ function Browse({ initialRestaurants }) {
         </button>
       </div>
       <br></br>
+      <div style={{textAlign:"center"}}>
+        <label htmlFor='uses'>Select:</label>
+        <select value={display} onChange={handleChange}>
+          <option value="Restaurants">Restaurants</option>
+          <option value="Organizations">Organizations</option>
+        </select>
+      </div>
       <div>
-        {toggleMap ? (
+      <br></br>
+
+        {display === "Restaurants" ? (
           <div>
-            <Map restaurants={restaurants}></Map>{" "}
-          </div>
-        ) : (
-          <div>
-            <input
-              id="search"
-              type="text"
-              placeholder="Search by Restaurant"
-              name="search"
-              onChange={(e) => searchRestaurant(e.target.value)}
-            />
+          {toggleMap ? <div><Map restaurants={restaurants}></Map> </div>
+          : <div>
+            <input id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={(e)=>searchRestaurant(e.target.value)} />
             <div>
               <br></br>
               {filterRestaurants(filteredResults)}
             </div>
-          </div>
-        )}
+            </div>
+          }
+        </div>
+      ) : (
+        <div>
+          {toggleMap ? null : (
+            <div>
+            <input id="search" type="text" placeholder="Search by Organization" name="search" onChange={(e)=>searchOrganizations(e.target.value)} />
+            <div>
+                {filterOrganizations(filteredOrganizations)}
+              {/* <ul>
+                {organizations.map((organization) => (
+                   <Link
+                   href="/browse/nonProfitOrg/[id]"
+                   as={`/browse/nonProfitOrg/${organization.id}`}
+                   key={organization.id}
+                   organization={organization.id}
+                 >
+                   <p key={organization.id}>{organization.businessName}</p>
+                 </Link>
+                ))}
+              </ul> */}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       </div>
     </div>
+
   );
 }
 
@@ -110,5 +167,20 @@ function filterRestaurants(filteredResults) {
   ));
   return filter;
 }
+
+function filterOrganizations(filteredOrganizations) {
+  const filter = filteredOrganizations.map((organization) => (
+    <Link
+      href="/browse/nonProfitOrg/[id]"
+      as={`/browse/nonProfitOrg/${organization.id}`}
+      key={organization.id}
+      organization={organization.id}
+    >
+      <p key={organization.id}>{organization.businessName}</p>
+    </Link>
+  ));
+  return filter;
+}
+
 
 export default React.memo(Browse);
