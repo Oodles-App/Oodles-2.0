@@ -61,7 +61,21 @@ const handleFormSubmit = (e) => {
 
 const handleValue = (event, productInfo) => {
   const quantity = parseInt(event.target.value)
-  const product = productInfo
+  const product = productInfo 
+  
+    // if (quantity <= product.amount) {
+    //   if (cart[product.name]) {
+    //     cart[product.name].quantity = quantity
+    //   } else {
+    //     cart[product.name] = {product, quantity}
+    //   }
+    //   console.log("cart", cart)
+    // } else {
+    //   alert(`Exceeded amount from current Inventory. Please change your quantity.`)
+    // }
+  
+
+
 
   try {
     fetch('../api/products/updateProduct', {
@@ -73,6 +87,18 @@ const handleValue = (event, productInfo) => {
       }),
       method:'PUT'
     })
+    if (quantity <= product.amount) {
+      if (cart[product.name]) {
+        cart[product.name].quantity = quantity
+      } else {
+        cart[product.name] = {product, quantity}
+
+      }
+      console.log("cart", cart)
+    } else {
+      alert(`Exceeded amount from current Inventory. Please change your quantity.`)
+    }
+
   } catch (err) {
     console.log("error in updating product in reservation", err)
   }
