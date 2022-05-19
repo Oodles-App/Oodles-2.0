@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   return (
     <>
       <header className={styles.header}>
-        <nav className={styles.navbar}>
+        <nav className={`${styles.navbar} bg-[#FEC84D]`}>
           <Link href="/home">
             <a className={styles.navlogo}>Oodles</a>
           </Link>
