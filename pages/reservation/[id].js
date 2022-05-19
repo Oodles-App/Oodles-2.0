@@ -54,6 +54,7 @@ const handleFormSubmit = (e) => {
       }),
       method: 'POST'
     })
+    router.push("/reservation/submitted")
   } catch (error) {
     console.log("error in creating new product", error);
   }
