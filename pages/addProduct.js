@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {useQuery, useMutation} from "react-query";
+import styles from "../styles/AddProduct.module.css";
 
 export default function AddProduct() {
   const {register, handleSubmit, errors, reset} = useForm();
@@ -30,17 +31,17 @@ export default function AddProduct() {
   }
 
   return (
-    <div>
+    <div className={styles.center}>
       <h1>Add Product</h1>
-      <form onSubmit={handleFormSubmit}>
-        <div>
+      <form onSubmit={handleFormSubmit} className={styles.form}>
+        <div className={styles.children}>
           <label htmlFor="amount">
             Amount
           </label>
           <input type="number" value={amount} onInput={e => setAmount(e.target.value)} />
         </div>
 
-        <div>
+        <div className={styles.children}>
           <label htmlFor="measurement"></label>
           <select
             name="measurement"
@@ -56,14 +57,14 @@ export default function AddProduct() {
           </select>
         </div>
 
-        <div>
+        <div className={styles.children}>
           <label htmlFor="product">
             Product
           </label>
           <input type="text" value={product} onInput={e => setProduct(e.target.value)}/>
         </div>
 
-        <button type="submit" disabled={product === ""}>
+        <button type="submit" disabled={product === ""} className={styles.button}>
           Add Product
         </button>
       </form>
