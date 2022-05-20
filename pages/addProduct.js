@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../redux/userProducts";
 
-import styles from "../styles/AddProduct.modules.css";
+import styles from "../styles/AddProduct.module.css";
 
 import ManageProducts from "../components/products/ManageProducts";
 

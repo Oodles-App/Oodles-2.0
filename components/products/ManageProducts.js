@@ -11,13 +11,12 @@ const ManageProducts = () => {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.userProducts);
 
-  console.log(products, "products");
-  // const [products, setProducts] = useState([]);
   useEffect(() => {
     if (user.id) {
       dispatch(fetchUserProducts(user));
     }
   }, []);
+
   return (
     <div>
       <h1>Your Listings</h1>
@@ -30,6 +29,7 @@ const ManageProducts = () => {
           >
             Remove
           </button>
+          <button type="button">Edit</button>
         </div>
       ))}
     </div>
