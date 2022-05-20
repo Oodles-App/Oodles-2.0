@@ -1,0 +1,38 @@
+
+.history {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    
+.historyTable {
+    border: 2px solid forestgreen;
+    width: 800px;
+    height: 200px;
+    text-align: center;
+
+  }
+    
+#organizationName {
+    border-bottom: 1px solid black;
+    text-align: center;
+
+  }
+#status {
+    border-bottom: 1px solid black;
+    text-align: center;
+
+
+}
+#date {
+    border-bottom: 1px solid black;
+    text-align: center;
+
+
+}
+    
+  /* td {
+    text-align: center;
+  } */
