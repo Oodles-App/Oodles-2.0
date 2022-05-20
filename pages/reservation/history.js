@@ -17,10 +17,11 @@ export const getServerSideProps = async () => {
 
 
 export default function History ({reservationsInfo}){
-  console.log("props passed?", filteredReservations)
   const [reservations, setReservations] = useState({reservationsInfo})
   const [usersReservations, setUsersReservations] = useState([])
   const user = useSelector((state) => state.user); 
+
+  console.log("reservation", reservations)
  
   // //converts initial reservations into array.
   // const reservationsArray = reservations.reservationsInfo
