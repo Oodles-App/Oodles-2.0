@@ -15,20 +15,23 @@ export const getServerSideProps = async () => {
     };
   };
 
+
 export default function History ({reservationsInfo}){
+  console.log("props passed?", filteredReservations)
   const [reservations, setReservations] = useState({reservationsInfo})
   const [usersReservations, setUsersReservations] = useState([])
   const user = useSelector((state) => state.user); 
-  console.log("updated here", usersReservations)
+ 
+  // //converts initial reservations into array.
+  // const reservationsArray = reservations.reservationsInfo
+  // //filters reservations by current user's id.
+  // setUsersReservations(reservationsArray.filter((reservation) => {
+  //     return reservation.userId === user.id
+  //   }))
 
-  function findUsersReservations(reservations) {
-    //got into reservation array 
-    const reservationsArray = reservations.reservationsInfo
-      const usersReservations = reservationsArray.filter((reservation) => {
-        return reservation.userId === user.id
-      })
-      setUsersReservations(usersReservations)
-  }
+  // console.log("filteredReservations", usersReservations)
+
+
 
   
 
@@ -36,45 +39,36 @@ export default function History ({reservationsInfo}){
     <div>
       {/* {findUsersReservations(reservations, user)} */}
       <h1>History</h1>
-{/* 
-      <div className="history" style={styles.history}>
-        <table className="historyTable">
+
+      <div className={styles.history}>
+        <table className={styles.historyTable}>
           <tbody>
             <tr>
-              <th id="organizationName">Name</th>
-              <th id="status">Age</th>
-              <th id="date">Gender</th>
+              <th id={styles.organizationName}>Organization's Name </th>
+              <th id={styles.status}>Age</th>
+              <th id={styles.status}>Gender</th>
             </tr>
             <tr>
-              <td id="organizationName">Anom</td>
-              <td id="status">19 </td>
-              <td id="date">Male</td>
+              <td id={styles.text}>Anom</td>
+              <td id={styles.text}>19 </td>
+              <td id={styles.text}>Male</td>
             </tr>
-            <tr>
-              <td id="organizationName">Megha</td>
-              <td id="status">19</td>
-              <td id="date">Female</td>
-            </tr>
-            <tr>
-              <td id="organizationName">Subham</td>
-              <td id="status">25</td>
-              <td id="date">Male</td>
-            </tr>
+    
           </tbody>
         </table>
-      </div> */}
+      </div>
         
-        {/* <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-            <div style={{border:"1px solid black", padding: "5px"}}>Name of the organization/Restaurant</div>
-            <div style={{border:"1px solid black", padding: "5px"}}>Status</div>
-            <div style={{border:"1px solid black", padding: "5px"}}>Date</div>
+      {/*  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+      //       <div style={{border:"1px solid black", padding: "5px"}}>Name of the organization/Restaurant</div>
+      //       <div style={{border:"1px solid black", padding: "5px"}}>Status</div>
+      //       <div style={{border:"1px solid black", padding: "5px"}}>Date</div>
              
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-          <p style={{border:"1px solid black", padding: "5px"}}>organization name</p>
-          <p style={{border:"1px solid black", padding: "5px"}}>organization status</p>
-          <p style={{border:"1px solid black", padding: "5px"}}>organization date</p>
-        </div> */}
+      //   </div>
+      //   <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+      //     <p style={{border:"1px solid black", padding: "5px"}}>organization name</p>
+      //     <p style={{border:"1px solid black", padding: "5px"}}>organization status</p>
+      //     <p style={{border:"1px solid black", padding: "5px"}}>organization date</p>
+      //   </div> */}
 
        
     </div>
