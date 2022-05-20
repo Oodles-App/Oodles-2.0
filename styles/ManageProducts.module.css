@@ -1,0 +1,35 @@
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.manageWrapper {
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.manageWrapper > h1 {
+  text-align: center;
+}
+
+.numberInput {
+  max-width: 57px;
+}
+
+.numberInput > div {
+  border-radius: 0px;
+  width: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#incButtonLeft {
+  width: 25px;
+}

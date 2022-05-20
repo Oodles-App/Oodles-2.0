@@ -1,10 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import EditProduct from "./EditProduct";
 
 import { fetchUserProducts } from "../../redux/userProducts";
-import { deleteProduct } from "../../redux/userProducts";
+
+import styles from "../../styles/ManageProducts.module.css";
+import { Accordion, AccordionSummary } from "@mui/material";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 
 const ManageProducts = () => {
   const dispatch = useDispatch();
@@ -18,20 +22,25 @@ const ManageProducts = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Your Listings</h1>
-      {products.map((product) => (
-        <div key={product.id}>
-          {product.name}
-          <button
-            type="button"
-            onClick={() => dispatch(deleteProduct(product.id, user))}
-          >
-            Remove
-          </button>
-          <button type="button">Edit</button>
-        </div>
-      ))}
+    <div className={`${styles.manageWrapper}`}>
+      <h1 className="text-2xl">Your Listings</h1>
+      <div className={styles.listWrapper}>
+        {products.map((product) => (
+          <Accordion key={product.id}>
+            <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
+              <div>
+                <div className="text-sm">
+                  {product.amount} {product.measurement}
+                </div>
+                <div className="text-xl">
+                  <strong>{product.name}</strong>
+                </div>
+              </div>
+            </AccordionSummary>
+            <EditProduct product={product} />
+          </Accordion>
+        ))}
+      </div>
     </div>
   );
 };

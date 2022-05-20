@@ -26,54 +26,60 @@ export default function AddProduct() {
       userId: user.id,
     };
     dispatch(postProduct(newProduct, user));
+    setAmount(0);
+    setMeasurement("");
+    setProduct("");
   };
 
   return (
-    <div className={styles.center}>
-      <h1>Add Product</h1>
-      <form onSubmit={handleFormSubmit} className={styles.form}>
-        <div className={styles.children}>
-          <label htmlFor="amount">Amount</label>
-          <input
-            type="number"
-            value={amount}
-            onInput={(e) => setAmount(e.target.value)}
-          />
-        </div>
+    <div>
+      <div className={styles.center}>
+        <h1>Add Product</h1>
+        <form onSubmit={handleFormSubmit} className={styles.form}>
+          <div className={styles.children}>
+            <label htmlFor="amount">Amount</label>
+            <input
+              type="number"
+              value={amount}
+              min={1}
+              onInput={(e) => setAmount(e.target.value)}
+            />
+          </div>
 
-        <div className={styles.children}>
-          <label htmlFor="measurement"></label>
-          <select
-            name="measurement"
-            value={measurement}
-            onChange={(e) => setMeasurement(e.target.value)}
+          <div className={styles.children}>
+            <label htmlFor="measurement"></label>
+            <select
+              name="measurement"
+              value={measurement}
+              onChange={(e) => setMeasurement(e.target.value)}
+            >
+              <option value="">Choose measurement</option>
+              <option value="lbs">lbs</option>
+              <option value="individual">individual</option>
+              <option value="bags">bags</option>
+              <option value="boxes">boxes</option>
+              <option value="cans">cans</option>
+            </select>
+          </div>
+
+          <div className={styles.children}>
+            <label htmlFor="product">Product</label>
+            <input
+              type="text"
+              value={product}
+              onInput={(e) => setProduct(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={product === ""}
+            className={styles.button}
           >
-            <option value="">Choose measurement</option>
-            <option value="lbs">lbs</option>
-            <option value="individual">individual</option>
-            <option value="bags">bags</option>
-            <option value="boxes">boxes</option>
-            <option value="cans">cans</option>
-          </select>
-        </div>
-
-        <div className={styles.children}>
-          <label htmlFor="product">Product</label>
-          <input
-            type="text"
-            value={product}
-            onInput={(e) => setProduct(e.target.value)}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={product === ""}
-          className={styles.button}
-        >
-          Add Product
-        </button>
-      </form>
+            Add Product
+          </button>
+        </form>
+      </div>
       <ManageProducts />
     </div>
   );
