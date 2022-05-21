@@ -81,7 +81,7 @@ const Donations = () => {
     chart.updateConfig({
       guide: {
         x: { label: `Time (Mo.)` },
-        y: { label: "Effort in points" },
+        y: { label: "Donations" },
         padding: { b: 40, l: 40, t: 10, r: 10 },
       },
       data: data,
