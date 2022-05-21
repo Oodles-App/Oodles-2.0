@@ -114,6 +114,11 @@ export default function Layout({ children }) {
                     <a onClick={() => setOpen(false)} className={styles.navlink}>Analytics</a>
                   </Link>
               </li>
+              <li className={styles.navitem}>
+                  <Link href='/reservation/history'>
+                    <a onClick={() => setOpen(false)} className={styles.navlink}>History</a>
+                  </Link>
+              </li>
               </>
             )}
           </ul>
