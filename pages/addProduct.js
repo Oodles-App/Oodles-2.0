@@ -11,8 +11,15 @@ import ManageProducts from "../components/products/ManageProducts";
 
 export default function AddProduct() {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors, reset } = useForm();
   const user = useSelector((state) => state.user);
+
+  const initialForm = {
+    amount: 0,
+    measurement: "",
+    name: "",
+  };
+
+  const [formState, setFormState] = useState(initialForm);
   const [amount, setAmount] = useState(0);
   const [measurement, setMeasurement] = useState("");
   const [product, setProduct] = useState("");
@@ -20,15 +27,11 @@ export default function AddProduct() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const newProduct = {
-      amount: amount,
-      measurement: measurement,
-      name: product,
+      ...formState,
       userId: user.id,
     };
     dispatch(postProduct(newProduct, user));
-    setAmount(0);
-    setMeasurement("");
-    setProduct("");
+    setFormState(initialForm);
   };
 
   return (

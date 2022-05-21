@@ -8,6 +8,7 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 const SET_PRODUCTS = "SET_PRODUCTS";
 const ADD_PRODUCT = "ADD_PRODUCT";
+const EDIT_PRODUCT = "EDIT_PRODUCT";
 
 const setProducts = (products) => {
   return {
@@ -22,11 +23,19 @@ const addProduct = (product) => {
     product,
   };
 };
+
 const removeProduct = (productId) => {
   console.log("inside remove product");
   return {
     type: REMOVE_PRODUCT,
     productId,
+  };
+};
+
+const editProduct = (updatedProduct) => {
+  return {
+    type: EDIT_PRODUCT,
+    updatedProduct,
   };
 };
 
@@ -45,8 +54,19 @@ export const postProduct = (newProduct, user) => {
 export const deleteProduct = (id, user) => {
   return async function (dispatch) {
     await fetchWrapper._delete(`${baseUrl}/products/${id}`, user);
-    console.log("inside delete product");
     dispatch(removeProduct(id));
+  };
+};
+
+export const putProduct = (product, user) => {
+  return async function (dispatch) {
+    const updatedProduct = await fetchWrapper.put(
+      `${baseUrl}/products/${product.id}`,
+      user,
+      product
+    );
+    console.log(updatedProduct, "updated product in redux");
+    dispatch(editProduct(updatedProduct));
   };
 };
 
@@ -56,7 +76,6 @@ export const fetchUserProducts = (user) => {
       `${baseUrl}/users/${user.id}/products`,
       user
     );
-    console.log(products);
     dispatch(setProducts(products));
   };
 };
@@ -67,6 +86,16 @@ export default function userProductsReducer(products = [], action) {
       return [...products, action.product];
     case REMOVE_PRODUCT:
       return products.filter((product) => product.id !== action.productId);
+    case EDIT_PRODUCT:
+      const newProducts = products.map((product) => {
+        if (product.id === action.updatedProduct.id) {
+          return action.updatedProduct;
+        } else {
+          return product;
+        }
+      });
+      console.log(newProducts);
+      return newProducts;
     case SET_PRODUCTS:
       return action.products;
     default:

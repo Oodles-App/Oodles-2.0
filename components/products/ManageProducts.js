@@ -14,7 +14,6 @@ const ManageProducts = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.userProducts);
-  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     if (user.id) {

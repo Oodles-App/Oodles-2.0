@@ -8,6 +8,7 @@ const { serverRuntimeConfig } = getConfig();
 
 export default apiHandler({
   delete: removeById,
+  put: updateProduct,
 });
 
 async function removeById(req, res) {
@@ -15,7 +16,22 @@ async function removeById(req, res) {
   await prisma.product.delete({
     where: { id: reqId },
   });
+
   res.status(204).send();
+}
+
+async function updateProduct(req, res) {
+  const productId = parseInt(req.query.id);
+  console.log("inside update product with data: ", req.body);
+  const updatedProduct = await prisma.product.update({
+    where: { id: productId },
+    include: {
+      tags: true,
+    },
+    data: req.body,
+  });
+
+  res.status(200).json(updatedProduct);
 }
 
 //TODO: move verification into fetch wrapper for verifying tokens on certain routes?

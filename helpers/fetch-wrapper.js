@@ -34,6 +34,8 @@ function put(url, auth, newInfo) {
     headers: { "Content-Type": "application/json", ...authHeader(url, auth) },
     body: JSON.stringify(newInfo),
   };
+  console.log(url, "url");
+  console.log(requestOptions, "request options");
   return fetch(url, requestOptions).then(handleResponse);
 }
 
@@ -59,8 +61,8 @@ function authHeader(url, auth) {
 
 function handleResponse(response) {
   return response.text().then((text) => {
+    console.log(text, "response text");
     const data = text && JSON.parse(text);
-
     if (!response.ok) {
       if (
         [401, 403].includes(response.status) &&
@@ -73,7 +75,7 @@ function handleResponse(response) {
       const error = data || { message: response.statusText };
       return Promise.reject(error);
     }
-
+    console.log(data, "data in fetch wrapper");
     return data;
   });
 }
