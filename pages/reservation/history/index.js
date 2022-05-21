@@ -2,8 +2,9 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import prisma from "../../db";
-import styles from "../../styles/History.module.css"
+import prisma from "../../../db";
+import styles from "../../../styles/History.module.css"
+import Link from 'next/link';
 
 export const getServerSideProps = async () => {
     const reservations = await prisma.reservation.findMany();
@@ -41,11 +42,13 @@ export default function History ({reservationsInfo}){
             {usersReservation.length === 0 ? null : 
               usersReservation.map((reservation) => (
                 //create links to these reservations to allow users to see what they reserved and other reserved infos
+                <Link key={reservation.id} href="/reservation/history/[id]" as={`/reservation/history/${reservation.id}`}>
                 <tr key={reservation.id}>
                   <th id={styles.text}>organization's name is missing in reservation</th>
                   <th id={styles.text}>{reservation.status}</th>
                   <th id={styles.text}>{reservation.pickupTime}</th>
                 </tr>
+                </Link>
               ) )
             }
           </tbody>
