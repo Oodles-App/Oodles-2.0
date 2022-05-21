@@ -6,6 +6,11 @@ import { useDispatch } from "react-redux";
 import { postProduct } from "../redux/userProducts";
 
 import styles from "../styles/AddProduct.module.css";
+import {
+  Paper,
+  AccordionClassKey,
+  AccordionSummaryClassKey,
+} from "@mui/material";
 
 import ManageProducts from "../components/products/ManageProducts";
 
@@ -20,9 +25,11 @@ export default function AddProduct() {
   };
 
   const [formState, setFormState] = useState(initialForm);
-  const [amount, setAmount] = useState(0);
-  const [measurement, setMeasurement] = useState("");
   const [product, setProduct] = useState("");
+
+  const handleFormChange = (e) => {
+    e.preventDefault();
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -36,16 +43,28 @@ export default function AddProduct() {
 
   return (
     <div>
-      <div className={styles.center}>
-        <h1>Add Product</h1>
+      <div className="flex flex-col items-center">
+        <Paper
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            height: "auto",
+            padding: "0px 10px",
+            width: "80vw",
+            maxWidth: "500px",
+          }}
+        >
+          <div>Add Product</div>
+        </Paper>
         <form onSubmit={handleFormSubmit} className={styles.form}>
           <div className={styles.children}>
             <label htmlFor="amount">Amount</label>
             <input
+              name="amount"
               type="number"
-              value={amount}
+              value={formState.amount}
               min={1}
-              onInput={(e) => setAmount(e.target.value)}
+              onInput={handleFormChange}
             />
           </div>
 
@@ -53,8 +72,8 @@ export default function AddProduct() {
             <label htmlFor="measurement"></label>
             <select
               name="measurement"
-              value={measurement}
-              onChange={(e) => setMeasurement(e.target.value)}
+              value={formState.measurement}
+              onChange={handleFormChange}
             >
               <option value="">Choose measurement</option>
               <option value="lbs">lbs</option>
@@ -68,9 +87,10 @@ export default function AddProduct() {
           <div className={styles.children}>
             <label htmlFor="product">Product</label>
             <input
+              name="product"
               type="text"
-              value={product}
-              onInput={(e) => setProduct(e.target.value)}
+              value={formState.product}
+              onInput={handleFormChange}
             />
           </div>
 
@@ -83,6 +103,7 @@ export default function AddProduct() {
           </button>
         </form>
       </div>
+      <div className="h-6 w-7"></div>
       <ManageProducts />
     </div>
   );
