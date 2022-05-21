@@ -23,12 +23,18 @@ const SingleReservation = ({initialReservation})  => {
     const cart = reservation.cart
   return (
     <div>
-        {/* add order number to reservations to display on reservation. */}        <div>Order#: **let's create one with random number**</div>
-        <div>Order Date: {reservation.reserveTime}</div>
-        {/* no user underneath reservation */}
-        <p>Orders from: **Missing restaurant owner**</p>
-        <p>Pickup Date: {reservation.pickupTime}</p>
-        <p>Items Reservered: </p>
+        <div style={{textAlign:"center"}}>
+            {/* add order number to reservations to display on reservation. */}       
+            <div>
+            <h1 style={{fontSize:"25px"}}>Order#: **let's create one with random number**</h1>
+            </div> 
+            <br></br>
+            <div>Order Date: {reservation.reserveTime}</div>
+            {/* no user underneath reservation */}
+            <p>Orders from: **Missing restaurant owner**</p>
+            <p>Pickup Date: {reservation.pickupTime}</p>
+            <p>Items Reservered: </p>
+        </div>
         <div className={styles.history}>
             <table className={styles.historyTable}>
             <tbody>
