@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { deleteProduct } from "../../redux/userProducts";
+import { useDispatch } from "react-redux";
 
 import {
   AccordionDetails,
@@ -10,13 +9,16 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+
 import styles from "../../styles/ManageProducts.module.css";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
-import { dispatch } from "d3";
-import { createAlert } from "../../redux/alerts";
 
-const EditProduct = ({ product }) => {
+import { createAlert } from "../../redux/alerts";
+import { deleteProduct } from "../../redux/userProducts";
+
+const EditProduct = ({ product, user }) => {
+  const dispatch = useDispatch();
   const initialForm = {
     name: product.name,
     amount: product.amount,
@@ -39,12 +41,20 @@ const EditProduct = ({ product }) => {
       setFormContent({ ...formContent, amount: oldAmount + 1 });
     }
   };
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId, user));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     formContent.amount = Number(formContent.amount);
-    if (formContent.amount === NaN) {
+    console.log(formContent.amount, "form content about after numbering");
+    if (isNaN(formContent.amount)) {
       console.log("hit NaN");
-      dispatch(createAlert({ message: "Please input a number for amount." }));
+      dispatch(
+        createAlert({
+          message: "Failed to save changes. Please input a number for amount.",
+        })
+      );
       return;
     }
     console.log(formContent, "form before submission");
@@ -136,7 +146,7 @@ const EditProduct = ({ product }) => {
       <button
         className="text-rose-600 mt-6"
         type="button"
-        onClick={() => dispatch(deleteProduct(product.id, user))}
+        onClick={() => handleDelete(product.id)}
       >
         <span className="text-xs">Remove Item</span>
       </button>

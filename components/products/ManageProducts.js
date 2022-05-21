@@ -14,6 +14,7 @@ const ManageProducts = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.userProducts);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     if (user.id) {
@@ -26,7 +27,7 @@ const ManageProducts = () => {
       <h1 className="text-2xl">Your Listings</h1>
       <div className={styles.listWrapper}>
         {products.map((product) => (
-          <Accordion key={product.id}>
+          <Accordion key={product.id} TransitionProps={{ unmountOnExit: true }}>
             <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
               <div>
                 <div className="text-sm">
@@ -37,7 +38,7 @@ const ManageProducts = () => {
                 </div>
               </div>
             </AccordionSummary>
-            <EditProduct product={product} />
+            <EditProduct product={product} user={user} />
           </Accordion>
         ))}
       </div>
