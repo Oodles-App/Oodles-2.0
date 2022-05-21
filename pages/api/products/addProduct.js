@@ -4,7 +4,6 @@ export default async function addProduct(req, res) {
   try {
     const productObj = JSON.parse(req.body);
     //const { product: productData } = req.body;
-    console.log(productObj);
     const product = await prisma.product.create({
       data: {
         name: productObj.product.name,

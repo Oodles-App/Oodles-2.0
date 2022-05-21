@@ -25,7 +25,6 @@ const addProduct = (product) => {
 };
 
 const removeProduct = (productId) => {
-  console.log("inside remove product");
   return {
     type: REMOVE_PRODUCT,
     productId,
@@ -46,7 +45,6 @@ export const postProduct = (newProduct, user) => {
       newProduct,
       user
     );
-    console.log(product);
     dispatch(addProduct(product));
   };
 };
@@ -65,7 +63,6 @@ export const putProduct = (product, user) => {
       user,
       product
     );
-    console.log(updatedProduct, "updated product in redux");
     dispatch(editProduct(updatedProduct));
   };
 };
@@ -94,7 +91,6 @@ export default function userProductsReducer(products = [], action) {
           return product;
         }
       });
-      console.log(newProducts);
       return newProducts;
     case SET_PRODUCTS:
       return action.products;

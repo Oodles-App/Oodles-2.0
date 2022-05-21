@@ -22,7 +22,6 @@ async function removeById(req, res) {
 
 async function updateProduct(req, res) {
   const productId = parseInt(req.query.id);
-  console.log("inside update product with data: ", req.body);
   const updatedProduct = await prisma.product.update({
     where: { id: productId },
     include: {
