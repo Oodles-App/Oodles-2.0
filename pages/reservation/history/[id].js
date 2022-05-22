@@ -36,16 +36,15 @@ const SingleReservation = ({initialReservation, restaurantList})  => {
   return (
     <div>
         <div style={{textAlign:"center"}}>
-            {/* add order number to reservations to display on reservation. */}       
             <div>
-            <h1 style={{fontSize:"25px"}}>Order#: **let's create one with random number**</h1>
+            <h1 style={{fontSize:"25px"}}>Order#: {reservation.id}</h1>
             </div> 
             <br></br>
             <div>Order Date: {reservation.reserveTime}</div>
             <p>Orders from: {restaurant[0].businessName}</p>
             <p>Pickup Date: {reservation.pickupTime}</p>
             <br></br>
-            <p>Items Reservered: </p>
+            <p>Items Reserved: </p>
         </div>
         <div className={styles.history}>
             <table className={styles.historyTable}>
