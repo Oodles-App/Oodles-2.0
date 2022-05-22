@@ -6,26 +6,37 @@ import styles from "../../styles/Analytics.module.css";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const dummyData = [
-  { product: "Dairy", year: 57, month: 16 },
-  { product: "Produce", year: 301, month: 38 },
-  { product: "Canned Goods", year: 256, month: 22 },
-  { product: "Pantry", year: 62, month: 2 },
-  { product: "Beverages", year: 256, month: 16 },
-  { product: "Bakery", year: 117, month: 12 },
-  { product: "Meat", year: 67, month: 10 },
+const dummyDataYear = [
+  { product: "Dairy", donations: 57 },
+  { product: "Produce", donations: 301 },
+  { product: "Canned Goods", donations: 256 },
+  { product: "Pantry", donations: 62 },
+  { product: "Beverages", donations: 256 },
+  { product: "Bakery", donations: 117 },
+  { product: "Meat", donations: 67 },
+];
+
+const dummyDataMonth = [
+  { product: "Dairy", donations: 16 },
+  { product: "Produce", donations: 38 },
+  { product: "Canned Goods", donations: 22 },
+  { product: "Pantry", donations: 2 },
+  { product: "Beverages", donations: 16 },
+  { product: "Bakery", donations: 12 },
+  { product: "Meat", donations: 10 },
 ];
 
 const config = {
   guide: {
     x: { label: "Product" },
     y: { label: "Donations" },
-    padding: { b: 40, l: 40, t: 10, r: 10 },
+    padding: { b: 40, l: 60, t: 10, r: 10 },
   },
-  data: dummyData,
-  type: "bar",
-  x: "product",
-  y: "month",
+  data: dummyDataMonth,
+  type: "horizontalBar",
+  x: "donations",
+  y: "product",
+  color: "product",
   settings: {
     fitModel: "normal",
     animationSpeed: 1000,
@@ -33,22 +44,26 @@ const config = {
   plugins: [Taucharts.api.plugins.get("tooltip")()],
 };
 
+const chart = new Taucharts.Chart(config);
+
 const Waste = () => {
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState("month");
   const domRef = useRef();
 
   useEffect(() => {
+    const data = time === "month" ? dummyDataMonth : dummyDataYear;
     chart.updateConfig({
       guide: {
         x: { label: "Product" },
         y: { label: "Donations" },
-        padding: { b: 40, l: 40, t: 10, r: 10 },
+        padding: { b: 40, l: 60, t: 10, r: 10 },
       },
       data: data,
-      type: "bar",
-      x: time,
-      y: "donations",
+      type: "horizontalBar",
+      x: "donations",
+      y: "product",
+      color: "product",
       settings: {
         fitModel: "normal",
         animationSpeed: 1000,
@@ -69,18 +84,25 @@ const Waste = () => {
     }
   }, [loading]);
 
+  const handleSelect = (e, selection) => {
+    if (selection) {
+      setTime(selection);
+    }
+  };
+
   return (
     <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
       <div className={styles.chartOptions}>
         <ToggleButtonGroup
           value={time}
-          onChange={handleChange}
+          onChange={handleSelect}
           exclusive
           size="small"
+          className="mt-4"
         >
-          <ToggleButton value="day">Last Week</ToggleButton>
-          <ToggleButton value="month">Last 6 Months</ToggleButton>
+          <ToggleButton value="month">This Month</ToggleButton>
+          <ToggleButton value="year">This YEAR</ToggleButton>
         </ToggleButtonGroup>
       </div>
     </div>
