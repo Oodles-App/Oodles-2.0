@@ -8,24 +8,37 @@ import Link from 'next/link';
 
 export const getServerSideProps = async () => {
     const reservations = await prisma.reservation.findMany();
+    const restaurants = await prisma.user.findMany({
+      where: {
+        businessType: {
+          equals: "RESTAURANT",
+        },
+      },
+    });
     
     return {
       props: {
-        reservationsInfo: JSON.parse(JSON.stringify(reservations))
+        reservationsInfo: JSON.parse(JSON.stringify(reservations)),
+        restaurantList: JSON.parse(JSON.stringify(restaurants))
       },
     };
   };
 
 
-export default function History ({reservationsInfo}){
+export default function History ({reservationsInfo, restaurantList}){
   const initialReservationList = useState({reservationsInfo})
-  // const [usersReservations, setUsersReservations] = useState([])
   const user = useSelector((state) => state.user); 
-  // console.log("users", user)
   const reservations = initialReservationList[0].reservationsInfo
   const usersReservation = reservations.filter((reservation) => {
-    return reservation.userId === user.id
+    return reservation.organizationId === user.id
   })
+
+  const findRestaurant = (id) =>  {
+    const restaurant = restaurantList.filter((restaurant) => {
+      return restaurant.id === id
+    })
+    return restaurant[0]
+  }
 
   return (
     <div>
@@ -41,10 +54,9 @@ export default function History ({reservationsInfo}){
 
             {usersReservation.length === 0 ? null : 
               usersReservation.map((reservation) => (
-                //create links to these reservations to allow users to see what they reserved and other reserved infos
-                <Link key={reservation.id} href="/reservation/history/[id]" as={`/reservation/history/${reservation.id}`}>
+                <Link key={reservation.id} href="/reservation/history/[id]" as={`/reservation/history/${reservation.id}`} >
                 <tr key={reservation.id}>
-                  <th id={styles.text}>organization's name is missing in reservation</th>
+                  <th id={styles.text}>{findRestaurant(reservation.restaurantId).businessName}</th>
                   <th id={styles.text}>{reservation.status}</th>
                   <th id={styles.text}>{reservation.pickupTime}</th>
                 </tr>

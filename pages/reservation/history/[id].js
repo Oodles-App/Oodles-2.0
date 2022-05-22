@@ -11,16 +11,28 @@ export const getServerSideProps = async ({ params }) => {
         id: parseInt(params.id),
       },
     });
+    const restaurants = await prisma.user.findMany({
+      where: {
+        businessType: {
+          equals: "RESTAURANT",
+        },
+      },
+    });
   
     return {
       props: {
         initialReservation: JSON.parse(JSON.stringify(reservation)),
+        restaurantList: JSON.parse(JSON.stringify(restaurants))
       },
     };
   };
-const SingleReservation = ({initialReservation})  => {
+const SingleReservation = ({initialReservation, restaurantList})  => {
     const [reservation, setSingleReservation] = useState(initialReservation)
     const cart = reservation.cart
+    const restaurant = restaurantList.filter((restaurant) => {
+      return restaurant.id === reservation.restaurantId
+    })
+
   return (
     <div>
         <div style={{textAlign:"center"}}>
@@ -30,9 +42,9 @@ const SingleReservation = ({initialReservation})  => {
             </div> 
             <br></br>
             <div>Order Date: {reservation.reserveTime}</div>
-            {/* no user underneath reservation */}
-            <p>Orders from: **Missing restaurant owner**</p>
+            <p>Orders from: {restaurant[0].businessName}</p>
             <p>Pickup Date: {reservation.pickupTime}</p>
+            <br></br>
             <p>Items Reservered: </p>
         </div>
         <div className={styles.history}>
