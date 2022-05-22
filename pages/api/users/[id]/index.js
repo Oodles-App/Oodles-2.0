@@ -1,5 +1,5 @@
-import prisma from "../../../db";
-import { apiHandler, errorHandler } from "../../../helpers/api";
+import prisma from "../../../../db";
+import { apiHandler } from "../../../../helpers/api";
 var jwt = require("jsonwebtoken");
 import getConfig from "next/config";
 
