@@ -4,44 +4,15 @@ import Taucharts from "taucharts";
 import "taucharts/dist/plugins/tooltip";
 
 import styles from "../../styles/Analytics.module.css";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-
-// const colorGenMonths = (donations) => {
-//   switch (donations) {
-//     case donations < 10:
-//       return "low";
-//     case donations < 20:
-//       return "med";
-//     case donations < 30:
-//       return "high";
-//     case donations >= 30:
-//       return "highest";
-//     default:
-//       return "none";
-//   }
-// };
+import { Card, CardContent } from "@mui/material";
 
 // PAST YEAR  or n months: aggregate quantity of donations by month
-// const dummyDataMonths = [
-//   { month: "December", donations: 14, value: colorGenMonths(this.donations) },
-//   {
-//     month: "January",
-//     donations: 10,
-//     value: colorGenMonths(this.donations),
-//   },
-//   { month: "February", donations: 23, value: colorGenMonths(this.donations) },
-//   { month: "March", donations: 12, value: colorGenMonths(this.donations) },
-//   { month: "April", donations: 32, value: colorGenMonths(this.donations) },
-//   { month: "May", donations: 45, value: colorGenMonths(this.donations) },
-// ];
 
 const dummyDataMonths = [
   { month: "December", donations: 14 },
   {
     month: "January",
     donations: 10,
-    value: colorGenMonths(this.donations),
   },
   { month: "February", donations: 23 },
   { month: "March", donations: 12 },
@@ -49,66 +20,89 @@ const dummyDataMonths = [
   { month: "May", donations: 45 },
 ];
 
-console.log(dummyDataMonths);
-
 // PAST WEEK aggregate quantity by day (etc.)
-// const dummyDataWeek = [
-//   {
-//     day: "Tuesday",
-//     donations: 5,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Wednesday",
-//     donations: 5,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Thursday",
-//     donations: 10,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Friday",
-//     donations: 7,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Saturday",
-//     donations: 0,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Sunday",
-//     donations: 0,
-//     value: colorGenMonths(this.donations),
-//   },
-//   {
-//     day: "Monday",
-//     donations: 5,
-//     value: colorGenMonths(this.donations),
-//   },
-// ];
+const dummyDataWeek = [
+  {
+    day: "Tuesday",
+    donations: 2,
+  },
+  {
+    day: "Wednesday",
+    donations: 4,
+  },
+  {
+    day: "Thursday",
+    donations: 10,
+  },
+  {
+    day: "Friday",
+    donations: 7,
+  },
+  {
+    day: "Saturday",
+    donations: 0,
+  },
+  {
+    day: "Sunday",
+    donations: 0,
+  },
+  {
+    day: "Monday",
+    donations: 5,
+  },
+];
+
+const brewerObjCreator = () => {
+  const colorGenWeek = (donations) => {
+    if (donations < 5) {
+      return "rgba(0, 177, 177, 0.3)";
+    }
+    if (donations < 10) {
+      return "rgba(0, 177, 177, 0.7)";
+    }
+    if (donations >= 10) {
+      return "rgba(0, 177, 177)";
+    }
+  };
+  const colorGenMonth = (donations) => {
+    if (donations < 15) {
+      return "rgba(0, 177, 177, 0.3)";
+    }
+    if (donations < 25) {
+      return "rgba(0, 177, 177, 0.7)";
+    }
+    if (donations >= 25) {
+      return "rgba(0, 177, 177)";
+    }
+  };
+  const brewerObj = {};
+  dummyDataMonths.map((monthObj) => {
+    const monthStr = monthObj.month;
+
+    brewerObj[monthStr] = colorGenMonth(monthObj.donations);
+  });
+  dummyDataWeek.map((weekObj) => {
+    const weekStr = weekObj.day;
+    brewerObj[weekStr] = colorGenWeek(weekObj.donations);
+  });
+  console.log(brewerObj, "brewerObj");
+  return brewerObj;
+};
 
 const config = {
   guide: {
-    x: { label: `Time (Mo.)` },
+    x: { label: `Time` },
     y: { label: "Donations" },
     padding: { b: 40, l: 40, t: 10, r: 10 },
-    // color: {
-    //   brewer: {
-    //     low: "rgba(228, 33, 85, 0.41)",
-    //     med: "rgba(228, 33, 85, 0.6)",
-    //     high: "rgba(228, 33, 85, 0.8)",
-    //     highest: "#e42155",
-    //   },
-    // },
+    color: {
+      brewer: brewerObjCreator(),
+    },
   },
-  data: dummyDataMonths,
+  data: dummyDataWeek,
   type: "bar",
-  x: "month",
+  x: "day",
   y: "donations",
-  // color: "value",
+  color: "day",
   settings: {
     fitModel: "normal",
     animationSpeed: 1000,
@@ -120,32 +114,34 @@ const chart = new Taucharts.Chart(config);
 
 const Donations = () => {
   const [loading, setLoading] = useState(true);
-  // const [time, setTime] = useState("day");
+  const [time, setTime] = useState("day");
+  const [cardSelect, setCardSelect] = useState("day");
   const domRef = useRef();
 
+  const totalDonations = (data) => {
+    let total = 0;
+    data.map((dataObj) => {
+      total += dataObj.donations;
+    });
+    return total;
+  };
+
   useEffect(() => {
-    console.log("inside use effect");
-    const data = dummyDataMonths;
-    // const data = time === "day" ? dummyDataWeek : dummyDataMonths;
+    const data = time === "day" ? dummyDataWeek : dummyDataMonths;
     chart.updateConfig({
       guide: {
-        x: { label: `Time` },
-        y: { label: "Donations" },
+        x: { label: `Time (Mo.)` },
+        y: { label: "Effort in points" },
         padding: { b: 40, l: 40, t: 10, r: 10 },
         color: {
-          brewer: {
-            low: "rgba(228, 33, 85, 0.41)",
-            med: "rgba(228, 33, 85, 0.6)",
-            high: "rgba(228, 33, 85, 0.8)",
-            highest: "#e42155",
-          },
+          brewer: brewerObjCreator(),
         },
       },
-      data: dummyDataMonths,
+      data: data,
       type: "bar",
-      x: "month",
+      x: time,
       y: "donations",
-      color: "value",
+      color: time,
       settings: {
         fitModel: "normal",
         animationSpeed: 1000,
@@ -155,7 +151,6 @@ const Donations = () => {
   }, [time]);
 
   useEffect(() => {
-    console.log("inside first useEffect");
     if (typeof window !== "undefined") {
       setLoading(false);
     }
@@ -167,25 +162,55 @@ const Donations = () => {
     }
   }, [loading]);
 
-  const handleChange = (e, selection) => {
+  const handleCardSelect = (selection) => {
     if (selection) {
       setTime(selection);
+      setCardSelect(selection);
     }
   };
 
   return (
     <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
-      <div className={styles.chartOptions}>
-        <ToggleButtonGroup
-          value={time}
-          onChange={handleChange}
-          exclusive
-          size="small"
+      <div className="flex justify-center gap-2.5 w-full mt-2v">
+        <Card
+          className={styles.optionsChild}
+          onClick={() => handleCardSelect("day")}
+          sx={{ backgroundColor: cardSelect === "day" ? "#ffe6ae" : "" }}
+          elevation={cardSelect === "day" ? 5 : 1}
         >
-          <ToggleButton value="day">Last Week</ToggleButton>
-          <ToggleButton value="month">Last 6 Months</ToggleButton>
-        </ToggleButtonGroup>
+          <CardContent>
+            <div className="text-center">
+              <span className="text-2xl font-bold">
+                {totalDonations(dummyDataWeek)}
+              </span>{" "}
+              donations
+              <div className="text-xs">
+                past <strong>seven days</strong>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card
+          className={styles.optionsChild}
+          onClick={() => handleCardSelect("month")}
+          sx={{
+            backgroundColor: cardSelect === "month" ? "#ffe6ae" : "",
+          }}
+          elevation={cardSelect === "month" ? 5 : 1}
+        >
+          <CardContent>
+            <div className="text-center">
+              <span className="text-2xl font-bold">
+                {totalDonations(dummyDataMonths)}{" "}
+              </span>
+              donations
+              <div className="text-xs">
+                past <strong>six months</strong>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

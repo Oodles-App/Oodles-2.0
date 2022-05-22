@@ -3,8 +3,7 @@ import Taucharts from "taucharts";
 import "taucharts/dist/plugins/tooltip";
 
 import styles from "../../styles/Analytics.module.css";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { Card, CardContent } from "@mui/material";
 
 const dummyDataYear = [
   { product: "Dairy", donations: 57 },
@@ -60,6 +59,8 @@ const chart = new Taucharts.Chart(config);
 const Waste = () => {
   const [loading, setLoading] = useState(true);
   const [time, setTime] = useState("month");
+  const [cardSelect, setCardSelect] = useState("month");
+
   const domRef = useRef();
 
   useEffect(() => {
@@ -106,26 +107,64 @@ const Waste = () => {
     }
   }, [loading]);
 
-  const handleSelect = (e, selection) => {
+  const handleCardSelect = (selection) => {
     if (selection) {
       setTime(selection);
+      setCardSelect(selection);
     }
+  };
+
+  const mostDonated = (data) => {
+    const donationsArr = data.map((dataObj) => dataObj.donations);
+    console.log(donationsArr, "donationsArr");
+    const maxDonations = Math.max(...donationsArr);
+    console.log(maxDonations, "maxDonations");
+    const mostDonatedObj = data[donationsArr.indexOf(maxDonations)];
+    console.log(mostDonatedObj, "most donated");
+    return mostDonatedObj;
   };
 
   return (
     <div className={styles.analyticsWrapper}>
-      <div className={styles.chartWrapper} ref={domRef}></div>
-      <div className={styles.chartOptions}>
-        <ToggleButtonGroup
-          value={time}
-          onChange={handleSelect}
-          exclusive
-          size="small"
-          className="mt-4"
+      <div className={styles.chartWrapper} ref={domRef} />
+      <div className="flex justify-center gap-2 w-full mt-2v">
+        <Card
+          className={styles.optionsChild}
+          onClick={() => handleCardSelect("day")}
+          sx={{ backgroundColor: cardSelect === "day" ? "#ffe6ae" : "" }}
+          elevation={cardSelect === "day" ? 5 : 1}
         >
-          <ToggleButton value="month">This Month</ToggleButton>
-          <ToggleButton value="year">This YEAR</ToggleButton>
-        </ToggleButtonGroup>
+          <CardContent>
+            <div className="text-center">
+              <span className="text-l font-bold">
+                {mostDonated(dummyDataMonth).donations}{" "}
+                {mostDonated(dummyDataMonth).product}
+              </span>{" "}
+              <div className="text-xs text-[11px]">donations (past month)</div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card
+          className={styles.optionsChild}
+          onClick={() => handleCardSelect("month")}
+          sx={{
+            backgroundColor: cardSelect === "month" ? "#ffe6ae" : "",
+          }}
+          elevation={cardSelect === "month" ? 5 : 1}
+        >
+          <CardContent>
+            <div className="text-center">
+              <span className="text-l font-bold">
+                {mostDonated(dummyDataYear).donations}{" "}
+                {mostDonated(dummyDataYear).product}{" "}
+              </span>
+              <div className="text-xs text-[11px]">donations (past year)</div>
+              {/* <div className="text-xs">
+                past <strong>year</strong>
+              </div> */}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

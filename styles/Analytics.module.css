@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .chartLoadingWrapper,
@@ -30,7 +32,10 @@
   max-width: 900px;
 }
 
-.chartOptions {
-  display: flex;
-  justify-content: center;
+.optionsChild {
+  flex: 0 1 calc(50% - 10px);
+}
+
+.selected {
+  box-shadow: 1 1 black;
 }
