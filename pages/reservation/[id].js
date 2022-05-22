@@ -41,15 +41,15 @@ const handleDateSelect = (newDate) => {
   setVisible(false);
 };
 
-const handleFormSubmit = (e) => {
+const handleFormSubmit = (e, restaurant) => {
   e.preventDefault();
   try {
     fetch('../api/reservation/addReservation', {
       body: JSON.stringify({
         reservation: {
           pickupTime: date.toDateString(),
-          userId: user.id,
-          user: user.id,
+          organizationId: user.id,
+          restaurantId: restaurant.id,
           cart
         }
       }),
@@ -151,7 +151,7 @@ return (
         <br></br>
       <p>Please input the quantity in order for your reservation to proceed.</p>
       <br></br>
-    <form onSubmit={handleFormSubmit}> 
+    <form onSubmit={(event) => handleFormSubmit(event, restaurant)}> 
           {/* Tried to use this method: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_lists_description */}
           <div>
           {products.length !== 0 ? products.map((product) => (

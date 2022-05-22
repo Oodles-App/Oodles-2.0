@@ -25,7 +25,8 @@ model User {
   sentMessages      Message[]  @relation("sentMessages")
   receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
-  reservations      Reservation[]
+  organization      Reservation[] @relation("organization")
+  restaurant        Reservation[] @relation("restaurant")
   tags              Tag[]
 }
 
@@ -60,8 +61,10 @@ model Reservation {
   reserveTime DateTime @default(now())
   pickupTime String
   status    Status
-  user      User    @relation(fields:[userId], references:[id])
-  userId      Int
+  organization      User    @relation(name: "organization", fields:[organizationId], references:[id])
+  restaurant        User    @relation(name: "restaurant", fields:[restaurantId], references:[id])
+  organizationId      Int
+  restaurantId        Int
   cart      Json
 }
 
