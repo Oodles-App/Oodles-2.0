@@ -5,6 +5,7 @@
   flex-direction: column;
   height: 200px;
   min-width: 0;
+  max-width: 500px;
   width: 80%;
   word-wrap: break-word;
   background-color: #fff;

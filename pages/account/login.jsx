@@ -16,6 +16,7 @@ import { Layout } from "../../components/account";
 
 import { useEffect } from "react";
 
+import Image from "next/image";
 import { TextField, Button } from "@mui/material";
 import styles from "../../styles/Register.module.css";
 
@@ -64,7 +65,16 @@ function Login() {
 
   return (
     <Layout>
-      <div className={styles.cardContainer}>
+      {/* <div className="z-0 absolute right-2 bottom-2">
+        <Image
+          src="/signin-graphic-01.png"
+          alt="Illustrated graphic of food donation."
+          width={80}
+          layout="fill"
+          objectFit="cover"
+        />
+      </div> */}
+      <div className={`${styles.cardContainer} z-10`}>
         <div className={`${styles.card} ${styles.login}`}>
           <h4 className={styles.cardHeader}>Login</h4>
           <div className={styles.cardBody}>
