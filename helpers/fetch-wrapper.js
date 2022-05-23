@@ -36,7 +36,7 @@ function put(url, auth, newInfo) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-function _delete(url) {
+function _delete(url, auth) {
   const requestOptions = {
     method: "DELETE",
     headers: authHeader(url, auth),
@@ -59,7 +59,6 @@ function authHeader(url, auth) {
 function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
-
     if (!response.ok) {
       if (
         [401, 403].includes(response.status) &&
@@ -72,7 +71,6 @@ function handleResponse(response) {
       const error = data || { message: response.statusText };
       return Promise.reject(error);
     }
-
     return data;
   });
 }

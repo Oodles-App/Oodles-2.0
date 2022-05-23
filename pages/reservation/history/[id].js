@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import prisma from "../../../db"
 import styles from "../../../styles/History.module.css"
+import { useRouter } from "next/router";
 
 
 
@@ -32,6 +33,8 @@ const SingleReservation = ({initialReservation, restaurantList})  => {
     const restaurant = restaurantList.filter((restaurant) => {
       return restaurant.id === reservation.restaurantId
     })
+    const router = useRouter();
+
 
   return (
     <div>
