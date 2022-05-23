@@ -170,6 +170,7 @@ return (
                               min={0}
                               max={product.amount}
                               value={product.value}
+                              style={{border: "1px solid black"}}
                               onChange={(event) => handleValue(event, product)}
                             />
                           </label>
@@ -211,13 +212,14 @@ return (
                         minDate={new Date(2021, 10, 16)}
                       />
                     ) : null}
+                    <br></br>
+                    <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
+
                 </div>
               )}
-
-
-            <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
+                 
             <Link href={"/browse/restaurants/[id]"} as={`/browse/restaurants/${restaurant.id}`}>
-            <button type="button">
+            <button type="button" style={{border:"1px solid black"}}>
               Back
             </button>
           </Link>
