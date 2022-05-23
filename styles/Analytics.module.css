@@ -3,10 +3,12 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  max-width: 1000px;
+  height: calc(100vh - 126px);
+  margin: 0 auto;
 }
 
-.chartLoadingWrapper,
-.chartWrapper {
+.chartLoadingWrapper {
   height: calc(100vh - 86px);
 }
 
@@ -23,14 +25,29 @@
 }
 
 .chartWrapper {
-  height: calc(60vh);
+  height: 80%;
   margin: auto 10px;
   width: 100%;
   min-width: 300px;
   max-width: 900px;
 }
 
-.chartOptions {
-  display: flex;
-  justify-content: center;
+.shortCardWrapper {
+  height: calc(25% - 8px);
+}
+
+.shortChart {
+  height: 75%;
+}
+
+.cardWrapper {
+  height: calc(20% - 8px);
+}
+
+.optionsChild {
+  flex: 0 1 calc(50% - 10px);
+}
+
+.selected {
+  box-shadow: 1 1 black;
 }

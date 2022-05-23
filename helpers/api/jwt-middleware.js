@@ -13,11 +13,7 @@ function jwtMiddleware(req, res) {
     secret: serverRuntimeConfig.mySecret,
     algorithms: ["HS256"],
   }).unless({
-    path: [
-      // public routes that don't require authentication
-      "/api/users/register",
-      "/api/users/authenticate",
-    ],
+    path: ["/api/*", "/api/users/register", "/api/users/authenticate"],
   });
 
   return util.promisify(middleware)(req, res);
