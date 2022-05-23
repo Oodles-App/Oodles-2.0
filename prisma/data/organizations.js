@@ -150,6 +150,21 @@ const organizations = [
       "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nycfoodpolicy.org%2Fnew-york-common-pantry-promotes-dignity-self-sufficiency%2F&psig=AOvVaw2OhGABUsEQN9AaenSEtwm7&ust=1653427670936000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPj0pJrI9vcCFQAAAAAdAAAAABAD",
     tags: { connect: tagsGenerator() },
   },
+  {
+    businessName: "The Bowery Mission",
+    businessType: "organization",
+    email: "bowery@gmail.com",
+    address: "355 Lexington Ave, Floor 19, New York, NY 10017",
+    lat: 40.741895,
+    lng: -73.989308,
+    hash: bcrypt.hashSync("bowery", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "The Bowery Mission serves homeless and hungry New Yorkers and provides services that meet their immediate needs and transforms their lives from poverty and hopelessness to hope.",
+    imageUrl:
+      "https://s7d2.scene7.com/is/image/TWCNews/bowery_mission_pkg4211803012000501072_11242021",
+    tags: { connect: tagsGenerator() },
+  },
 ];
 
 module.exports = organizations;
