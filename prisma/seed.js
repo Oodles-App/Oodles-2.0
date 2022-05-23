@@ -568,9 +568,6 @@ const restaurants = [
 const createRestaurants = async () => {
   for (let i = 0; i < restaurants.length; i++) {
     const restaurant = restaurants[i];
-
-    console.log(restaurant.email)
-
     await prisma.User.create({
       data: {
         email: restaurant.email,
