@@ -20,7 +20,7 @@ export const setProfile = (profile) => {
 export const fetchEditProfile = (user) => {
   return async (dispatch) => {
     try {
-      const profile = await fetchWrapper.get(`${baseUrl}/${user.id}`, user);
+      const profile = await fetchWrapper.get(`/api/users/${user.id}`, user);
       dispatch(setProfile(profile));
     } catch (error) {
       console.error(error);
@@ -35,7 +35,7 @@ export const updateUser = (user, newProfile) => {
       const token = JSON.parse(window.localStorage.getItem("user")).token;
       newProfile.token = token;
       const updatedUser = await fetchWrapper.put(
-        `${baseUrl}/${user.id}`,
+        `/api/users/${user.id}`,
         user,
         newProfile
       );

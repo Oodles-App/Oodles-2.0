@@ -16,7 +16,10 @@ import { Layout } from "../../components/account";
 
 import { useEffect } from "react";
 
+import Image from "next/image";
 import { TextField, Button } from "@mui/material";
+import { editProfileTheme } from "../../styles/MuiThemes";
+import { ThemeProvider } from "@mui/material";
 import styles from "../../styles/Register.module.css";
 
 export default Login;
@@ -64,62 +67,79 @@ function Login() {
 
   return (
     <Layout>
-      <div className={styles.cardContainer}>
-        <div className={`${styles.card} ${styles.login}`}>
-          <h4 className={styles.cardHeader}>Login</h4>
-          <div className={styles.cardBody}>
-            <form onSubmit={handleSubmit(onSubmit)} id={styles.formContainer}>
-              <div className={styles.formGroup}>
-                <TextField
-                  label="Email"
-                  name="email"
-                  {...register("email")}
-                  autoComplete="new-password"
-                  className={
-                    errors.email
-                      ? `${styles.formControl} ${styles.isInvalid}`
-                      : `${styles.formControl}`
-                  }
-                />
-                <div className={styles.invalidFeedback}>
-                  {errors.email?.message}
+      <div className={styles.pageContainer}>
+        <div className={styles.loginContainer}>
+          <ThemeProvider theme={editProfileTheme}>
+            <div className={`${styles.cardContainer} z-10`}>
+              <div className={`${styles.card} ${styles.login}`}>
+                <h4 className={styles.cardHeader}>Login</h4>
+                <div className={styles.cardBody}>
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    id={styles.formContainer}
+                  >
+                    <div className={styles.formGroup}>
+                      <TextField
+                        label="Email"
+                        name="email"
+                        {...register("email")}
+                        autoComplete="new-password"
+                        className={
+                          errors.email
+                            ? `${styles.formControl} ${styles.isInvalid}`
+                            : `${styles.formControl}`
+                        }
+                      />
+                      <div className={styles.invalidFeedback}>
+                        {errors.email?.message}
+                      </div>
+                    </div>
+                    <div className={styles.formGroup}>
+                      <TextField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        {...register("password")}
+                        className={
+                          errors.password
+                            ? `${styles.formControl} ${styles.isInvalid}`
+                            : `${styles.formControl}`
+                        }
+                      />
+                      <div className={styles.invalidFeedback}>
+                        {errors.password?.message}
+                      </div>
+                    </div>
+                    <Button
+                      variant="outlined"
+                      type="submit"
+                      disabled={formState.isSubmitting}
+                      className={styles.loginButton}
+                    >
+                      {formState.isSubmitting ? <Spinner /> : "Login"}
+                    </Button>
+                  </form>
                 </div>
               </div>
-              <div className={styles.formGroup}>
-                <TextField
-                  label="Password"
-                  name="password"
-                  type="password"
-                  {...register("password")}
-                  className={
-                    errors.password
-                      ? `${styles.formControl} ${styles.isInvalid}`
-                      : `${styles.formControl}`
-                  }
-                />
-                <div className={styles.invalidFeedback}>
-                  {errors.password?.message}
-                </div>
+              <div className={styles.registerLink}>
+                <p>
+                  Don't have an account?
+                  <span>
+                    <Link href="/account/register"> Click here </Link>
+                  </span>
+                  to register.
+                </p>
               </div>
-              <Button
-                variant="outlined"
-                type="submit"
-                disabled={formState.isSubmitting}
-                className={styles.loginButton}
-              >
-                {formState.isSubmitting ? <Spinner /> : "Login"}
-              </Button>
-            </form>
-          </div>
+            </div>
+          </ThemeProvider>
         </div>
-        <div className={styles.registerLink}>
-          <p>
-            Don't have an account?
-            <span>
-              <Link href="/account/register"> Click here </Link>
-            </span>
-            to register.
-          </p>
+
+        <div className={`z-0 relative ${styles.imageContainer}`}>
+          <Image
+            src="/food_donation_box-01.svg"
+            alt="Illustrated graphic of food donation."
+            layout="fill"
+          />
         </div>
       </div>
     </Layout>

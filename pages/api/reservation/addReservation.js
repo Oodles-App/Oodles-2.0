@@ -4,12 +4,12 @@ export default async function Reservation(req, res){
   const prisma = new PrismaClient({log: ["query"]})
   try {
     const reservationData = JSON.parse(req.body);
-    console.log("reservationData", reservationData);
     const reservation = await prisma.reservation.create({
       data: {
         pickupTime:reservationData.reservation.pickupTime,
         status: "ACTIVE",
-        userId: reservationData.reservation.userId,
+        restaurantId: reservationData.reservation.restaurantId,
+        organizationId: reservationData.reservation.organizationId,
         cart: reservationData.reservation.cart
       }
     });

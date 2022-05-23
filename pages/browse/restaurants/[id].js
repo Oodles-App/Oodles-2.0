@@ -65,7 +65,13 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
         Back
       </button>
       <div></div>
-      <Link href={{pathname: `/reservation/${restaurant.id}`}} style={{border:"1px solid black"}}>Reserve</Link>
+
+      <Link href={"/reservation/[id]"} as={`/reservation/${restaurant.id}`}>
+          <button type="button" style={{border:"1px solid black"}}>
+            Reserve
+          </button>
+      </Link>
+
       <button
         type="button"
         style={{ border: "1px solid black" }}

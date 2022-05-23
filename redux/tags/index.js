@@ -26,14 +26,14 @@ const createTag = (tag) => {
 //THUNKS
 export const fetchTags = (auth) => {
   return async function (dispatch) {
-    const tags = await fetchWrapper.get(baseUrl, auth);
+    const tags = await fetchWrapper.get("/api/tags", auth);
     dispatch(setTags(tags));
   };
 };
 
 export const postTag = (tag, auth) => {
   return async function (dispatch) {
-    const newTag = await fetchWrapper.post(baseUrl, tag, auth);
+    const newTag = await fetchWrapper.post("/api/tags", tag, auth);
     dispatch(createTag(newTag));
   };
 };

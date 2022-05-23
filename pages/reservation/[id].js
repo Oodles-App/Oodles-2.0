@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import DatePicker from 'sassy-datepicker';
 import { useRouter } from "next/router";
+import Link from 'next/link';
 
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
@@ -41,15 +42,15 @@ const handleDateSelect = (newDate) => {
   setVisible(false);
 };
 
-const handleFormSubmit = (e) => {
+const handleFormSubmit = (e, restaurant) => {
   e.preventDefault();
   try {
     fetch('../api/reservation/addReservation', {
       body: JSON.stringify({
         reservation: {
           pickupTime: date.toDateString(),
-          userId: user.id,
-          user: user.id,
+          organizationId: user.id,
+          restaurantId: restaurant.id,
           cart
         }
       }),
@@ -151,7 +152,7 @@ return (
         <br></br>
       <p>Please input the quantity in order for your reservation to proceed.</p>
       <br></br>
-    <form onSubmit={handleFormSubmit}> 
+    <form onSubmit={(event) => handleFormSubmit(event, restaurant)}> 
           {/* Tried to use this method: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_lists_description */}
           <div>
           {products.length !== 0 ? products.map((product) => (
@@ -169,6 +170,7 @@ return (
                               min={0}
                               max={product.amount}
                               value={product.value}
+                              style={{border: "1px solid black"}}
                               onChange={(event) => handleValue(event, product)}
                             />
                           </label>
@@ -210,11 +212,17 @@ return (
                         minDate={new Date(2021, 10, 16)}
                       />
                     ) : null}
+                    <br></br>
+                    <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
+
                 </div>
               )}
-
-
-            <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
+                 
+            <Link href={"/browse/restaurants/[id]"} as={`/browse/restaurants/${restaurant.id}`}>
+            <button type="button" style={{border:"1px solid black"}}>
+              Back
+            </button>
+          </Link>
     </form>
   </div>
       )
