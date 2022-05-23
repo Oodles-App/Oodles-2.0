@@ -111,6 +111,7 @@ const restaurants = [
     neighborhood: "Manhattan",
     photograph: "1.jpg",
     address: "171 E Broadway, New York, NY 10002",
+    contactNum: "347-448-6040",
     latlng: {
       lat: 40.713829,
       lng: -73.989667,
@@ -158,6 +159,7 @@ const restaurants = [
     neighborhood: "Brooklyn",
     photograph: "2.jpg",
     address: "919 Fulton St, Brooklyn, NY 11238",
+    contactNum: "212-394-1735",
     latlng: {
       lat: 40.683555,
       lng: -73.966393,
@@ -205,6 +207,7 @@ const restaurants = [
     email: "KHDB@gmail.com",
     photograph: "3.jpg",
     address: "1 E 32nd St, New York, NY 10016",
+    contactNum:"718-293-5850",
     latlng: {
       lat: 40.747143,
       lng: -73.985414,
@@ -252,6 +255,7 @@ const restaurants = [
     email: "katz@gmail.com",
     photograph: "4.jpg",
     address: "205 E Houston St, New York, NY 10002",
+    contactNum: "212-701-3921",
     latlng: {
       lat: 40.722216,
       lng: -73.987501,
@@ -299,6 +303,7 @@ const restaurants = [
     email: "RP@gmail.com",
     photograph: "5.jpg",
     address: "261 Moore St, Brooklyn, NY 11206",
+    contactNum: "908-291-5674",
     latlng: {
       lat: 40.705089,
       lng: -73.933585,
@@ -346,6 +351,7 @@ const restaurants = [
     username: "HBBQ",
     email: "HBBQ@gmail.com",
     address: "454 Van Brunt St, Brooklyn, NY 11231",
+    contactNum: "718-293-1284",
     latlng: {
       lat: 40.674925,
       lng: -74.016162,
@@ -392,6 +398,7 @@ const restaurants = [
     email: "SB@gmail.com",
     photograph: "7.jpg",
     address: "430 E 9th St, New York, NY 10009",
+    contactNum: "212-237-0841",
     latlng: {
       lat: 40.727397,
       lng: -73.983645,
@@ -439,6 +446,7 @@ const restaurants = [
     neighborhood: "Manhattan",
     photograph: "8.jpg",
     address: "131 Sullivan St, New York, NY 10012",
+    contactNum: "212=825-1112",
     latlng: {
       lat: 40.726584,
       lng: -74.002082,
@@ -486,6 +494,7 @@ const restaurants = [
     neighborhood: "Queens",
     photograph: "9.jpg",
     address: "1209 Jackson Ave, Queens, NY 11101",
+    contactNum: "212-900-7832",
     latlng: {
       lat: 40.743797,
       lng: -73.950652,
@@ -533,6 +542,7 @@ const restaurants = [
     neighborhood: "Queens",
     photograph: "10.jpg",
     address: "5-48 49th Ave, Queens, NY 11101",
+    contactNum: "347-448-6040",
     latlng: {
       lat: 40.743394,
       lng: -73.954235,
@@ -586,7 +596,7 @@ const createRestaurants = async () => {
         lat: restaurant.latlng.lat,
         lng: restaurant.latlng.lng,
         businessType: "restaurant",
-        contactNum: "123",
+        contactNum: restaurant.contactNum,
         biography: restaurant.biography,
         imageUrl: "bar",
         hash: "1",
