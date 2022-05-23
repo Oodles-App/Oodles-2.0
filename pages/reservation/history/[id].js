@@ -58,6 +58,15 @@ const SingleReservation = ({initialReservation, restaurantList})  => {
             </tbody>
             </table>
         </div> 
+        <button
+        type="button"
+        style={{ border: "1px solid black" }}
+        onClick={() => {
+          router.push("/reservation/history");
+        }}
+      >
+        Back
+      </button>
 
     </div>
    

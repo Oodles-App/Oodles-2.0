@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import DatePicker from 'sassy-datepicker';
 import { useRouter } from "next/router";
+import Link from 'next/link';
 
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
@@ -215,6 +216,11 @@ return (
 
 
             <button type="submit" style={{border:"1px solid black"}}> Reserve</button>
+            <Link href={"/browse/restaurants/[id]"} as={`/browse/restaurants/${restaurant.id}`}>
+            <button type="button">
+              Back
+            </button>
+          </Link>
     </form>
   </div>
       )
