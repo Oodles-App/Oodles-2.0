@@ -57,8 +57,8 @@ enum Status {
 }
 
 enum BusinessType {
-  RESTAURANT
-  ORGANIZATION
+  restaurant
+  organization
 }
 
 model Reservation {

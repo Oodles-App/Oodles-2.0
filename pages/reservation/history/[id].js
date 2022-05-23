@@ -15,7 +15,7 @@ export const getServerSideProps = async ({ params }) => {
     const restaurants = await prisma.user.findMany({
       where: {
         businessType: {
-          equals: "RESTAURANT",
+          equals: "restaurant",
         },
       },
     });

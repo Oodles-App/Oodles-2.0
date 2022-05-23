@@ -11,14 +11,14 @@ export async function getStaticProps() {
   const restaurants = await prisma.user.findMany({
     where: {
       businessType: {
-        equals: BusinessType.RESTAURANT,
+        equals: BusinessType.restaurant,
       },
     },
   });
   const organizations = await prisma.user.findMany({
     where: {
       businessType: {
-        equals: BusinessType.ORGANIZATION,
+        equals: BusinessType.organization,
       },
     },
   });

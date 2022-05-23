@@ -45,8 +45,12 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
         <p>{restaurant.address}</p>
         <p>{restaurant.contactNum}</p>
         <div>
-          <p>Bio:</p>
-          <p>Products: </p>
+          <p>{restaurant.biography}</p>
+          <br></br>
+          {products ==! null ? (
+            <p>Products: </p>
+          ): "Sorry, no products available at the moment"
+          }
           <ul>
               { products ? products.map((product) => (
                   <li key={product.id}>{product.name}</li>
@@ -55,6 +59,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
           </ul>
         </div>
       </div>
+      <br></br>
       <button
         type="button"
         style={{ border: "1px solid black" }}
