@@ -50,7 +50,7 @@ function Register() {
 
   useEffect(() => {
     const fetchAddresses = async () => {
-      const res = await fetch(`${baseUrl}/address/${address}`);
+      const res = await fetch(`/api/address/${address}`);
       const result = await res.json();
       setAddressSuggestions(
         result.features.map((location) => location.properties.formatted)
