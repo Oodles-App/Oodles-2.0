@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, BusinessType } = require("@prisma/client");
 let prisma = new PrismaClient();
 
 const bcrypt = require("bcryptjs");
@@ -10,7 +10,7 @@ async function createAdmin() {
     businessName: "Oodles",
     contactNum: "1118675309",
     address: "2202 Oodles Street, New York, NY",
-    businessType: "organization",
+    businessType: BusinessType.ORGANIZATION,
   };
 
   const password = "oodles2202";
@@ -521,11 +521,11 @@ const createRestaurants = async () => {
         address: restaurant.address,
         lat: restaurant.latlng.lat,
         lng: restaurant.latlng.lng,
-        businessType: "RESTAURANT",
+        businessType: BusinessType.RESTAURANT,
         contactNum: "123",
         biography: "foo",
         imageUrl: "bar",
-        hash: "1",
+        hash: bcrypt.hashSync("12345678", 10),
       },
     });
   }

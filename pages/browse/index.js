@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { BusinessType } from "@prisma/client";
 import prisma from "../../db";
 import styles from "../../styles/Browse.module.css";
 
@@ -10,14 +11,14 @@ export async function getStaticProps() {
   const restaurants = await prisma.user.findMany({
     where: {
       businessType: {
-        equals: "RESTAURANT",
+        equals: BusinessType.RESTAURANT,
       },
     },
   });
   const organizations = await prisma.user.findMany({
     where: {
       businessType: {
-        equals: "organization",
+        equals: BusinessType.ORGANIZATION,
       },
     },
   });

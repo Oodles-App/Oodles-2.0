@@ -8,25 +8,25 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  hash      String
-  businessName  String  @unique
-  username  String?
-  address   String
-  lat       Float?
-  lng       Float?
-  contactNum  String
-  biography String?
-  businessType String
-  imageUrl  String?
-  is501c3 Boolean? @default(false)
-  sentMessages      Message[]  @relation("sentMessages")
-  receivedMessages  Message[]  @relation("receivedMessages")
-  products          Product[]
-  reservations      Reservation[]
-  tags              Tag[]
+  id                      Int               @id @default(autoincrement())
+  createdAt               DateTime          @default(now())
+  email                   String            @unique
+  hash                    String
+  businessName            String            @unique
+  username                String?
+  address                 String
+  lat                     Float?
+  lng                     Float?
+  contactNum              String
+  biography               String?
+  businessType            BusinessType
+  imageUrl                String?
+  is501c3                 Boolean?          @default(false)
+  orgLiveChatChannels     ChatChannel[]     @relation("orgLiveChannels")
+  restaurantLiveChatChannels  ChatChannel[]     @relation("restaurantIdLiveChannels")
+  products                Product[]
+  reservations            Reservation[]
+  tags                    Tag[]
 }
 
 model Tag {
@@ -40,7 +40,7 @@ model Tag {
 
 model Product {
   id          Int         @id @default(autoincrement())
-	user			  User?    @relation(fields:[userId], references:[id])
+	user			  User?       @relation(fields:[userId], references:[id])
   userId      Int?
   name        String
   amount      Int
@@ -55,28 +55,33 @@ enum Status {
   COMPLETED
 }
 
-model Reservation {
-  id          Int      @id @default(autoincrement())
-  reserveTime DateTime @default(now())
-  pickupTime String
-  status    Status
-  user      User    @relation(fields:[userId], references:[id])
-  userId      Int
-  cart      Json
+enum BusinessType {
+  RESTAURANT
+  ORGANIZATION
 }
 
-model Message {
-  id         Int    @id
-  time      DateTime  @default(now())
-  text       String
-  sender     User   @relation(name: "sentMessages", fields: [senderId], references: [id])
-  receiver   User   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
-  senderId   Int
-  receiverId Int
+model Reservation {
+  id             Int         @id @default(autoincrement())
+  reserveTime    DateTime    @default(now())
+  pickupTime     String
+  status         Status
+  user           User        @relation(fields:[userId], references:[id])
+  userId         Int
+  cart           Json
+}
+
+model ChatChannel {
+  id                 Int         @id @default(autoincrement())
+  org                User        @relation(name: "orgLiveChannels", fields: [orgId], references: [id])
+  orgId              Int
+  restaurant         User        @relation(name: "restaurantIdLiveChannels", fields: [restaurantId], references: [id])
+  restaurantId       Int
+  name               String      
+  @@unique([orgId, restaurantId])
 }
 
 model Article {
-  id      Int  @id @default(autoincrement())
+  id      Int                @id @default(autoincrement())
   title   String
   author  String
   url     String
