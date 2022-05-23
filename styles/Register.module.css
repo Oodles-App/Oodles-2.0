@@ -5,6 +5,7 @@
   flex-direction: column;
   height: 200px;
   min-width: 0;
+  max-width: 500px;
   width: 80%;
   word-wrap: break-word;
   background-color: #fff;
@@ -133,7 +134,11 @@
 
 .registerContainer {
   height: auto;
-  min-height: calc(100vh - 86px);
+}
+
+.pageContainer {
+  /* height: auto; */
+  height: calc(100vh - 80px);
 }
 
 .loginButton {
@@ -160,4 +165,52 @@
 
 .link {
   height: 1rem;
+}
+
+.imageContainer {
+  width: 50%;
+}
+
+.imageContainer > img {
+  padding: 30px;
+}
+
+@media only screen and (max-width: 700px) {
+  .pageContainer {
+    background-image: url("/beveragePattern2-01.svg");
+    background-repeat: repeat-y;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pageContainer.register {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .pageContainer {
+    display: flex;
+    width: 100vw;
+    padding: 30px;
+  }
+  .imageContainer {
+    width: 45%;
+    position: relative;
+    top: 50px;
+  }
+  .loginContainer {
+    width: 50%;
+    position: relative;
+    bottom: 50px;
+    display: flex;
+  }
+  .cardContainer {
+    width: 100%;
+  }
 }

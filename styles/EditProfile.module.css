@@ -1,7 +1,14 @@
 .imageContainer {
-  width: 100%;
+  width: 90%;
   height: 200px;
   position: relative;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.31);
+}
+
+.imageContainer > img {
+  border-radius: 10px;
 }
 
 .image {
@@ -23,6 +30,12 @@
   margin-bottom: 20px;
 }
 
+@media only screen and (min-width: 600px) {
+  .editWrapper {
+    margin: 20px auto;
+  }
+}
+
 .title {
   text-align: center;
 }
@@ -30,4 +43,22 @@
 .textarea {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid lightgray;
+}
+
+.textarea:focus {
+  outline: 2px solid #00b1b0;
+}
+
+.select {
+  border-radius: 2px;
+}
+
+.select:focus {
+  outline: 2px solid #00b1b0;
+}
+
+.center {
+  margin: 0 auto;
 }
