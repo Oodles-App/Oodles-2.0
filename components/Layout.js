@@ -93,19 +93,6 @@ export default function Layout({ children }) {
                     </a>
                   </Link>
                 </li>
-                <li className={styles.navitem}>
-                  <Link href="">
-                    <a
-                      onClick={() => {
-                        dispatch(logout());
-                        setOpen(false);
-                      }}
-                      className={styles.navlink}
-                    >
-                      Logout
-                    </a>
-                  </Link>
-                </li>
 
                 <li className={styles.navitem}>
                   <Link href="/account/edit-profile">
@@ -124,6 +111,20 @@ export default function Layout({ children }) {
                       className={styles.navlink}
                     >
                       Analytics
+                    </a>
+                  </Link>
+                </li>
+
+                <li className={styles.navitem}>
+                  <Link href="">
+                    <a
+                      onClick={() => {
+                        dispatch(logout());
+                        setOpen(false);
+                      }}
+                      className={styles.navlink}
+                    >
+                      Logout
                     </a>
                   </Link>
                 </li>

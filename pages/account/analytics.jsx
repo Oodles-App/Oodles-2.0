@@ -5,20 +5,8 @@ import { Tabs, Tab, TabPanel, Box } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const chartsTheme = createTheme({
-  palette: {
-    primary: {
-      light: "#0fffff",
-      main: "#E42256",
-      dark: "#00bdbd",
-    },
-    secondary: {
-      light: "#E42256",
-      main: "#E42256",
-      dark: "#E42256",
-    },
-  },
-});
+
+import { chartsTheme } from "../../styles/MuiThemes";
 
 const getDonations = () => import("../../components/analytics/Donations");
 const getProducts = () => import("../../components/analytics/Waste");

@@ -28,6 +28,7 @@ const Articles = ({ initialArticles }) => {
             placeholder="Search by Title"
             name="search"
             onChange={(e) => setSearch(e.target.value)}
+            className={"px-6"}
           />
           <ul>
             {articles
@@ -37,16 +38,15 @@ const Articles = ({ initialArticles }) => {
               .map((article) => (
                 <li
                   key={article.id}
-                  style={{
-                    padding: "10px",
-                    textAlign: "center",
-                    border: "1px solid black",
-                  }}
+                  className={"sm:grid grid-cols-5 bg-white shadow-sm p-7 relative lg:max-w-2xl sm:p-4 rounded-lg lg:col-span-2 lg:ml-20"}
                 >
                   {/* <Image src="/default-placeholder.png" width="20px" height="20px" alt="Article picture"/> */}
-                  <h4 onClick={() => newTab(article.url)}>{article.title}</h4>
+                  <div className={"pt-5 self-center sm:pt-0 sm:pl-10 col-span-3"}>
 
-                  <p>by {article.author}</p>
+                  <h4 className={"text-gray-800 capitalize text-xl font-bold"} onClick={() => newTab(article.url)}>{article.title}</h4>
+
+                  <p className={"capitalize underline inline-block pt-2"}>by {article.author}</p>
+                  </div>
                 </li>
               ))}
           </ul>

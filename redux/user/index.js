@@ -33,7 +33,7 @@ export const logout = () => {
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      const user = await fetchWrapper.post(`${baseUrl}/authenticate`, {
+      const user = await fetchWrapper.post(`/api/users/authenticate`, {
         email,
         password,
       });
@@ -56,7 +56,7 @@ export const postUser = (user) => {
   return async (dispatch) => {
     try {
       const { email, password } = user;
-      const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
+      const newUser = await fetchWrapper.post(`/api/users/register`, user);
       dispatch(login(email, password));
       dispatch(
         createAlert({
