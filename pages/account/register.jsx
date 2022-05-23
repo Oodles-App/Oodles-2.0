@@ -67,7 +67,13 @@ function Register() {
 
   return (
     <Layout>
-      <div className={styles.pageContainer}>
+      <div
+        className={
+          businessType === ""
+            ? `${styles.pageContainer}`
+            : `${styles.pageContainer} ${styles.register}`
+        }
+      >
         <div className={styles.loginContainer}>
           <ThemeProvider theme={editProfileTheme}>
             <div
