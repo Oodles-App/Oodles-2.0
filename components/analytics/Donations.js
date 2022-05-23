@@ -130,7 +130,7 @@ const Donations = () => {
     const data = time === "day" ? dummyDataWeek : dummyDataMonths;
     chart.updateConfig({
       guide: {
-        x: { label: `Time (Mo.)` },
+        x: { label: `Time` },
         y: { label: "Effort in points" },
         padding: { b: 40, l: 40, t: 10, r: 10 },
         color: {
@@ -172,7 +172,7 @@ const Donations = () => {
   return (
     <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
-      <div className="flex justify-center gap-2.5 w-full mt-2v">
+      <div className="flex justify-center gap-2.5 w-full mt-2 max-w-md">
         <Card
           className={styles.optionsChild}
           onClick={() => handleCardSelect("day")}

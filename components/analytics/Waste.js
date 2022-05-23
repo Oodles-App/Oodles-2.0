@@ -7,7 +7,7 @@ import { Card, CardContent } from "@mui/material";
 
 const dummyDataYear = [
   { product: "Dairy", donations: 57 },
-  { product: "Produce", donations: 301 },
+  { product: "Produce", donations: 201 },
   { product: "Canned Goods", donations: 256 },
   { product: "Pantry", donations: 62 },
   { product: "Beverages", donations: 230 },
@@ -116,30 +116,43 @@ const Waste = () => {
 
   const mostDonated = (data) => {
     const donationsArr = data.map((dataObj) => dataObj.donations);
-    console.log(donationsArr, "donationsArr");
     const maxDonations = Math.max(...donationsArr);
-    console.log(maxDonations, "maxDonations");
     const mostDonatedObj = data[donationsArr.indexOf(maxDonations)];
-    console.log(mostDonatedObj, "most donated");
     return mostDonatedObj;
   };
 
   return (
     <div className={styles.analyticsWrapper}>
-      <div className={styles.chartWrapper} ref={domRef} />
-      <div className="flex justify-center gap-2 w-full mt-2v">
+      <div
+        className={`${styles.chartWrapper} ${styles.shortChart}`}
+        ref={domRef}
+      />
+      <div className="flex justify-center gap-2 w-full mt-2 max-w-md">
         <Card
           className={styles.optionsChild}
           onClick={() => handleCardSelect("day")}
           sx={{ backgroundColor: cardSelect === "day" ? "#ffe6ae" : "" }}
           elevation={cardSelect === "day" ? 5 : 1}
         >
-          <CardContent>
-            <div className="text-center">
-              <span className="text-l font-bold">
-                {mostDonated(dummyDataMonth).donations}{" "}
-                {mostDonated(dummyDataMonth).product}
-              </span>{" "}
+          <CardContent
+            sx={{
+              pb: 1,
+              pt: 2,
+              pl: 1,
+              pr: 1,
+              "& .MuiCardContent-root:last-child": { padding: 0 },
+            }}
+            className="flex justify-center items-center"
+          >
+            <div className="text-center pb-0">
+              <div className="font-bold">
+                <div className="text-xl">
+                  {mostDonated(dummyDataMonth).donations}
+                </div>
+                <div className="text-xs">
+                  {mostDonated(dummyDataMonth).product}
+                </div>
+              </div>
               <div className="text-xs text-[11px]">donations (past month)</div>
             </div>
           </CardContent>
@@ -152,16 +165,25 @@ const Waste = () => {
           }}
           elevation={cardSelect === "month" ? 5 : 1}
         >
-          <CardContent>
-            <div className="text-center">
-              <span className="text-l font-bold">
-                {mostDonated(dummyDataYear).donations}{" "}
-                {mostDonated(dummyDataYear).product}{" "}
-              </span>
+          <CardContent
+            sx={{
+              pb: 1,
+              pt: 2,
+              pl: 1,
+              pr: 1,
+              "& .MuiCardContent-root:last-child": { padding: 0 },
+            }}
+          >
+            <div className="text-center pb-0">
+              <div className="font-bold">
+                <div className="text-xl">
+                  {mostDonated(dummyDataYear).donations}
+                </div>
+                <div className="text-[13px]">
+                  {mostDonated(dummyDataYear).product}
+                </div>
+              </div>
               <div className="text-xs text-[11px]">donations (past year)</div>
-              {/* <div className="text-xs">
-                past <strong>year</strong>
-              </div> */}
             </div>
           </CardContent>
         </Card>

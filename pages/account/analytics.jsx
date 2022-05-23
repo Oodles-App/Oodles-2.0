@@ -9,13 +9,13 @@ const chartsTheme = createTheme({
   palette: {
     primary: {
       light: "#0fffff",
-      main: "#00B1B0",
+      main: "#E42256",
       dark: "#00bdbd",
     },
     secondary: {
-      light: "#ffa799",
-      main: "#FF8370",
-      dark: "#ff725c",
+      light: "#E42256",
+      main: "#E42256",
+      dark: "#E42256",
     },
   },
 });
@@ -27,11 +27,15 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("donations");
   const [Chart, setChart] = useState(null);
+  const [view700, setView700] = useState(null);
+
+  console.log(view700, "view");
 
   useEffect(() => {
     if (window !== undefined) {
       setChart(dynamic(getDonations));
       setLoading(false);
+      setView700(window.matchMedia("(min-width: 700px)"));
     }
   }, []);
 
@@ -55,9 +59,13 @@ const Analytics = () => {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
-            variant="fullWidth"
+            variant={view700.matches ? "standard" : "fullWidth"}
+            centered={view700.matches}
             onChange={handleChange}
-            indicatorColor="primary"
+            indicatorColor="secondary"
+            // sx={{
+            //   backgroundColor: "rgba(0, 177, 177, 0.4)",
+            // }}
           >
             <Tab label="Donations" value="donations" />
             <Tab label="Products" value="products" />

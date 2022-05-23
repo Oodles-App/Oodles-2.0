@@ -32,6 +32,10 @@
   max-width: 900px;
 }
 
+.shortChart {
+  height: calc(58vh);
+}
+
 .optionsChild {
   flex: 0 1 calc(50% - 10px);
 }
