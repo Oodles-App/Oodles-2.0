@@ -92,7 +92,7 @@ const config = {
   guide: {
     x: { label: `Time` },
     y: { label: "Donations" },
-    padding: { b: 40, l: 40, t: 10, r: 10 },
+    padding: { b: 40, l: 40, t: 0, r: 10 },
     color: {
       brewer: brewerObjCreator(),
     },
@@ -131,7 +131,7 @@ const Donations = () => {
       guide: {
         x: { label: `Time` },
         y: { label: "Effort in points" },
-        padding: { b: 40, l: 40, t: 10, r: 10 },
+        padding: { b: 40, l: 40, t: 0, r: 10 },
         color: {
           brewer: brewerObjCreator(),
         },
@@ -172,7 +172,7 @@ const Donations = () => {
     <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
       <div
-        className={`flex justify-center gap-2.5 w-full mt-2 max-w-md items-center ${styles.cardWrapper}`}
+        className={`flex justify-center gap-2.5 w-full mt-2 max-w-md items-start ${styles.cardWrapper}`}
       >
         <Card
           className={styles.optionsChild}

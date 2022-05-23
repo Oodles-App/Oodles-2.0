@@ -29,7 +29,7 @@ const config = {
   guide: {
     x: { label: "Product" },
     y: { label: "Donations" },
-    padding: { b: 40, l: 0, t: 10, r: 10 },
+    padding: { b: 40, l: 0, t: 0, r: 10 },
     color: {
       brewer: {
         Dairy: "#00B1B0",
@@ -69,7 +69,7 @@ const Waste = () => {
       guide: {
         x: { label: "Product" },
         y: { label: "Donations" },
-        padding: { b: 0, l: 0, t: 10, r: 10 },
+        padding: { b: 0, l: 0, t: 0, r: 10 },
         color: {
           brewer: {
             Dairy: "#00B1B0",
@@ -123,9 +123,12 @@ const Waste = () => {
 
   return (
     <div className={styles.analyticsWrapper}>
-      <div className={styles.chartWrapper} ref={domRef} />
       <div
-        className={`flex justify-center gap-2 w-full mt-2 max-w-md items-center ${styles.cardWrapper}`}
+        className={`${styles.chartWrapper} ${styles.shortChart}`}
+        ref={domRef}
+      />
+      <div
+        className={`flex justify-center gap-2 w-full mt-2 max-w-md items-start ${styles.shortCardWrapper}`}
       >
         <Card
           className={styles.optionsChild}

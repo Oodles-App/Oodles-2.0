@@ -32,8 +32,12 @@
   max-width: 900px;
 }
 
+.shortCardWrapper {
+  height: calc(25% - 8px);
+}
+
 .shortChart {
-  height: 40%;
+  height: 75%;
 }
 
 .cardWrapper {
