@@ -29,8 +29,6 @@ const Analytics = () => {
   const [Chart, setChart] = useState(null);
   const [view700, setView700] = useState(null);
 
-  console.log(view700, "view");
-
   useEffect(() => {
     if (window !== undefined) {
       setChart(dynamic(getDonations));
@@ -63,9 +61,6 @@ const Analytics = () => {
             centered={view700.matches}
             onChange={handleChange}
             indicatorColor="secondary"
-            // sx={{
-            //   backgroundColor: "rgba(0, 177, 177, 0.4)",
-            // }}
           >
             <Tab label="Donations" value="donations" />
             <Tab label="Products" value="products" />

@@ -85,7 +85,6 @@ const brewerObjCreator = () => {
     const weekStr = weekObj.day;
     brewerObj[weekStr] = colorGenWeek(weekObj.donations);
   });
-  console.log(brewerObj, "brewerObj");
   return brewerObj;
 };
 
