@@ -186,10 +186,13 @@
   }
 
   .pageContainer.register {
-    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .cardContainer {
+    padding: 10px 0;
   }
 }
 

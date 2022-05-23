@@ -71,7 +71,7 @@ function Register() {
         className={
           businessType === ""
             ? `${styles.pageContainer}`
-            : `${styles.pageContainer} ${styles.register}`
+            : `${styles.pageContainer} ${styles.register} ${styles.expandPage}`
         }
       >
         <div className={styles.loginContainer}>
