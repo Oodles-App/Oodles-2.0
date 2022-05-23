@@ -1,1 +1,1 @@
-web: bin/start-pgbouncer
+web: bin/use-pgbouncer
