@@ -521,7 +521,7 @@ const createRestaurants = async () => {
         address: restaurant.address,
         lat: restaurant.latlng.lat,
         lng: restaurant.latlng.lng,
-        businessType: "RESTAURANT",
+        businessType: "restaurant",
         contactNum: "123",
         biography: "foo",
         imageUrl: "bar",
