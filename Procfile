@@ -1,1 +1,1 @@
-web: bin/use-pgbouncer
+web: bin/start-pgbouncer sleep infinity
