@@ -1,1 +1,1 @@
-web: bin/start-pgbouncer oodles-database
+web: bin/start-pgbouncer
