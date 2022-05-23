@@ -103,7 +103,7 @@ const config = {
   y: "donations",
   color: "day",
   settings: {
-    fitModel: "normal",
+    fitModel: "entire-view",
     animationSpeed: 1000,
   },
   plugins: [Taucharts.api.plugins.get("tooltip")()],
@@ -142,7 +142,7 @@ const Donations = () => {
       y: "donations",
       color: time,
       settings: {
-        fitModel: "normal",
+        fitModel: "entire-view",
         animationSpeed: 1000,
       },
       plugins: [Taucharts.api.plugins.get("tooltip")()],
@@ -171,7 +171,9 @@ const Donations = () => {
   return (
     <div className={styles.analyticsWrapper}>
       <div className={styles.chartWrapper} ref={domRef}></div>
-      <div className="flex justify-center gap-2.5 w-full mt-2 max-w-md">
+      <div
+        className={`flex justify-center gap-2.5 w-full mt-2 max-w-md items-center ${styles.cardWrapper}`}
+      >
         <Card
           className={styles.optionsChild}
           onClick={() => handleCardSelect("day")}

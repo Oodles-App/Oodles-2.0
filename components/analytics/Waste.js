@@ -123,11 +123,10 @@ const Waste = () => {
 
   return (
     <div className={styles.analyticsWrapper}>
+      <div className={styles.chartWrapper} ref={domRef} />
       <div
-        className={`${styles.chartWrapper} ${styles.shortChart}`}
-        ref={domRef}
-      />
-      <div className="flex justify-center gap-2 w-full mt-2 max-w-md">
+        className={`flex justify-center gap-2 w-full mt-2 max-w-md items-center ${styles.cardWrapper}`}
+      >
         <Card
           className={styles.optionsChild}
           onClick={() => handleCardSelect("day")}
