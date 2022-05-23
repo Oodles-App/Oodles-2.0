@@ -44,6 +44,62 @@ async function createArticles() {
       url: "https://www.fda.gov/food/consumers/food-loss-and-waste",
     },
   });
+  await prisma.Article.create({
+    data:{
+      title: "Food waste in the United States: A contributing factor toward environmental instability ",
+      author:"Michael E. Hickey and Gulnihal Ozabay",
+      url:"https://www.frontiersin.org/articles/10.3389/fenvs.2014.00051/full"
+    }
+
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Reducing Food Waste in Your Kitchen During a Pandemic",
+      author:"Jeremy Hobson and Allison Hagan",
+      url: "https://www.unep.org/thinkeatsave/news/story/reducing-food-waste-your-kitchen-during-pandemic"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "All-Purpose Cleaner is Made Entirely of Food Waste Collected in NYC",
+      author:"Andy Corbley",
+      url: "https://www.unep.org/thinkeatsave/news/story/all-purpose-cleaner-made-entirely-food-waste-collected-nyc-and-ditches-plastic-spray"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Preventing Food Waste",
+      author:"Jane Black",
+      url: "https://www.worldwildlife.org/magazine/issues/fall-2018/articles/preventing-food-waste",   
+    }
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Preventing Wasted Food at Home",
+      author:"EPA",
+      url:"https://www.epa.gov/recycle/preventing-wasted-food-home"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Examining Plastic and Food Waste: A Package Deal",
+      author:"Minnie Ringland",
+      url: "https://refed.org/articles/plastic-and-food-waste-a-package-deal/"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "GUEST BLOG: How to EatOrToss is Empowering Consumers to Waste Less By Understanding their Food Better ",
+      author:"Rachael Jackson",
+      url:"https://refed.org/articles/guest-blog-how-eatortoss-is-empowering-consumers-to-waste-less-by-understanding-their-food-better/"
+    
+    }
+    
+  })
 }
 
 const restaurants = [
@@ -512,6 +568,8 @@ const restaurants = [
 const createRestaurants = async () => {
   for (let i = 0; i < restaurants.length; i++) {
     const restaurant = restaurants[i];
+
+    console.log(restaurant.email)
 
     await prisma.User.create({
       data: {
