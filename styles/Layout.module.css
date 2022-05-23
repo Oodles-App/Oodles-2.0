@@ -1,5 +1,5 @@
 .header{
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 1px solid ##e4b344;
 }
 
 .navbar {
@@ -35,7 +35,7 @@
 }
 
 .navlink{
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 400;
     color: #475569;
 }
