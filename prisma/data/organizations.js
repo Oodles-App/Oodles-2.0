@@ -1,8 +1,7 @@
 const organizations = [
   {
-    name: "Mission Chinese Food",
-    username: "MCF",
-    email: "missionChineseFood@gmail.com ",
+    name: "Action Against Hunger",
+    email: "actionAgainstHunger@gmail.com ",
     neighborhood: "Manhattan",
     photograph: "1.jpg",
     address: "171 E Broadway, New York, NY 10002",
