@@ -2,18 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useChannel } from "./LiveChatReactEffect";
 import styles from "./LiveChat.module.css";
 
-const LiveChat = () => {
+const LiveChat = (props) => {
   let inputBox = null;
   let messageEnd = null;
 
+  const [messageId, setMessageId] = useState("");
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  const [channel, ably] = useChannel("chat-demo", (message) => {
+  const [channel, ably] = useChannel(props.channelName, (message) => {
     const history = receivedMessages.slice(-199);
     setMessages([...history, message]);
   });
+
+  useEffect(() => {
+    console.info({ receivedMessages, bool: !receivedMessages.length })
+    if (!receivedMessages.length) {
+      channel.history().then((res) => setMessages([...res.items].reverse()));
+    }
+  }, []);
 
   const sendChatMessage = (messageText) => {
     channel.publish({ name: "chat-message", data: messageText });
@@ -35,9 +43,14 @@ const LiveChat = () => {
   };
 
   const messages = receivedMessages.map((message, index) => {
+    if (!messageId) setMessageId(message.connectionId);
     const author = message.connectionId === ably.connection.id ? "me" : "other";
+    const messageClass = messageId === message.connectionId 
+      ? "message1" 
+      : "message2";
+    console.log(message)
     return (
-      <span key={index} className={styles.message} data-author={author}>
+      <span key={index} className={styles[messageClass]} data-author={author}>
         {message.data}
       </span>
     );

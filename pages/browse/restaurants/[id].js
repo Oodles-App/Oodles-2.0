@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
@@ -25,6 +26,7 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Restaurant = ({ restaurantInfo, initialProducts }) => {
+  const user = useSelector((state) => state.user);
   const [restaurant, setRestaurants] = useState(restaurantInfo);
   const [products, setProducts] = useState(initialProducts)
   const router = useRouter();
@@ -78,8 +80,21 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
       <button
         type="button"
         style={{ border: "1px solid black" }}
-        onClick={() => {
-          router.push("/liveChat");
+        onClick={async (e) => {
+          e.preventDefault();
+          try {
+            const res = await fetch("../../api/liveChat/createChannel", {
+              body: JSON.stringify({
+                orgId: user.id,
+                restaurantId: restaurant.id,
+              }),
+              method: "POST",
+            });
+            const { chatChannel } = await res.json();
+            router.push(`/liveChat/${chatChannel.name}`);
+          } catch (error) {
+            console.log("error in creating new live chat channel", error);
+          }
         }}
       >
         Live Chat
