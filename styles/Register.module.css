@@ -90,6 +90,12 @@
   gap: 20px;
 }
 
+.formContainer {
+  display: flex !important;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .formWidth {
   width: 100%;
 }
@@ -194,13 +200,20 @@
   .cardContainer {
     padding: 10px 0;
   }
+
+  .formContainer#registerForm {
+    gap: 10px;
+  }
+
+  .card.expand {
+    height: 520px;
+  }
 }
 
 @media only screen and (min-width: 700px) {
   .pageContainer {
     display: flex;
     width: 100vw;
-    padding: 30px;
   }
   .imageContainer {
     width: 45%;

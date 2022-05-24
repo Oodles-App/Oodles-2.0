@@ -1,94 +1,101 @@
-.header{
-    border-bottom: 1px solid #e4b344;
+.header {
+  border-bottom: 1px solid #e4b344;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.oodlesSvg {
+  width: 135px;
+  height: 2rem;
+  background-image: url("/oodlesNav_NavBar.svg");
+  object-fit: contain;
+  background-repeat: no-repeat;
 }
 
 .hamburger {
-    display: none;
+  display: none;
 }
 
 .bar {
-    display: block;
-    width: 35px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: #222222;
+  display: block;
+  width: 35px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: #222222;
 }
 
 .navmenu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
 }
 
 .navitem {
-    margin-left: 4rem;
+  margin-left: 4rem;
 }
 
-.navlink{
-    font-size: 1rem;
-    font-weight: 400;
-    color: #475569;
+.navlink {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #475569;
 }
 
-.navlink:hover{
-    color: #482ff7;
+.navlink:hover {
+  color: #482ff7;
 }
 
 .navlogo {
-    font-size: 2.0rem;
-    font-weight: 500;
-    margin-left: 4px;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-left: 4px;
 }
 
 @media only screen and (max-width: 768px) {
-    .navmenu {
-        position: fixed;
-        left: -100%;
-        top: 4.5rem;
-        flex-direction: column;
-        background-color: #fff;
-        width: 100%;
-        border-radius: 10px;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow:
-            0 10px 27px rgba(0, 0, 0, 0.05);
-    }
+  .navmenu {
+    position: fixed;
+    left: -100%;
+    top: 4.5rem;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+  }
 
-    .navmenu.active {
-        left: 0;
-    }
+  .navmenu.active {
+    left: 0;
+  }
 
-    .navitem {
-        margin: 2.5rem 0;
-    }
+  .navitem {
+    margin: 2.5rem 0;
+  }
 
-    .hamburger {
-        display: block;
-        cursor: pointer;
-    }
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
 
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
 
-    .hamburger.active .bar:nth-child(1) {
-        -webkit-transform: translateY(8px) rotate(45deg);
-        transform: translateY(8px) rotate(45deg);
-    }
+  .hamburger.active .bar:nth-child(1) {
+    -webkit-transform: translateY(8px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
+  }
 
-    .hamburger.active .bar:nth-child(3) {
-        -webkit-transform: translateY(-8px) rotate(-45deg);
-        transform: translateY(-8px) rotate(-45deg);
-    }
+  .hamburger.active .bar:nth-child(3) {
+    -webkit-transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
+  }
 }

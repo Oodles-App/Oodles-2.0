@@ -95,7 +95,8 @@ function Register() {
                 <div className={styles.cardBody}>
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    id={styles.formContainer}
+                    className={styles.formContainer}
+                    id={`${styles.registerForm}`}
                   >
                     <FormControl className={styles.formGroup}>
                       <InputLabel id="select-label">Business Type</InputLabel>

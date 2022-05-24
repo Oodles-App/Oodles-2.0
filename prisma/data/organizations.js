@@ -136,18 +136,18 @@ const organizations = [
     tags: { connect: tagsGenerator() },
   },
   {
-    businessName: "New York Common Pantry",
+    businessName: "West Side Campaign Against Hunger",
     businessType: "organization",
-    email: "commonPantry@gmail.com",
-    address: "8 East 109th Street, New York, NY 10029",
-    lat: 40.7958,
-    lng: -73.94921,
-    hash: bcrypt.hashSync("commonPantry", 10),
+    email: "westside@gmail.com",
+    address: "263 West 86th Street New York, NY 10024",
+    lat: 40.7889381,
+    lng: -73.977291,
+    hash: bcrypt.hashSync("westside", 10),
     contactNum: faker.phone.phoneNumber("718-###-###"),
     biography:
-      "New York Common Pantry reduces hunger and promotes dignity, health and self-sufficiency.",
+      "West Side Campaign Against Hunger is on a mission to alleviate hunger by ensuring that all New Yorkers have access with dignity to a choice of healthy food and supportive services.",
     imageUrl:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nycfoodpolicy.org%2Fnew-york-common-pantry-promotes-dignity-self-sufficiency%2F&psig=AOvVaw2OhGABUsEQN9AaenSEtwm7&ust=1653427670936000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPj0pJrI9vcCFQAAAAAdAAAAABAD",
+      "https://www.wscah.org/wp-content/uploads/2021/10/0J3A7035-resized-683x1024.jpg",
     tags: { connect: tagsGenerator() },
   },
   {

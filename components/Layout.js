@@ -17,7 +17,9 @@ export default function Layout({ children }) {
       <header className={styles.header}>
         <nav className={`${styles.navbar} bg-[#FEC84D]`}>
           <Link href="/home">
-            <a className={styles.navlogo}>Oodles</a>
+            <a className={styles.navlogo}>
+              <div className={styles.oodlesSvg} />
+            </a>
           </Link>
           <ul
             className={
