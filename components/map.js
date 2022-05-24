@@ -15,7 +15,7 @@ export default function Map(props) {
 
   return (
     <div>
-      <div id="map">
+      <div id="map" >
         <MapContainer center={defaultCenter} ref={setMap} zoom={defaultZoom} scrollWheelZoom={false}  >
         {/* <button type="button" style={{border: "1px solid black"}} onClick={()=> {toggle? setToggle(false): }}>Toggle Live location</button> */}
 
@@ -32,9 +32,8 @@ export default function Map(props) {
 
           <Markers data={restaurants}/>      
         </MapContainer>
-        <br></br>
-        <div>
-            <button type="button" style={{border: "1px solid black", zIndex:1000, textAlign:"center"}} onClick={() => {
+        <div >
+            <button type="button" style={{border: "1px solid black", zIndex:1000, textAlign:"center", paddingLeft:"2rem", paddingRight:"2rem", backgroundColor:"white", borderRadius:"0.25rem"}} onClick={() => {
             map.setView(
               [
                 defaultCenter[0],

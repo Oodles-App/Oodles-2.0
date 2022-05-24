@@ -77,45 +77,49 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   }
 
   return (
-    <div className={styles.center}>
-      <br></br>
+    <div className={styles.bodyBgd}>
+
       <div className="Browse">
-        <h1 style={{textAlign:"center", fontSize:"40px"}}>Browse</h1>
-        <br></br>
-        <p>Location: New York, NY</p>
-        <br></br>
+          <h1 style={{textAlign:"center", fontSize:"40px", textAlign:"center", color:"#333333", backgroundColor:"#06a6a6"}}>Browse</h1>
+        <p style={{textAlign:"center", backgroundColor:"#06a6a6", color:"#333333"}}>Location: New York, NY</p>
       </div>
-      <div className="browseButtons">
+      <div className="browseButtons" style={{width:"100", backgroundColor:"#06a6a6"}} >
         {user.businessType === "organization" ? (
-          <div>
+          <div style={{display:"inline-flex"}}>
           <button 
           id="mapId"
           type="button"
           name="Map"
+          style={{paddingLeft:"2rem", paddingRight:"2rem"}}
           onClick={() => {
             setToggleMap(true);
           }}
+          className="bg-white hover:bg-gray-100 text-lg text-gray-800 font-semibold m-2 py-4 px-8 border border-gray-400 rounded shadow"
         >
           Map
         </button>
-        <button
+        <button 
           id="list"
           type="button"
           name="List"
+          style={{paddingLeft:"2rem", paddingRight:"2rem"}}
+          className="bg-white hover:bg-gray-100 text-lg text-gray-800 font-semibold m-2 py-4 px-8 border border-gray-400 rounded shadow"
           onClick={() => {
             setToggleMap(false);
           }}
         >
           List
         </button>
+     
         </div>
         ): (
-          <div>
+          <div style={{display:"inline-flex"}}>
           <button
           id="list"
           type="button"
           name="List"
-          style={{width:"auto"}}
+          style={{paddingLeft:"2rem", paddingRight:"2rem"}}
+    
         >
           List of Organizations
         </button>
@@ -125,21 +129,11 @@ function Browse({ initialRestaurants, initialOrganizations }) {
         }
 
       </div>
-
-      <br></br>
-      {/* <div style={{ textAlign: "center" }}>
-        <label htmlFor="uses">Select:</label>
-        <select value={display} onChange={handleChange}>
-          <option value="Restaurants">Restaurants</option>
-          <option value="Organizations">Organizations</option>
-        </select>
-      </div> */}
-      <div>
-        <br></br>
+      <div id="info" style={{backgroundColor:"#06a6a6"}}>
         {user.businessType === "organization" ? 
         <div id="organizationUsers">
           {toggleMap ? (
-              <div>
+              <div style={{width:"100", backgroundColor:"#06a6a6"}}>
                 <Map restaurants={restaurants}></Map>{" "}
               </div>
             ) : (
