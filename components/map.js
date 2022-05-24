@@ -32,8 +32,9 @@ export default function Map(props) {
 
           <Markers data={restaurants}/>      
         </MapContainer>
+        <br></br>
         <div>
-            <button type="button" style={{border: "1px solid black", zIndex:1000}} onClick={() => {
+            <button type="button" style={{border: "1px solid black", zIndex:1000, textAlign:"center"}} onClick={() => {
             map.setView(
               [
                 defaultCenter[0],

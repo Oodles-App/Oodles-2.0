@@ -36,7 +36,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
   const user = useSelector((state) => state.user);
   const [restaurant, setRestaurants] = useState(restaurantInfo);
   const [products, setProducts] = useState(initialProducts)
-  const router = useRouter();
+  const router = useRouter(); 
 
   return (
     <div className={styles.bodyBgd}>
@@ -70,7 +70,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
         <div>
           <p>{restaurant.biography}</p>
           <br></br>
-          {products ==! null ? (
+          {products.length !== 0 ? (
             <p>Products: </p>
           ): "Sorry, no products available at the moment"
           }

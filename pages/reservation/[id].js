@@ -104,40 +104,6 @@ export default function Reservation({ initialProducts, restaurantInfo }) {
     }
   };
 
-  // const handleValue = (event, product) => {
-  //   // change cart to {} if using this way.
-  //   const quantity = parseInt(event.target.value)
-  //   console.log(typeof product.amount)
-
-  //   setValue(quantity)
-
-  //   if (quantity <= product.amount) {
-  //     if (cart[product.name]) {
-  //       cart[product.name].quantity = quantity
-  //     } else {
-  //       cart[product.name] = {product, quantity}
-  //     }
-  //     console.log("cart", cart)
-  //   } else {
-  //     alert(`Exceeded amount from current Inventory. Please change your quantity.`)
-  //   }
-  // }
-
-  // function handleChange(event, product) {
-  //   const quantity = parseInt(event.target.value)
-  //   console.log(product)
-  //   console.log(cart)
-
-  //   if (quantity <= product.amount) {
-  //     if (cart[product.name]) {
-  //       cart[product.name].quantity = quantity
-  //     } else {
-
-  //     }
-  //   }
-
-  // }
-
   return (
     <div>
       <div style={{ textAlign: "center" }}>Make a Reservation!</div>
@@ -170,18 +136,6 @@ export default function Reservation({ initialProducts, restaurantInfo }) {
                       />
                     </label>
                   </div>
-                  {/* <label id="quantity-input" htmlFor="quantity">
-                          Quantity:
-                          <input
-                            type="string"
-                            id="quantity"
-                            value={product.value}
-                            min={0}
-                            max={product.amount}
-                            onChange={(event) => handleValue(event, product)}
-                            style={{width:"20px"}}
-                          />
-                        </label> */}
                 </>
               </div>
             ))
