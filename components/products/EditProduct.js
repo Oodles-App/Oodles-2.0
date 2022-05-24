@@ -10,7 +10,6 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Autocomplete,
 } from "@mui/material";
 
 import styles from "../../styles/ManageProducts.module.css";

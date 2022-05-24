@@ -5,19 +5,6 @@ const bcrypt = require("bcryptjs");
 const tags = require("./data/tags");
 const organizations = require("./data/organizations");
 
-async function createAdmin() {
-  const admin = {
-    email: "oodles@gmail.com",
-    businessName: "Oodles",
-    contactNum: "1118675309",
-    address: "2202 Oodles Street, New York, NY",
-    businessType: "organization",
-  };
-  const password = "oodles2202";
-  admin.hash = bcrypt.hashSync(password, 10);
-  await prisma.user.create({ data: admin });
-}
-
 async function createOrgs() {
   await Promise.all(
     organizations.map((organization) =>
@@ -543,7 +530,6 @@ async function main() {
   await createTags();
   await createArticles();
   await createRestaurants();
-  await createAdmin();
   await createOrgs();
 }
 

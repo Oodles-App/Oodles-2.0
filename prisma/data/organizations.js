@@ -17,6 +17,31 @@ const tagsGenerator = () => {
 
 const organizations = [
   {
+    email: "oodles@gmail.com",
+    businessName: "Oodles",
+    contactNum: "1118675309",
+    address: "2202 Oodles Street, New York, NY",
+    businessType: "organization",
+    hash: bcrypt.hashSync("oodles2202", 10),
+    lat: 40.7128,
+    lng: -74.006,
+    contactNum: "7188675309",
+    biography:
+      "Oodles is an application bringing restaurants and non-profit organizations together with the common goal of eliminating food waste. Restaurant owners can use our application to donate specified food products to non-profit organizations seeking food donations. While Non-profit organizations in search of donations can use our application to find and contact local restaurants offering food items.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370",
+    tags: {
+      connect: [
+        { id: 1 },
+        { id: 2 },
+        { id: 4 },
+        { id: 6 },
+        { id: 8 },
+        { id: 5 },
+      ],
+    },
+  },
+  {
     businessName: "Action Against Hunger",
     businessType: "organization",
     email: "actionAgainstHunger@gmail.com",
