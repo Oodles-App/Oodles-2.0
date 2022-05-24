@@ -18,8 +18,14 @@ const reservations = [
     pickupTime: "May 26, 2022, 5:00PM",
     status: "ACTIVE",
     cart: {
-      milk: { name: "milk", quantity: 2, measurement: "individual" },
-      eggs: { name: "eggs", quantity: 24, measurement: "boxes" },
+      milk: {
+        product: { name: "milk", measurement: "individual" },
+        quantity: 2,
+      },
+      eggs: {
+        product: { name: "eggs", measurement: "boxes" },
+        quantity: 24,
+      },
     },
   },
   {
@@ -29,8 +35,14 @@ const reservations = [
     pickupTime: "May 24, 2022, 5:00PM",
     status: "PENDING",
     cart: {
-      beans: { name: "beans", quantity: 5, measurement: "cans" },
-      apples: { name: "apples", quantity: 10, measurement: "bags" },
+      beans: {
+        product: { name: "beans", measurement: "cans" },
+        quantity: 5,
+      },
+      apples: {
+        product: { name: "apples", measurement: "bags" },
+        quantity: 10,
+      },
     },
   },
   {
@@ -40,8 +52,14 @@ const reservations = [
     pickupTime: "April 20, 2022, 3:00PM",
     status: "COMPLETED",
     cart: {
-      beans: { name: "beans", quantity: 20, measurement: "cans" },
-      chicken: { name: "chicken", quantity: 5, measurement: "lbs" },
+      beans: {
+        product: { name: "beans", measurement: "cans" },
+        quantity: 20,
+      },
+      chicken: {
+        product: { measurement: "lbs", name: "chicken" },
+        quantity: 5,
+      },
     },
   },
 ];
