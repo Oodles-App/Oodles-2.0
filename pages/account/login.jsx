@@ -24,6 +24,14 @@ import styles from "../../styles/Register.module.css";
 
 export default Login;
 
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
 function Login() {
   const router = useRouter();
   const user = useSelector((state) => state.user);
@@ -110,14 +118,20 @@ function Login() {
                         {errors.password?.message}
                       </div>
                     </div>
-                    <Button
-                      variant="outlined"
-                      type="submit"
-                      disabled={formState.isSubmitting}
-                      className={styles.loginButton}
-                    >
-                      {formState.isSubmitting ? <Spinner /> : "Login"}
-                    </Button>
+                    <div className="flex flex-row justify-center">
+                      <Button
+                        variant="outlined"
+                        type="submit"
+                        disabled={formState.isSubmitting}
+                        className={`${styles.loginButton} mr-4`}
+                      >
+                        {formState.isSubmitting ? <Spinner /> : "Login"}
+                      </Button>
+                      <div
+                        className="g-signin2 ml-4"
+                        data-onsuccess={onSignIn}
+                      ></div>
+                    </div>
                   </form>
                 </div>
               </div>
