@@ -30,6 +30,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
   const [restaurant, setRestaurants] = useState(restaurantInfo);
   const [products, setProducts] = useState(initialProducts)
   const router = useRouter();
+  console.log(products[0])
 
   return (
     <div>
@@ -47,7 +48,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
         <div>
           <p>{restaurant.biography}</p>
           <br></br>
-          {products ==! null ? (
+          {products.length !== 0 ? (
             <p>Products: </p>
           ): "Sorry, no products available at the moment"
           }

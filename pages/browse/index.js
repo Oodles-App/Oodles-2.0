@@ -80,7 +80,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
     <div className={styles.center}>
       <br></br>
       <div className="Browse">
-        <h1 style={{ textAlign: "center" }}>Browse</h1>
+        <h1 style={{textAlign:"center", fontSize:"40px"}}>Browse</h1>
         <br></br>
         <p>Location: New York, NY</p>
         <br></br>
