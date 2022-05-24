@@ -4,6 +4,8 @@ import Link from "next/link";
 import { BusinessType } from "@prisma/client";
 import prisma from "../../db";
 import styles from "../../styles/Browse.module.css";
+import { useSelector } from "react-redux";
+
 
 const Map = dynamic(() => import("../../components/map"), { ssr: false });
 
@@ -38,6 +40,9 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   const [filteredResults, setFilteredResults] = useState(initialRestaurants);
   const [filteredOrganizations, setFilteredResultsO] =
     useState(initialOrganizations);
+  const user = useSelector((state) => state.user);
+  const [isOrganization, setOrganizationUser] = useState(null)
+
 
   function searchRestaurant(value) {
     if (value !== "") {
@@ -81,7 +86,9 @@ function Browse({ initialRestaurants, initialOrganizations }) {
         <br></br>
       </div>
       <div className="browseButtons">
-        <button
+        {user.businessType === "organization" ? (
+          <div>
+          <button 
           id="mapId"
           type="button"
           name="Map"
@@ -101,21 +108,37 @@ function Browse({ initialRestaurants, initialOrganizations }) {
         >
           List
         </button>
+        </div>
+        ): (
+          <div>
+          <button
+          id="list"
+          type="button"
+          name="List"
+          style={{width:"auto"}}
+        >
+          List of Organizations
+        </button>
+        </div>)
+      
+
+        }
+
       </div>
+
       <br></br>
-      <div style={{ textAlign: "center" }}>
+      {/* <div style={{ textAlign: "center" }}>
         <label htmlFor="uses">Select:</label>
         <select value={display} onChange={handleChange}>
           <option value="Restaurants">Restaurants</option>
           <option value="Organizations">Organizations</option>
         </select>
-      </div>
+      </div> */}
       <div>
         <br></br>
-
-        {display === "Restaurants" ? (
-          <div>
-            {toggleMap ? (
+        {user.businessType === "organization" ? 
+        <div id="organizationUsers">
+          {toggleMap ? (
               <div>
                 <Map restaurants={restaurants}></Map>{" "}
               </div>
@@ -135,10 +158,9 @@ function Browse({ initialRestaurants, initialOrganizations }) {
                 </div>
               </div>
             )}
-          </div>
-        ) : (
-          <div>
-            {toggleMap ? null : (
+        </div>
+        : <div id="restaurantUsers">
+             {(
               <div>
                 <input
                   id="search"
@@ -148,26 +170,14 @@ function Browse({ initialRestaurants, initialOrganizations }) {
                   onChange={(e) => searchOrganizations(e.target.value)}
                 />
                 <div>
+                  <br></br>
                   {filterOrganizations(filteredOrganizations)}
-                  {/* <ul>
-                {organizations.map((organization) => (
-                   <Link
-                   href="/browse/nonProfitOrg/[id]"
-                   as={`/browse/nonProfitOrg/${organization.id}`}
-                   key={organization.id}
-                   organization={organization.id}
-                 >
-                   <p key={organization.id}>{organization.businessName}</p>
-                 </Link>
-                ))}
-              </ul> */}
                 </div>
               </div>
             )}
-          </div>
-        )}
+          </div> }
       </div>
-    </div>
+      </div>
   );
 }
 
