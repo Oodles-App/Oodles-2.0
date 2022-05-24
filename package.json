@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "primsa:reset:push:seed": "npx prisma migrate reset --skip-seed && npx prisma db push && npx prisma db seed && npx prisma studio"
   },
   "prisma": {
     "seed": "node ./prisma/seed.js"

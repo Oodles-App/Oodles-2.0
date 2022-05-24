@@ -2,10 +2,10 @@
   width: 30rem;
   height: auto;
   position: absolute;
+  margin-top: 2%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
   border-radius: 10px;
   background-color: #f9fbff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -13,8 +13,10 @@
 }
 
 .chatHolder {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-template-rows: 1fr 100px;
+  background-color: #ffe2dc;
 }
 
 .chatText {
@@ -43,29 +45,36 @@
 
 .button {
   border: 0;
-  color: white;
+  color: #FEC84D;
   font-weight: bold;
   font-size: 1.4em;
-  background: linear-gradient(to right, #363795, #005c97);
+  background: #00B1B0;
 }
 
 .button:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(54, 55, 149, 1) 0%,
-    rgba(0, 92, 151, 1) 62%,
-    rgba(0, 125, 205, 1) 100%
-  );
+  background: #00B1B0;
+  opacity: 0.25;
 }
 
 .button:disabled,
 .button:hover:disabled {
-  background: linear-gradient(to right, #363795, #005c97);
+  color: #00B1B0;
+  background: #FF8370;
   opacity: 0.5;
 }
 
-.message {
-  background-color: #eef5f8;
+.message1 {
+  align-self: flex-start;
+  background-color: #4CD7D0;
+  padding: 1em;
+  border-radius: 10px;
+  flex-grow: 0;
+  border-bottom-left-radius: 0;
+}
+
+.message2 {
+  align-self: flex-end;
+  background-color: #A4E8E0;
   padding: 1em;
   border-radius: 10px;
   flex-grow: 0;
