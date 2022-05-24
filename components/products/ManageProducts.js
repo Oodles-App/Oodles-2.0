@@ -7,7 +7,7 @@ import EditProduct from "./EditProduct";
 import { fetchUserProducts } from "../../redux/userProducts";
 
 import styles from "../../styles/ManageProducts.module.css";
-import { Accordion, AccordionSummary } from "@mui/material";
+import { Accordion, AccordionSummary, Paper } from "@mui/material";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 
 const ManageProducts = () => {
@@ -23,33 +23,39 @@ const ManageProducts = () => {
 
   return (
     <div className={`${styles.manageWrapper}`}>
-      <h1 className="text-2xl">Your Listings</h1>
-      {products.length === 0 ? (
-        <div className={`text-center mt-2 ${styles.noProducts}`}>
-          No products currently listed.
-        </div>
-      ) : (
-        <div className={`${styles.listWrapper} mt-2`}>
-          {products.map((product) => (
-            <Accordion
-              key={product.id}
-              TransitionProps={{ unmountOnExit: true }}
-            >
-              <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
-                <div>
-                  <div className="text-sm">
-                    {product.amount} {product.measurement}
+      <Paper
+        className="flex flex-col items-center w-full p-5 relative"
+        sx={{ maxWidth: 500 }}
+      >
+        <h1 className="text-2xl">Your Listings</h1>
+        {products.length === 0 ? (
+          <div className={`text-center mt-2 ${styles.noProducts}`}>
+            No products currently listed.
+          </div>
+        ) : (
+          <div className={`${styles.listWrapper} mt-2`}>
+            {products.map((product) => (
+              <Accordion
+                key={product.id}
+                TransitionProps={{ unmountOnExit: true }}
+                sx={{ backgroundColor: "#e2e2e2" }}
+              >
+                <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
+                  <div>
+                    <div className="text-sm">
+                      {product.amount} {product.measurement}
+                    </div>
+                    <div className="text-xl">
+                      <strong>{product.name}</strong>
+                    </div>
                   </div>
-                  <div className="text-xl">
-                    <strong>{product.name}</strong>
-                  </div>
-                </div>
-              </AccordionSummary>
-              <EditProduct product={product} user={user} />
-            </Accordion>
-          ))}
-        </div>
-      )}
+                </AccordionSummary>
+                <EditProduct product={product} user={user} />
+              </Accordion>
+            ))}
+          </div>
+        )}
+      </Paper>
     </div>
   );
 };

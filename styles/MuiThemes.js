@@ -17,9 +17,13 @@ export const chartsTheme = createTheme({
 
 export const editProfileTheme = createTheme({
   palette: {
+    // primary: {
+    //   main: "#00B1B0",
+    //   dark: "#00B1B0",
+    // },
     primary: {
-      main: "#00B1B0",
-      dark: "#00B1B0",
+      main: "#E42256",
+      dark: "#E42256",
     },
     secondary: {
       main: "#E42256",

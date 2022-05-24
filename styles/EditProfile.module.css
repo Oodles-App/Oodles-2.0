@@ -7,6 +7,12 @@
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.31);
 }
 
+.editWrapper {
+  color: #ffffff;
+  background: linear-gradient(#06a6a6, #047474);
+  /* background-color: #008989; */
+}
+
 .imageContainer > img {
   border-radius: 10px;
 }
@@ -33,6 +39,7 @@
 @media only screen and (min-width: 600px) {
   .editWrapper {
     margin: 20px auto;
+    border-radius: 10px;
   }
 }
 

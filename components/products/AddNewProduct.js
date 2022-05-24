@@ -98,12 +98,13 @@ const AddNewProduct = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-6">
-      <h1 className="text-2xl">Add Product</h1>
+    <div className={`mt-6 flex flex-col items-center ${styles.addWrapper}`}>
       <Paper
-        className="flex items-center w-4/5 p-5 relative"
+        className="flex flex-col items-center w-full p-5 relative"
         sx={{ maxWidth: 500 }}
       >
+        <h1 className="text-2xl">Add Product</h1>
+
         <IconButton
           type="submit"
           onClick={handleFormSubmit}
@@ -111,7 +112,10 @@ const AddNewProduct = ({ user }) => {
         >
           <AddCircleOutline />
         </IconButton>
-        <form onSubmit={handleFormSubmit} className="w-full mt-1">
+        <form
+          onSubmit={handleFormSubmit}
+          className="w-full mt-1 flex flex-col items-center"
+        >
           <div className={styles.form}>
             <div>
               <FormLabel>Product Name</FormLabel>
@@ -187,7 +191,7 @@ const AddNewProduct = ({ user }) => {
                 onChange={(measurementVal) => setMeasurement(measurementVal)}
               />
             </div>
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} mb-4`}>
               <FormLabel>Categories</FormLabel>
               <ReactSelect
                 isMulti={true}

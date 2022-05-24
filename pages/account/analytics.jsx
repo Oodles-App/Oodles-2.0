@@ -23,7 +23,7 @@ const Analytics = () => {
     }
   }, []);
 
-  const handleChange = (e, value) => {
+  const handleChange = (event, value) => {
     if (value === "products") {
       setChart(dynamic(getProducts));
       setValue("products");
@@ -38,7 +38,7 @@ const Analytics = () => {
   }
 
   return (
-    <div>
+    <div className="backgroundWhite">
       <ThemeProvider theme={chartsTheme}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
