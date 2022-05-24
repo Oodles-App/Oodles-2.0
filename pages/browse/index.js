@@ -80,7 +80,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
     <div className={styles.bodyBgd}>
 
       <div className="Browse">
-          <h1 style={{textAlign:"center", fontSize:"40px", textAlign:"center", color:"#333333", backgroundColor:"#06a6a6"}}>Browse</h1>
+          <h1 style={{textAlign:"center", fontSize:"40px", textAlign:"center", color:"#333333", backgroundColor:"#06a6a6", color:"white"}}>Browse</h1>
         <p style={{textAlign:"center", backgroundColor:"#06a6a6", color:"#333333"}}>Location: New York, NY</p>
       </div>
       <div className="browseButtons" style={{width:"100", backgroundColor:"#06a6a6"}} >

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import DatePicker from "sassy-datepicker";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import styles from "../../styles/ReservationId.module.css";
 
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
@@ -105,13 +106,11 @@ export default function Reservation({ initialProducts, restaurantInfo }) {
   };
 
   return (
-    <div>
-      <div style={{ textAlign: "center" }}>Make a Reservation!</div>
-      <h3>{restaurant.businessName}'s Products:</h3>
-      <br></br>
-      <p>Please input the quantity in order for your reservation to proceed.</p>
-      <br></br>
-      <form onSubmit={(event) => handleFormSubmit(event, restaurant)}>
+    <div className={styles.bodyBgd} >
+      <h1 style={{ textAlign: "center", backgroundColor: "#00B1B0", fontSize:"30px", color:"white"}}>Make a Reservation!</h1>
+      <h3 style={{backgroundColor:"#00B1B0", height:"20vh", textAlign:"center"}}>{restaurant.businessName}'s Products:</h3>
+      {/* <p style={{backgroundColor:"#00B1B0"}}>Please input the quantity in order for your reservation to proceed.</p> */}
+      <form onSubmit={(event) => handleFormSubmit(event, restaurant)} style={{backgroundColor:"#00B1B0"}} className={styles.blueBlock}>
         {/* Tried to use this method: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_lists_description */}
         <div>
           {products.length !== 0 ? (
@@ -168,7 +167,7 @@ export default function Reservation({ initialProducts, restaurantInfo }) {
               />
             ) : null}
             <br></br>
-            <button type="submit" style={{ border: "1px solid black" }}>
+            <button type="submit" style={{ border: "1px solid black", backgroundColor:"white", borderRadius:"0.25rem",paddingLeft:"1rem", paddingRight:"1rem" }}>
               {" "}
               Reserve
             </button>
@@ -179,11 +178,12 @@ export default function Reservation({ initialProducts, restaurantInfo }) {
           href={"/browse/restaurants/[id]"}
           as={`/browse/restaurants/${restaurant.id}`}
         >
-          <button type="button" style={{ border: "1px solid black" }}>
+          <button type="button" style={{  border: "1px solid black", backgroundColor:"white", borderRadius:"0.25rem",paddingLeft:"1.5rem", paddingRight:"1.5rem" }}>
             Back
           </button>
         </Link>
       </form>
     </div>
+
   );
 }
