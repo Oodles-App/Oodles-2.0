@@ -9,25 +9,21 @@ export const getServerSideProps = async ({ params }) => {
     where: {
       id: parseInt(params.id),
     },
-  });
-  const tags = await prisma.tag.findMany({
     include: {
-      users: true,
+      tags: true,
     },
   });
+
   return {
     props: {
       organizationInfo: JSON.parse(JSON.stringify(organization)),
-      tags: JSON.parse(JSON.stringify(tags)).filter((tag) =>
-        tag.users.some((user) => user.id === +params.id)
-      ),
     },
   };
 };
 
-const Organization = ({ organizationInfo, tags }) => {
-  const [organization, setOrganizations] = useState(organizationInfo);
+const Organization = ({ organizationInfo }) => {
   const router = useRouter();
+  const tags = organizationInfo.tags;
   return (
     <div>
       <div>
@@ -38,9 +34,9 @@ const Organization = ({ organizationInfo, tags }) => {
           height="50%"
           style={{ justifyItems: "center" }}
         />
-        <h1>{organization.businessName}</h1>
-        <p>{organization.address}</p>
-        <p>{organization.contactNum}</p>
+        <h1>{organizationInfo.businessName}</h1>
+        <p>{organizationInfo.address}</p>
+        <p>{organizationInfo.contactNum}</p>
         <div>
           <p>Bio:</p>
         </div>
