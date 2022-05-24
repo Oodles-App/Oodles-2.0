@@ -1,0 +1,40 @@
+.profileWrapper {
+  min-height: calc(100vh - 80px);
+  overflow-x: hidden;
+}
+
+.bannerImg {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.bannerWrapper {
+  height: 40vh;
+  position: relative;
+}
+
+.name {
+  background-color: #06a6a6;
+  color: white;
+  position: relative;
+  bottom: 40px;
+  left: 10px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.block {
+  background-color: #06a6a6;
+  height: 10px !important;
+}
+
+.blueBlock {
+  background-color: #06a6a6;
+  padding-top: 5px;
+}
+
+.card {
+  width: 80%;
+  margin: 10px auto;
+}
