@@ -5,6 +5,13 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
+import { Card, CardContent, Chip, Stack, Grid } from "@mui/material";
+import { IoLocationOutline, IoArrowBackCircle } from "react-icons/io5";
+import { BiMessageRounded } from "react-icons/bi";
+import { RiMessage3Line } from "react-icons/ri";
+import { AiOutlineMessage } from "react-icons/ai";
+import styles from "../../../styles/ResProfile.module.css";
+
 export const getServerSideProps = async ({ params }) => {
   const restaurant = await prisma.user.findUnique({
     where: {
@@ -29,25 +36,41 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
   const user = useSelector((state) => state.user);
   const [restaurant, setRestaurants] = useState(restaurantInfo);
   const [products, setProducts] = useState(initialProducts)
-  const router = useRouter();
+  const router = useRouter(); 
 
   return (
-    <div>
-      <div>
-        <Image
-          src="/restaurant.png"
-          alt="Food Banner"
-          width="50%"
-          height="50%"
-          style={{ justifyItems: "center" }}
-        />
-        <h1>{restaurant.businessName}</h1>
-        <p>{restaurant.address}</p>
-        <p>{restaurant.contactNum}</p>
+    <div className={styles.bodyBgd}>
+      <div className={styles.profileWrapper}>
+        <div className={styles.bannerWrapper}>
+          <img
+            src={"https://www.sandiegorestaurantweek.com/wp-content/uploads/2022/02/SDRW_Press_WebGraphic-1030x465.jpeg"}
+            alt="Food Banner"
+            width="50%"
+            height="50%"
+            className={styles.bannerImg}
+          />
+          <button
+            type="button"
+            className={styles.back}
+            onClick={() => {
+            router.push("/browse");
+          }}
+      >
+      <IoArrowBackCircle size={46} className={styles.backButton} />
+      </button>
+      </div>
+      <div className={`${styles.block}`}>
+        <div className={`text-2xl text-center px-5 py-2 font-semibold ${styles.name}`}>
+        {restaurant.businessName}
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 p-5">
+        <h3 className="text-lg">{restaurant.address}</h3>
+        <h3 className="text-lg">{restaurant.contactNum}</h3>
         <div>
           <p>{restaurant.biography}</p>
           <br></br>
-          {products ==! null ? (
+          {products.length !== 0 ? (
             <p>Products: </p>
           ): "Sorry, no products available at the moment"
           }
@@ -58,28 +81,23 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
             }
           </ul>
         </div>
+
+      </div>
       </div>
       <br></br>
-      <button
-        type="button"
-        style={{ border: "1px solid black" }}
-        onClick={() => {
-          router.push("/browse");
-        }}
-      >
-        Back
-      </button>
+
       <div></div>
 
       <Link href={"/reservation/[id]"} as={`/reservation/${restaurant.id}`}>
-          <button type="button" style={{border:"1px solid black"}}>
+          <button type="button"
+          className="bg-white hover:bg-gray-100 text-lg text-gray-800 font-semibold m-2 py-4 px-8 border border-gray-400 rounded shadow">
             Reserve
           </button>
       </Link>
 
       <button
+        className={styles.liveChat}
         type="button"
-        style={{ border: "1px solid black" }}
         onClick={async (e) => {
           e.preventDefault();
           try {
@@ -97,7 +115,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
           }
         }}
       >
-        Live Chat
+        <AiOutlineMessage className={styles.messageIcon} size={45} />
       </button>
     </div>
   );
