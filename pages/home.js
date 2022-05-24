@@ -70,7 +70,7 @@ const Home = (props) => {
         </header>
       </div>
 
-      <div className="flex flex-wrap items-center flex-row-reverse bg-[#FF8370] py-16">
+      <div className="flex flex-wrap items-center flex-row-reverse items-center bg-[#FF8370] py-16">
         <div className="w-full sm:w-1/2 text-center sm:px-6">
           <h1 className="text-3xl text-[#00B1B0] font-semibold drop-shadow-lg">
             Let us Eliminate this Excess Waste
