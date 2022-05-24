@@ -17,6 +17,7 @@ const tagsGenerator = () => {
 
 const organizations = [
   {
+    id: 21,
     email: "oodles@gmail.com",
     businessName: "Oodles",
     contactNum: "1118675309",

@@ -3,16 +3,24 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .manageWrapper {
   width: 80%;
   max-width: 500px;
   margin: 0 auto;
+  min-width: 300px;
 }
 
 .manageWrapper > h1 {
   text-align: center;
+}
+
+.addWrapper {
+  width: 80%;
+  margin: 0 auto;
+  min-width: 300px;
 }
 
 .numberInput {
@@ -36,9 +44,34 @@
 
 .noProducts {
   color: #c31442;
+  height: 328px;
+  padding: 20px;
+  margin-top: 0;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
+}
+
+.flexWrapper {
+  margin: 20px 0px;
+}
+
+@media only screen and (min-width: 800px) {
+  .flexWrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    max-width: 800px;
+    height: calc(100vh - 80px);
+    align-items: center;
+    justify-content: center;
+  }
+  .flexWrapper > div {
+    width: 50%;
+  }
+  .addWrapper {
+    margin-top: 0;
+  }
 }
