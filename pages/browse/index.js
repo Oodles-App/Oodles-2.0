@@ -167,6 +167,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
                   type="text"
                   placeholder="Search by Organization"
                   name="search"
+                  style={{borderRadius:"10px", padding:"10px"}}
                   onChange={(e) => searchOrganizations(e.target.value)}
                 />
                 <div>
