@@ -25,21 +25,22 @@ model User {
   sentMessages      Message[]  @relation("sentMessages")
   receivedMessages  Message[]  @relation("receivedMessages")
   products          Product[]
-  reservations      Reservation[]
+  organization      Reservation[] @relation("organization")
+  restaurant        Reservation[] @relation("restaurant")
   tags              Tag[]
 }
 
 model Tag {
-  id      Int         @id @default(autoincrement())
-  name    String?     @unique
-  label   String      @unique      
-  value   String      @unique
-  products Product[]
-  users User[]
+  id        Int         @id @default(autoincrement())
+  label     String      @unique      
+  value     String      @unique
+  category  String
+  products  Product[]
+  users     User[]
 }
 
 model Product {
-  id      Int         @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
 	user			  User?    @relation(fields:[userId], references:[id])
   userId      Int?
   name        String
@@ -58,10 +59,13 @@ enum Status {
 model Reservation {
   id          Int      @id @default(autoincrement())
   reserveTime DateTime @default(now())
-  pickupTime Int
+  pickupTime String
   status    Status
-  user      User    @relation(fields:[userId], references:[id])
-  userId      Int
+  organization      User    @relation(name: "organization", fields:[organizationId], references:[id])
+  restaurant        User    @relation(name: "restaurant", fields:[restaurantId], references:[id])
+  organizationId      Int
+  restaurantId        Int
+  cart      Json
 }
 
 model Message {

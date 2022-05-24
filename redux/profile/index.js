@@ -1,6 +1,8 @@
 import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
 
+import { createAlert } from "../alerts";
+
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
 
@@ -18,13 +20,11 @@ export const setProfile = (profile) => {
 export const fetchEditProfile = (user) => {
   return async (dispatch) => {
     try {
-      const profile = await fetchWrapper.get(`${baseUrl}/${user.id}`, user);
+      const profile = await fetchWrapper.get(`/api/users/${user.id}`, user);
       dispatch(setProfile(profile));
     } catch (error) {
       console.error(error);
-      dispatch(
-        setProfile({ error: { message: error.message, id: error.status } })
-      );
+      dispatch(createAlert({ message: error.message }));
     }
   };
 };
@@ -32,14 +32,17 @@ export const fetchEditProfile = (user) => {
 export const updateUser = (user, newProfile) => {
   return async (dispatch) => {
     try {
+      const token = JSON.parse(window.localStorage.getItem("user")).token;
+      newProfile.token = token;
       const updatedUser = await fetchWrapper.put(
-        `${baseUrl}/${user.id}`,
+        `/api/users/${user.id}`,
         user,
         newProfile
       );
       dispatch(setProfile(updatedUser));
     } catch (error) {
-      console.log(error); //TODO: replace with better error handling
+      error;
+      dispatch(createAlert({ message: error.message }));
     }
   };
 };

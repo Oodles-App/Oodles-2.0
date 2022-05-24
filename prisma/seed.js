@@ -1,7 +1,8 @@
-const bcrypt = require("bcryptjs");
-
 const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+let prisma = new PrismaClient();
+
+const bcrypt = require("bcryptjs");
+const tags = require("./data/tags");
 
 async function createAdmin() {
   const admin = {
@@ -9,7 +10,7 @@ async function createAdmin() {
     businessName: "Oodles",
     contactNum: "1118675309",
     address: "2202 Oodles Street, New York, NY",
-    businessType: "ORGANIZATION",
+    businessType: "organization",
   };
 
   const password = "oodles2202";
@@ -18,12 +19,7 @@ async function createAdmin() {
 }
 
 async function createTags() {
-  const dummyTags = [
-    { label: "Tag1", value: "1" },
-    { label: "Tag2", value: "2" },
-    { label: "Tag3", value: "3" },
-  ];
-  await Promise.all(dummyTags.map((tag) => prisma.tag.create({ data: tag })));
+  await Promise.all(tags.map((tag) => prisma.tag.create({ data: tag })));
 }
 
 async function createArticles() {
@@ -48,6 +44,62 @@ async function createArticles() {
       url: "https://www.fda.gov/food/consumers/food-loss-and-waste",
     },
   });
+  await prisma.Article.create({
+    data:{
+      title: "Food waste in the United States: A contributing factor toward environmental instability ",
+      author:"Michael E. Hickey and Gulnihal Ozabay",
+      url:"https://www.frontiersin.org/articles/10.3389/fenvs.2014.00051/full"
+    }
+
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Reducing Food Waste in Your Kitchen During a Pandemic",
+      author:"Jeremy Hobson and Allison Hagan",
+      url: "https://www.unep.org/thinkeatsave/news/story/reducing-food-waste-your-kitchen-during-pandemic"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "All-Purpose Cleaner is Made Entirely of Food Waste Collected in NYC",
+      author:"Andy Corbley",
+      url: "https://www.unep.org/thinkeatsave/news/story/all-purpose-cleaner-made-entirely-food-waste-collected-nyc-and-ditches-plastic-spray"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Preventing Food Waste",
+      author:"Jane Black",
+      url: "https://www.worldwildlife.org/magazine/issues/fall-2018/articles/preventing-food-waste",   
+    }
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Preventing Wasted Food at Home",
+      author:"EPA",
+      url:"https://www.epa.gov/recycle/preventing-wasted-food-home"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "Examining Plastic and Food Waste: A Package Deal",
+      author:"Minnie Ringland",
+      url: "https://refed.org/articles/plastic-and-food-waste-a-package-deal/"
+    }
+    
+  })
+  await prisma.Article.create({
+    data:{
+      title: "GUEST BLOG: How to EatOrToss is Empowering Consumers to Waste Less By Understanding their Food Better ",
+      author:"Rachael Jackson",
+      url:"https://refed.org/articles/guest-blog-how-eatortoss-is-empowering-consumers-to-waste-less-by-understanding-their-food-better/"
+    
+    }
+    
+  })
 }
 
 const restaurants = [
@@ -59,11 +111,13 @@ const restaurants = [
     neighborhood: "Manhattan",
     photograph: "1.jpg",
     address: "171 E Broadway, New York, NY 10002",
+    contactNum: "347-448-6040",
     latlng: {
       lat: 40.713829,
       lng: -73.989667,
     },
     cuisine_type: "Asian",
+    biography: "Mission Chinese is a New York based restaurant that creates Sichuan-style dishes that surpass the traditional. Inspired by the nuances of all cuisines, Mission merges unique flavors for food that are delightful and unexpected.",
     operating_hours: {
       Monday: "5:30 pm - 11:00 pm",
       Tuesday: "5:30 pm - 12:00 am",
@@ -105,11 +159,13 @@ const restaurants = [
     neighborhood: "Brooklyn",
     photograph: "2.jpg",
     address: "919 Fulton St, Brooklyn, NY 11238",
+    contactNum: "212-394-1735",
     latlng: {
       lat: 40.683555,
       lng: -73.966393,
     },
     cuisine_type: "Pizza",
+    biography:"Both wood burning ovens at our locations center as the hearths where you will find Matt and our team cooking pizzas from dough made with care and mozzarella made by hand. Matt’s outlook on cooking for others is that when you put genuine love into the preparation of a meal, those who eat it can taste the sentiment behind it. I am thrilled to be the namesake of my husband’s restaurant and am proud to offer to you pizza and other delicious fare from our hearts made and served with love.",
     operating_hours: {
       Monday: "5:30 pm - 11:00 pm",
       Tuesday: "5:30 pm - 11:00 pm",
@@ -151,11 +207,13 @@ const restaurants = [
     email: "KHDB@gmail.com",
     photograph: "3.jpg",
     address: "1 E 32nd St, New York, NY 10016",
+    contactNum:"718-293-5850",
     latlng: {
       lat: 40.747143,
       lng: -73.985414,
     },
     cuisine_type: "Asian",
+    biography:"Baekjeong, the Korean word for 'butcher', reflects our commitment to serve only the highest quality meats and offer a truly outstanding Korean cultural dining experience, showcasing the rich authentic flavors and the unique qualities of Korean barbecue. Owned and operated by Kijung Hospitality Group, we opened the first US Baekjeong in Los Angeles in October 2012 and quickly expanded to 7 restaurants in California and New York, making us the #1 choice for Korean barbecue in North America. From our innovative grill to our nationwide expansion, Baekjeong is widely recognized by leading food critics as the gold standard and industry leader in Korean barbecue.", 
     operating_hours: {
       Monday: "11:30 am - 2:00 am",
       Tuesday: "11:30 am - 2:00 am",
@@ -197,11 +255,13 @@ const restaurants = [
     email: "katz@gmail.com",
     photograph: "4.jpg",
     address: "205 E Houston St, New York, NY 10002",
+    contactNum: "212-701-3921",
     latlng: {
       lat: 40.722216,
       lng: -73.987501,
     },
     cuisine_type: "American",
+    biography:"Each week thousands of visitors from around the world flock to Katz's to dine in this legendary deli, and to feast on the most delectable sandwiches, platters and meats. But it's really New Yorkers have made Katz's Delicatessen what it is, making Katz's an inherent part of the city's culture and history. They enthusiastically spread the word, brought their friends in, wrote books, shot films, and kept coming back for a pastrami on rye. Building a reputation on longevity alone is nothin' to brag about, which is why we've built ours on quality. Now that's somethin' special. We only select the best cuts of beef for our corned beef, pastrami, brisket, and other fine foods. Our corned beef and pastrami is cured using a slower method, which best flavors the meat, without injecting chemicals, water, or other additives to speed the process. Our finished product can take up to a full 30 days to cure, while commercially prepared corned beef is often pressure-injected (or 'pumped') to cure in 36 hours. Yep, you read that right. 30 days vs. 36 hours. Now, which sounds like the better meat to you?",
     operating_hours: {
       Monday: "8:00 am - 10:30 pm",
       Tuesday: "8:00 am - 10:30 pm",
@@ -243,11 +303,13 @@ const restaurants = [
     email: "RP@gmail.com",
     photograph: "5.jpg",
     address: "261 Moore St, Brooklyn, NY 11206",
+    contactNum: "908-291-5674",
     latlng: {
       lat: 40.705089,
       lng: -73.933585,
     },
     cuisine_type: "Pizza",
+    biography:"Down a nearly forgotten corner of Bushwick whose neighbors include abandoned factories and gritty warehouses, you’ll find an old shipping container, a fiery red pizza oven imported from Italy and New York royalty--Beyoncé and Jay-Z. Why? Let’s just leave it as... it’s Brooklyn. Waiting in hour long lines wrapped around a graffiti-tagged garage, New Yorkers gather around long picnic tables as they dine on some of the city’s best Neapolitan-inspired pizza, lit under the romantic glow of holiday twinkle lights. Simplicity is key here. Each pizza is topped with a fresh tomato sauce and creamy, house-made mozzarella as flames lick the edges of their airy, yet crisp crust in an imported wood-burning oven.",
     operating_hours: {
       Monday: "11:00 am - 12:00 am",
       Tuesday: "11:00 am - 12:00 am",
@@ -289,6 +351,7 @@ const restaurants = [
     username: "HBBQ",
     email: "HBBQ@gmail.com",
     address: "454 Van Brunt St, Brooklyn, NY 11231",
+    contactNum: "718-293-1284",
     latlng: {
       lat: 40.674925,
       lng: -74.016162,
@@ -335,11 +398,13 @@ const restaurants = [
     email: "SB@gmail.com",
     photograph: "7.jpg",
     address: "430 E 9th St, New York, NY 10009",
+    contactNum: "212-237-0841",
     latlng: {
       lat: 40.727397,
       lng: -73.983645,
     },
     cuisine_type: "American",
+    biography: "Punk-rock drummer and former fine-dining pastry chef extraor­dinaire, total badass and wearer of paper soda-jerk hats — if you were looking for someone to give vegetarian fast-food a spectacular high-low makeover, to make it cool, cravable, and also, you know, nutritious, you couldn’t do much better than Brooks Headley. Everything on his Superiority menu — veggie burger, faux Sloppy Joe, burnt-broccoli salad — is mysteriously satisfying and as good as you’ve heard, except the Superiority Wrap (a.k.a. the Hippie Wrap), which is better than you’ve heard. Nor do daily specials like vegan pump-cheese nachos disappoint. Have an expert Arnold Palmer while you wait for the savory stuff. Then take your salubrious fast-food feast to a Tompkins Square Park bench, or, if one’s available, grab an old-fashioned swing-tray seat at the restaurant and imagine you’re dining at the late, great, decidedly nonvegetarian Prime Burger on 51st Street.",
     operating_hours: {
       Monday: "11:30 am - 10:00 pm",
       Tuesday: "Closed",
@@ -381,11 +446,13 @@ const restaurants = [
     neighborhood: "Manhattan",
     photograph: "8.jpg",
     address: "131 Sullivan St, New York, NY 10012",
+    contactNum: "212=825-1112",
     latlng: {
       lat: 40.726584,
       lng: -74.002082,
     },
     cuisine_type: "American",
+    biography: "The Dutch is an American restaurant, bar and oyster room inspired by local cafes, country inns, corner taverns, neighborhood bistros, seaside shacks, roadside joints and the same mix of cultural influences that make New York City great. Award-winning Chef Andrew Carmellini's roots-inspired American menu features fresh fish and shellfish, choice meats, local produce and the best of what's around.",
     operating_hours: {
       Monday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
       Tuesday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
@@ -427,11 +494,13 @@ const restaurants = [
     neighborhood: "Queens",
     photograph: "9.jpg",
     address: "1209 Jackson Ave, Queens, NY 11101",
+    contactNum: "212-900-7832",
     latlng: {
       lat: 40.743797,
       lng: -73.950652,
     },
     cuisine_type: "Asian",
+    biography: "Mu offers ramen and other recipes prepared with New York influences. Originally starting out as a late-night pop-up eatery in Long Island City, owner and chef Joshua Smookler combines fresh, high quality ingredients into memorable meals. Dinners at Mu Ramen can start with selections from the treats offerings, which include charred edamame, okonomiyaki, tebasaki gyoza and U.N.I. Ramen choices include tonkotsu, spicy miso, and shoyu.",
     operating_hours: {
       Monday: "5:00 pm - 10:00 pm",
       Tuesday: "5:00 pm - 10:00 pm",
@@ -473,11 +542,13 @@ const restaurants = [
     neighborhood: "Queens",
     photograph: "10.jpg",
     address: "5-48 49th Ave, Queens, NY 11101",
+    contactNum: "347-448-6040",
     latlng: {
       lat: 40.743394,
       lng: -73.954235,
     },
     cuisine_type: "Mexican",
+    biography: "Casa Enrique opened its doors on March 15th 2012, and quickly established itself as a local hotspot in Long Island City. In September 2014, Casa Enrique was awarded its first ever Michelin star. “We are very proud to serve our family’s recipes to our friends and customers and share a taste of home with them”. Casa Enrique continues this same tradition till this day, while being awarded another 6 Michelin stars in as many years. In addition, Chef Cosme is also a James Beard award nominee for excellence in Mexican cuisine. Join us on this unique gastronomical journey & experience first hand the magic that is Casa Enrique. Buen Provecho.",
     operating_hours: {
       Monday: "5:00 pm - 12:00 am",
       Tuesday: "5:00 pm - 12:00 am",
@@ -516,7 +587,6 @@ const restaurants = [
 const createRestaurants = async () => {
   for (let i = 0; i < restaurants.length; i++) {
     const restaurant = restaurants[i];
-
     await prisma.User.create({
       data: {
         email: restaurant.email,
@@ -525,9 +595,9 @@ const createRestaurants = async () => {
         address: restaurant.address,
         lat: restaurant.latlng.lat,
         lng: restaurant.latlng.lng,
-        businessType: "RESTAURANT",
-        contactNum: "123",
-        biography: "foo",
+        businessType: "restaurant",
+        contactNum: restaurant.contactNum,
+        biography: restaurant.biography,
         imageUrl: "bar",
         hash: "1",
       },

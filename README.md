@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Welcome to Oodles!
 
-## Getting Started
+Oodles is an application that brings restaurants and non-profit organizations together with the common goal of eliminating food waste. Restaurant owners can use our application to donate specified food products to non-profit organizations seeking food donations. Non-profit organizations in search of specific donations can find and contact local restaurants offering those food items.
 
-First, run the development server:
+## Beta Testing
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Please use developer tools for a mobile device view.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Oodles app link: https://oodles-2-1.vercel.app/account/login
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Please give us feedback based on your experience!
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Feedback Link: https://forms.gle/on4JRWwETLyZpcaA7

@@ -1,0 +1,14 @@
+.card {
+  margin: 20px auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 200px;
+  width: 80%;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #00000020;
+  border-radius: 0.25rem;
+}

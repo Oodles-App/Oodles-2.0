@@ -2,6 +2,7 @@ import { fetchWrapper } from "../../helpers";
 import getConfig from "next/config";
 import { BehaviorSubject } from "rxjs";
 import Router from "next/router";
+import { createAlert } from "../alerts/index";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
@@ -32,7 +33,7 @@ export const logout = () => {
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      const user = await fetchWrapper.post(`${baseUrl}/authenticate`, {
+      const user = await fetchWrapper.post(`/api/users/authenticate`, {
         email,
         password,
       });
@@ -41,8 +42,12 @@ export const login = (email, password) => {
 
       dispatch(setUser(user));
     } catch (error) {
-      //if user tries to log in with invalid credentials user object with have a key 'error' with error message
-      dispatch(setUser({ error }));
+      dispatch(
+        createAlert({
+          message: error.message,
+          key: new Date().getTime(),
+        })
+      );
     }
   };
 };
@@ -51,11 +56,19 @@ export const postUser = (user) => {
   return async (dispatch) => {
     try {
       const { email, password } = user;
-      const newUser = await fetchWrapper.post(`${baseUrl}/register`, user);
+      const newUser = await fetchWrapper.post(`/api/users/register`, user);
       dispatch(login(email, password));
+      dispatch(
+        createAlert({
+          message: "Registration successful.",
+          keepAfterRouteChange: true,
+        })
+      );
+      Router.push("/account/edit-profile");
     } catch (error) {
-      //if user tries to sign up with invalid credentials user object with have a key 'error' with error message
-      dispatch(setUser({ error }));
+      dispatch(
+        createAlert({ message: error.message, key: new Date().getTime() })
+      );
     }
   };
 };

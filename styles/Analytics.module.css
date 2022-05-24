@@ -1,0 +1,53 @@
+.analyticsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1000px;
+  height: calc(100vh - 126px);
+  margin: 0 auto;
+}
+
+.chartLoadingWrapper {
+  height: calc(100vh - 86px);
+}
+
+.chartLoadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loadIconWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.chartWrapper {
+  height: 80%;
+  margin: auto 10px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 900px;
+}
+
+.shortCardWrapper {
+  height: calc(25% - 8px);
+}
+
+.shortChart {
+  height: 75%;
+}
+
+.cardWrapper {
+  height: calc(20% - 8px);
+}
+
+.optionsChild {
+  flex: 0 1 calc(50% - 10px);
+}
+
+.selected {
+  box-shadow: 1 1 black;
+}
