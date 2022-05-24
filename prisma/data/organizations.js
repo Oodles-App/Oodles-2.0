@@ -132,7 +132,7 @@ const organizations = [
     biography:
       "New York Common Pantry reduces hunger and promotes dignity, health and self-sufficiency.",
     imageUrl:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nycfoodpolicy.org%2Fnew-york-common-pantry-promotes-dignity-self-sufficiency%2F&psig=AOvVaw2OhGABUsEQN9AaenSEtwm7&ust=1653427670936000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPj0pJrI9vcCFQAAAAAdAAAAABAD",
+      "https://nycommonpantry.org/wp-content/uploads/2021/12/DSC_1242-Edit-Edit-Edit_R01-scaled.jpeg",
     tags: { connect: tagsGenerator() },
   },
   {
