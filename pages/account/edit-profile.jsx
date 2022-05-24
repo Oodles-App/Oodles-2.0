@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
@@ -130,27 +132,20 @@ const EditProfile = () => {
 
   return (
     <ThemeProvider theme={editProfileTheme}>
-      <div className={`pt-5 max-w-2xl my-0 mx-auto ${styles.editWrapper}`}>
+      <div className={`pt-6 pb-1 max-w-2xl my-0 mx-auto ${styles.editWrapper}`}>
         <Layout>
           <div className={styles.imageContainer}>
             <img
               src={profile.imageUrl || placeholderSrc}
               className={styles.image}
             />
-            {/* Next.js image element doesn't allow external URls except those that are denoted in next.config
-        <Image
-          src={profile.imageUrl || placeholderSrc}
-          alt="User profile image"
-          layout="fill"
-          objectFit="cover"
-        /> */}
           </div>
           <form onSubmit={handleFormSubmit} className={styles.form}>
             <div>
               <h3 className={`${styles.title} text-2xl font-bold`}>
                 Edit Profile
               </h3>
-              <hr className="border-1 border-black" />
+              <hr className="border-2 border-white" />
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="businessName" className={styles.label}>

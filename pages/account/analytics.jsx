@@ -38,7 +38,7 @@ const Analytics = () => {
   }
 
   return (
-    <div>
+    <div className="backgroundWhite">
       <ThemeProvider theme={chartsTheme}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
