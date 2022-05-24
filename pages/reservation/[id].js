@@ -176,18 +176,7 @@ return (
                           </label>
            
                         </div>
-                        {/* <label id="quantity-input" htmlFor="quantity">
-                          Quantity:
-                          <input
-                            type="string"
-                            id="quantity"
-                            value={product.value}
-                            min={0}
-                            max={product.amount}
-                            onChange={(event) => handleValue(event, product)}
-                            style={{width:"20px"}}
-                          />
-                        </label> */}
+                      
                       </>    
                   </div>
                 )) 

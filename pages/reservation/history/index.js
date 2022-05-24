@@ -43,6 +43,10 @@ export default function History ({reservationsInfo, restaurantList}){
   return (
     <div>
       <h1 style={{textAlign:"center", fontSize:"40px"}}>History</h1>
+      {usersReservation.length === 0 ? (<div>
+        <br></br> <p style={{textAlign:"center"}}>No History Available.</p>
+        </div>) 
+      :(
       <div className={styles.history}>
         <table className={styles.historyTable}>
           <tbody>
@@ -65,7 +69,7 @@ export default function History ({reservationsInfo, restaurantList}){
             }
           </tbody>
         </table>
-      </div> 
+      </div> )}
     </div>
   )
 }

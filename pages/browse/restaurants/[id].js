@@ -29,8 +29,7 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
   const user = useSelector((state) => state.user);
   const [restaurant, setRestaurants] = useState(restaurantInfo);
   const [products, setProducts] = useState(initialProducts)
-  const router = useRouter();
-  console.log(products[0])
+  const router = useRouter(); 
 
   return (
     <div>
