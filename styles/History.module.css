@@ -1,39 +1,43 @@
+.historyWrapper {
+  width: 90%;
+  margin: 20px auto;
+  max-width: 550px;
+}
 
 .history {
-    width: 100%;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-    
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .historyTable {
-    border: 2px solid forestgreen;
-    width: 800px;
-    height: 200px;
-    text-align: center;
+  border: 2px solid forestgreen;
+  width: 800px;
+  height: 200px;
+  text-align: center;
+}
 
-  }
-    
 #organizationName {
-    border-bottom: 1px solid black;
-    text-align: center;
-
-  }
+  border-bottom: 1px solid black;
+  text-align: center;
+}
 #status {
-    border-bottom: 1px solid black;
-    text-align: center;
-
-
+  border-bottom: 1px solid black;
+  text-align: center;
 }
 #date {
-    border-bottom: 1px solid black;
-    text-align: center;
-
-
+  border-bottom: 1px solid black;
+  text-align: center;
+  border-bottom: 1px solid #ffb4a9;
 }
-    
+
 #text {
-    text-align: center;
-    padding:5px;
-  }
+  text-align: center;
+  padding: 5px;
+}
+
+.cell {
+  padding: 5px;
+}
