@@ -31,7 +31,7 @@ const Home = (props) => {
           </div>
         </div>
 
-        <div className="w-full sm:w-1/2">
+        <div className="w-full sm:w-1/2 pr-10">
           <Image
             src="/oodlesHero.png"
             alt="Oodles Landing Page Image"
