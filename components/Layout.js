@@ -18,7 +18,9 @@ export default function Layout({ children }) {
         <nav className={`${styles.navbar} bg-[#FEC84D]`}>
           <Link href="/home">
             <a className={styles.navlogo}>
-              <div className={styles.oodlesSvg} />
+              <div className={styles.svgWrapper}>
+                <div className={styles.oodlesSvg} />
+              </div>
             </a>
           </Link>
           <ul

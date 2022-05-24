@@ -9,10 +9,18 @@
   padding: 1rem 1.5rem;
 }
 
-.oodlesSvg {
+.svgWrapper {
   width: 135px;
-  height: 2rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.oodlesSvg {
   background-image: url("/oodlesNav_NavBar.svg");
+  width: 100%;
+  height: 30px;
   object-fit: contain;
   background-repeat: no-repeat;
 }
