@@ -11,11 +11,13 @@ export default function Layout({ children }) {
   const [isOpen, setOpen] = useState(false);
   const clickMenu = () => setOpen(!isOpen);
   const isLoggedIn = useSelector((state) => state.user.id !== undefined);
+  const userType = useSelector((state) => state.user.businessType)
+  console.log(userType);
 
   return (
     <>
       <header className={styles.header}>
-        <nav className={`${styles.navbar} bg-[#FEC84D]`}>
+        <nav className={`${styles.navbar} bg-[#FEC84D] flex`}>
           <Link href="/home">
             <a className={styles.navlogo}>
               <div className={styles.svgWrapper}>
@@ -53,8 +55,18 @@ export default function Layout({ children }) {
                     </a>
                   </Link>
                 </li>
+                <li className={styles.navitem}>
+                  <Link href="/articles">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Articles
+                    </a>
+                  </Link>
+                </li>
               </>
-            ) : (
+            ) : userType === "restaurant" ? (
               <>
                 <li className={styles.navitem}>
                   <Link href="/">
@@ -120,6 +132,17 @@ export default function Layout({ children }) {
                 </li>
 
                 <li className={styles.navitem}>
+                  <Link href="/reservation/history">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Reservation History
+                    </a>
+                  </Link>
+                </li>
+
+                <li className={styles.navitem}>
                   <Link href="">
                     <a
                       onClick={() => {
@@ -133,6 +156,75 @@ export default function Layout({ children }) {
                   </Link>
                 </li>
               </>
+            ) : (
+              <>
+              <li className={styles.navitem}>
+                  <Link href="/">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Home
+                    </a>
+                  </Link>
+                </li>
+
+                <li className={styles.navitem}>
+                  <Link href="/browse">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Browse
+                    </a>
+                  </Link>
+                </li>
+                <li className={styles.navitem}>
+                  <Link href="/articles">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Articles
+                    </a>
+                  </Link>
+                </li>
+                <li className={styles.navitem}>
+                  <Link href="/account/edit-profile">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Edit Profile
+                    </a>
+                  </Link>
+                </li>
+                <li className={styles.navitem}>
+                  <Link href="/reservation/history">
+                    <a
+                      onClick={() => setOpen(false)}
+                      className={styles.navlink}
+                    >
+                      Reservation History
+                    </a>
+                  </Link>
+                </li>
+
+                <li className={styles.navitem}>
+                  <Link href="">
+                    <a
+                      onClick={() => {
+                        dispatch(logout());
+                        setOpen(false);
+                      }}
+                      className={styles.navlink}
+                    >
+                      Logout
+                    </a>
+                  </Link>
+                </li>
+              </>
+
             )}
           </ul>
           <button

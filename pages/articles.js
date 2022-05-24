@@ -1,5 +1,6 @@
 import { useState } from "react";
 import prisma from "../db";
+import styles from "../styles/Articles.module.css";
 
 export async function getStaticProps() {
   const articles = await prisma.article.findMany();
@@ -18,8 +19,8 @@ const Articles = ({ initialArticles }) => {
   const [search, setSearch] = useState("");
 
   return (
-    <div>
-      <h1 className="ArticlesPage">Articles</h1>
+    <div className={styles.body}>
+      <h1 className="ArticlesPage py-8">Articles</h1>
       <div className="search-container">
         <form action="/action_page.php">
           <input
@@ -28,7 +29,7 @@ const Articles = ({ initialArticles }) => {
             placeholder="Search by Title"
             name="search"
             onChange={(e) => setSearch(e.target.value)}
-            className={"px-6"}
+            className={"px-6 m-8"}
           />
           <ul>
             {articles
@@ -38,7 +39,7 @@ const Articles = ({ initialArticles }) => {
               .map((article) => (
                 <li
                   key={article.id}
-                  className={"sm:grid grid-cols-5 bg-white shadow-sm p-7 relative lg:max-w-2xl sm:p-4 rounded-lg lg:col-span-2 lg:ml-20"}
+                  className={"sm:grid grid-cols-5 bg-white shadow-sm p-7 relative lg:max-w-2xl sm:p-4 rounded-lg lg:col-span-2 lg:ml-20 py-8"}
                 >
                   {/* <Image src="/default-placeholder.png" width="20px" height="20px" alt="Article picture"/> */}
                   <div className={"pt-5 self-center sm:pt-0 sm:pl-10 col-span-3"}>
