@@ -13,6 +13,22 @@
     display: none;
 }
 
+.svgWrapper {
+  width: 135px;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.oodlesSvg {
+  background-image: url("/oodlesNav_NavBar.svg");
+  width: 100%;
+  height: 30px;
+  object-fit: contain;
+  background-repeat: no-repeat;
+}
+
 .bar {
     display: block;
     width: 35px;
