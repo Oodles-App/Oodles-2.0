@@ -168,7 +168,7 @@ const Organization = ({ organizationInfo }) => {
                 <div className="font-thin">
                   <IoLocationOutline size={70} strokeWidth={1} />
                 </div>
-                <div className="text-l font-semibold w-3/5">
+                <div className="text-l font-semibold">
                   <p>{formatAddress(organizationInfo.address).line1}</p>
                   <p>{formatAddress(organizationInfo.address).line2}</p>
                   <p>{organizationInfo.contactNum}</p>

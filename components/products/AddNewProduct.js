@@ -1,31 +1,33 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postProduct } from "../../redux/userProducts";
+import ReactSelect from "react-select";
 
-import {
-  Paper,
-  TextField,
-  IconButton,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  FormLabel,
-} from "@mui/material";
+import { Paper, TextField, IconButton, Button, FormLabel } from "@mui/material";
 
 import styles from "../../styles/ManageProducts.module.css";
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 
 import { createAlert } from "../../redux/alerts";
+import { fetchTags } from "../../redux/tags";
 
 const AddNewProduct = ({ user }) => {
   const dispatch = useDispatch();
   const initialForm = {
     name: "",
     amount: 0,
-    measurement: "",
   };
+
   const [formContent, setFormContent] = useState(initialForm);
+  const [productTags, setProductTags] = useState([]);
+  const [measurement, setMeasurement] = useState("");
+  const [loading, setLoading] = useState(true);
+  const allTags = useSelector((state) => state.tags);
+
+  useEffect(() => {
+    dispatch(fetchTags(user));
+    setLoading(false);
+  }, []);
 
   const handleFormChange = (e) => {
     setFormContent({ ...formContent, [e.target.name]: e.target.value });
@@ -53,10 +55,25 @@ const AddNewProduct = ({ user }) => {
     e.preventDefault();
     formContent.amount = Number(formContent.amount);
 
+    const productTagsConnect = productTags.map((tag) => {
+      return { id: tag.id };
+    });
+
     const newProduct = {
       ...formContent,
+      measurement: measurement.value,
+      tags: { connect: productTagsConnect },
       userId: user.id,
     };
+
+    if (measurement === "") {
+      dispatch(
+        createAlert({
+          message: "Failed to add product. Please input a measurement.",
+        })
+      );
+      return;
+    }
     if (isNaN(formContent.amount)) {
       dispatch(
         createAlert({
@@ -76,6 +93,8 @@ const AddNewProduct = ({ user }) => {
     }
     dispatch(postProduct(newProduct, user));
     setFormContent(initialForm);
+    setMeasurement("");
+    setProductTags([]);
   };
 
   return (
@@ -152,22 +171,33 @@ const AddNewProduct = ({ user }) => {
               </div>
             </div>
             <div>
-              <FormControl fullWidth>
-                <FormLabel>Measurement</FormLabel>
-                <Select
-                  size="small"
-                  fullWidth
-                  name="measurement"
-                  value={formContent.measurement}
-                  onChange={handleFormChange}
-                >
-                  <MenuItem value="individual">individual</MenuItem>
-                  <MenuItem value="lbs">lbs</MenuItem>
-                  <MenuItem value="bags">bags</MenuItem>
-                  <MenuItem value="boxes">boxes</MenuItem>
-                  <MenuItem value="cans">cans</MenuItem>
-                </Select>
-              </FormControl>
+              <FormLabel>Measurement</FormLabel>
+              <ReactSelect
+                size="small"
+                fullWidth
+                name="measurement"
+                options={[
+                  { value: "individual", label: "individual" },
+                  { value: "lbs", label: "lbs" },
+                  { value: "bags", label: "bags" },
+                  { value: "boxes", label: "boxes" },
+                  { value: "cans", label: "cans" },
+                ]}
+                value={measurement}
+                onChange={(measurementVal) => setMeasurement(measurementVal)}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <FormLabel>Categories</FormLabel>
+              <ReactSelect
+                isMulti={true}
+                options={allTags}
+                name="tags"
+                className={`bg-slate-50`}
+                value={productTags}
+                sx={{ borderRadius: 1 }}
+                onChange={(tags) => setProductTags(tags)}
+              />
             </div>
           </div>
         </form>

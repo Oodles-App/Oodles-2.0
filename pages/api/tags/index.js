@@ -8,7 +8,7 @@ export default apiHandler({
 async function getTags(req, res) {
   try {
     const allTags = await prisma.tag.findMany();
-    res.status(200).json(allTags);
+    res.status(200).send(allTags);
   } catch (error) {
     console.log(error); //TODO: error handling
   }
