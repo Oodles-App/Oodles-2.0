@@ -23,7 +23,7 @@ const Analytics = () => {
     }
   }, []);
 
-  const handleChange = (e, value) => {
+  const handleChange = (event, value) => {
     if (value === "products") {
       setChart(dynamic(getProducts));
       setValue("products");
