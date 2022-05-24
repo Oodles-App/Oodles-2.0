@@ -1,0 +1,7 @@
+.landingSvg {
+  background-image: url("/landing-01.png");
+  height: 400px;
+  margin-left: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

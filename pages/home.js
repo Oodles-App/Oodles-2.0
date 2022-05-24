@@ -5,29 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
-import ChartLoading from "../components/analytics/ChartLoading";
-import organization from "../public/organization.png";
-import restaurant from "../public/restaurant.png";
-
-const getVisual = () => import("../components/analytics/LandingVisual");
+import styles from "../styles/LandingPage.module.css";
 
 const Home = (props) => {
   const router = useRouter();
-  const [Chart, setChart] = useState(null);
-  const [loadingChart, setLoadingChart] = useState(true);
-  console.log(loadingChart, "loading");
-  console.log(Chart, "chart");
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      setChart(dynamic(getVisual));
-      setLoadingChart(false);
-    }
-  }, []);
-
-  if (loadingChart) {
-    return <div>Loading</div>;
-  }
 
   return (
     <>
@@ -105,15 +86,7 @@ const Home = (props) => {
         </div>
 
         <div className="w-full h-full sm:w-1/2">
-          <Chart />
-          {/* <Image
-            src="/foodWasteData.png"
-            alt="Food Waste Data"
-            width="80%"
-            height="80%"
-            layout="responsive"
-            objectFit="contain"
-          /> */}
+          <div className={styles.landingSvg} />
         </div>
       </div>
     </>
