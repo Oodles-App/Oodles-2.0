@@ -1,0 +1,23 @@
+.bodyBgd {
+    background-image: url("/beveragePattern2-01.svg");
+    height: 100vh;
+  }
+
+/* .profileWrapper {
+min-height: calc(100vh - 80px);
+overflow-x: hidden;
+position: relative;
+background-color: #047474;
+} */
+
+.blueBlock {
+    background-color: #047474;
+    padding:75px;
+    margin: 0;
+    background: #047474;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+  }
