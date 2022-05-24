@@ -39,6 +39,7 @@ const editProduct = (updatedProduct) => {
 };
 
 export const postProduct = (newProduct, user) => {
+  console.log(newProduct, "new product redux");
   return async function (dispatch) {
     const product = await fetchWrapper.post(
       `${baseUrl}/products`,

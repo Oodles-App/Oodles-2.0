@@ -34,6 +34,7 @@ const Organization = ({ organizationInfo }) => {
   const [view800, setView800] = useState(null);
   const [expandedBio, setExpandedBio] = useState(false);
 
+  console.log(view800, "view800");
   useEffect(() => {
     if (window !== undefined) {
       setView800(window.matchMedia("(min-width: 800px)"));
@@ -121,7 +122,7 @@ const Organization = ({ organizationInfo }) => {
             >
               <CardContent className={styles.animateGrow}>
                 <div className={`text-center text-s`}>
-                  {view800 ? (
+                  {view800 && view800.matches ? (
                     <span>{organizationInfo.biography}</span>
                   ) : (
                     <span>
