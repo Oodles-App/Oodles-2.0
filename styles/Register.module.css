@@ -90,6 +90,12 @@
   gap: 20px;
 }
 
+.formContainer {
+  display: flex !important;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .formWidth {
   width: 100%;
 }
@@ -186,10 +192,21 @@
   }
 
   .pageContainer.register {
-    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .cardContainer {
+    padding: 10px 0;
+  }
+
+  .formContainer#registerForm {
+    gap: 10px;
+  }
+
+  .card.expand {
+    height: 520px;
   }
 }
 
@@ -197,12 +214,13 @@
   .pageContainer {
     display: flex;
     width: 100vw;
-    padding: 30px;
   }
   .imageContainer {
     width: 45%;
+    height: 500px;
     position: relative;
-    top: 50px;
+    align-self: end;
+    margin-bottom: 5%;
   }
   .loginContainer {
     width: 50%;

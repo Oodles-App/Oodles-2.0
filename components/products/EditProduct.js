@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ReactSelect from "react-select";
 
 import {
   AccordionDetails,
@@ -26,6 +27,8 @@ const EditProduct = ({ product, user }) => {
     measurement: product.measurement,
   };
   const [formContent, setFormContent] = useState(initialForm);
+  const [productTags, setProductTags] = useState(product.tags);
+  const allTags = useSelector((state) => state.tags);
   const [changes, setChanges] = useState(false);
 
   const handleFormChange = (e) => {
@@ -42,8 +45,14 @@ const EditProduct = ({ product, user }) => {
     }
     setChanges(true);
   };
+
   const handleDelete = (productId) => {
     dispatch(deleteProduct(productId, user));
+  };
+
+  const handleTagsChange = (tags) => {
+    setProductTags(tags);
+    setChanges(true);
   };
 
   const handleSubmit = (e) => {
@@ -68,7 +77,31 @@ const EditProduct = ({ product, user }) => {
       return;
     }
 
-    dispatch(putProduct({ ...formContent, id: product.id }, user));
+    const connectTags = productTags.map((tag) => {
+      return { value: tag.value };
+    });
+
+    const deleteTags = () => {
+      const oldTagValues = product.tags.map((tag) => tag.value);
+      const newTagValues = productTags.map((tag) => tag.value);
+      const tagsToDelete = oldTagValues
+        .filter((tag) => !newTagValues.includes(tag))
+        .map((tag) => {
+          return { value: tag };
+        });
+      return tagsToDelete;
+    };
+
+    dispatch(
+      putProduct(
+        {
+          ...formContent,
+          id: product.id,
+          tags: { connect: connectTags, disconnect: deleteTags() },
+        },
+        user
+      )
+    );
 
     setChanges(false);
   };
@@ -163,6 +196,13 @@ const EditProduct = ({ product, user }) => {
               </FormControl>
             </div>
           </div>
+          <ReactSelect
+            name="tags"
+            options={allTags}
+            isMulti
+            value={productTags}
+            onChange={(tags) => handleTagsChange(tags)}
+          />
         </div>
       </form>
       <button

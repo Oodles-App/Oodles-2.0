@@ -10,7 +10,15 @@ async function getProductsByUser(req, res) {
   const userProducts = await prisma.user.findUnique({
     where: { id: reqId },
     select: {
-      products: true,
+      products: {
+        select: {
+          id: true,
+          name: true,
+          amount: true,
+          measurement: true,
+          tags: true,
+        },
+      },
     },
   });
 

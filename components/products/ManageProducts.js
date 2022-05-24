@@ -24,23 +24,32 @@ const ManageProducts = () => {
   return (
     <div className={`${styles.manageWrapper}`}>
       <h1 className="text-2xl">Your Listings</h1>
-      <div className={styles.listWrapper}>
-        {products.map((product) => (
-          <Accordion key={product.id} TransitionProps={{ unmountOnExit: true }}>
-            <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
-              <div>
-                <div className="text-sm">
-                  {product.amount} {product.measurement}
+      {products.length === 0 ? (
+        <div className={`text-center mt-2 ${styles.noProducts}`}>
+          No products currently listed.
+        </div>
+      ) : (
+        <div className={`${styles.listWrapper} mt-2`}>
+          {products.map((product) => (
+            <Accordion
+              key={product.id}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ModeEditOutlinedIcon />}>
+                <div>
+                  <div className="text-sm">
+                    {product.amount} {product.measurement}
+                  </div>
+                  <div className="text-xl">
+                    <strong>{product.name}</strong>
+                  </div>
                 </div>
-                <div className="text-xl">
-                  <strong>{product.name}</strong>
-                </div>
-              </div>
-            </AccordionSummary>
-            <EditProduct product={product} user={user} />
-          </Accordion>
-        ))}
-      </div>
+              </AccordionSummary>
+              <EditProduct product={product} user={user} />
+            </Accordion>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

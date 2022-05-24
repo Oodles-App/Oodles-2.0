@@ -70,7 +70,7 @@ function Login() {
       <div className={styles.pageContainer}>
         <div className={styles.loginContainer}>
           <ThemeProvider theme={editProfileTheme}>
-            <div className={`${styles.cardContainer} z-10`}>
+            <div className={`${styles.cardContainer}`}>
               <div className={`${styles.card} ${styles.login}`}>
                 <h4 className={styles.cardHeader}>Login</h4>
                 <div className={styles.cardBody}>
@@ -122,7 +122,7 @@ function Login() {
                 </div>
               </div>
               <div className={styles.registerLink}>
-                <p>
+                <p className="font-semibold">
                   Don't have an account?
                   <span>
                     <Link href="/account/register"> Click here </Link>

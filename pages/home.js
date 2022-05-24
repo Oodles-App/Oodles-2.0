@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import organization from "../public/organization.png";
-import restaurant from "../public/restaurant.png";
+import dynamic from "next/dynamic";
+
+import styles from "../styles/LandingPage.module.css";
 
 const Home = (props) => {
   const router = useRouter();
@@ -50,14 +52,14 @@ const Home = (props) => {
             What is Life Without Purpose
           </h3>
           <div className="text-xl mt-4 mb-16 mx-16">
-            Oodles means abundance, and at Oodles we realize there is an abundance of food that is 
-            discarded every year by U.S. restaurants. In fact, U.S. restaurants account for a staggering 
-            22 to 33 billion pounds of food waste anually. By connecting restaurant owners with non-profit 
-            organizations requesting food donations, Oodles seeks to significantly decrease food waste 
-            with the greater purpose of making donations available to individuals in food 
-            insecure households across the country. 
-            
-            At Oodles, no food should go to waste.
+            Oodles means abundance, and at Oodles we realize there is an
+            abundance of food that is discarded every year by U.S. restaurants.
+            In fact, U.S. restaurants account for a staggering 22 to 33 billion
+            pounds of food waste anually. By connecting restaurant owners with
+            non-profit organizations requesting food donations, Oodles seeks to
+            significantly decrease food waste with the greater purpose of making
+            donations available to individuals in food insecure households
+            across the country. At Oodles, no food should go to waste.
           </div>
 
           <Link href="/account/register">
@@ -77,20 +79,14 @@ const Home = (props) => {
           <div className="mt-6 text-xl mx-8 py-8">
             We could do more with this abundance. At Oodles we want to help
             restaurants redirect this wasted excess of food to organizations
-            that could provide it to those in need. <Link href="/account/register">Join us</Link> and we will help you
+            that could provide it to those in need.{" "}
+            <Link href="/account/register">Join us</Link> and we will help you
             do your part.
           </div>
         </div>
 
-        <div className="w-full sm:w-1/2">
-          <Image
-            src="/foodWasteData.png"
-            alt="Food Waste Data"
-            width="80%"
-            height="80%"
-            layout="responsive"
-            objectFit="contain"
-          />
+        <div className="w-full h-full sm:w-1/2">
+          <div className={styles.landingSvg} />
         </div>
       </div>
     </>

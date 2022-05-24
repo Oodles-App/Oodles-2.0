@@ -1,452 +1,195 @@
+const bcrypt = require("bcryptjs");
+const { faker } = require("@faker-js/faker");
+
+const tagsGenerator = () => {
+  const randomNumOfTags = () => {
+    return Math.floor(Math.random() * 6) + 1;
+  };
+  const emptyArr = new Array(randomNumOfTags()).fill(null);
+
+  const randomId = () => {
+    return Math.floor(Math.random() * 9) + 1;
+  };
+  return emptyArr.map(() => {
+    return { id: randomId() };
+  });
+};
+
 const organizations = [
   {
-    name: "Mission Chinese Food",
-    username: "MCF",
-    email: "missionChineseFood@gmail.com ",
-    neighborhood: "Manhattan",
-    photograph: "1.jpg",
-    address: "171 E Broadway, New York, NY 10002",
-    latlng: {
-      lat: 40.713829,
-      lng: -73.989667,
+    email: "oodles@gmail.com",
+    businessName: "Oodles",
+    contactNum: "1118675309",
+    address: "2202 Oodles Street, New York, NY",
+    businessType: "organization",
+    hash: bcrypt.hashSync("oodles2202", 10),
+    lat: 40.7128,
+    lng: -74.006,
+    contactNum: "7188675309",
+    biography:
+      "Oodles is an application bringing restaurants and non-profit organizations together with the common goal of eliminating food waste. Restaurant owners can use our application to donate specified food products to non-profit organizations seeking food donations. While Non-profit organizations in search of donations can use our application to find and contact local restaurants offering food items.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370",
+    tags: {
+      connect: [
+        { id: 1 },
+        { id: 2 },
+        { id: 4 },
+        { id: 6 },
+        { id: 8 },
+        { id: 5 },
+      ],
     },
-    cuisine_type: "Asian",
-    operating_hours: {
-      Monday: "5:30 pm - 11:00 pm",
-      Tuesday: "5:30 pm - 12:00 am",
-      Wednesday: "5:30 pm - 12:00 am",
-      Thursday: "5:30 pm - 12:00 am",
-      Friday: "5:30 pm - 12:00 am",
-      Saturday: "12:00 pm - 4:00 pm, 5:30 pm - 12:00 am",
-      Sunday: "12:00 pm - 4:00 pm, 5:30 pm - 11:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Mission Chinese Food has grown up from its scrappy Orchard Street days into a big, two story restaurant equipped with a pizza oven, a prime rib cart, and a much broader menu. Yes, it still has all the hits — the kung pao pastrami, the thrice cooked bacon —but chef/proprietor Danny Bowien and executive chef Angela Dimayuga have also added a raw bar, two generous family-style set menus, and showstoppers like duck baked in clay. And you can still get a lot of food without breaking the bank.",
-      },
-      {
-        name: "Morgan",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "This place is a blast. Must orders: GREEN TEA NOODS, sounds gross (to me at least) but these were incredible!, Kung pao pastrami (but you already knew that), beef tartare was a fun appetizer that we decided to try, the spicy ma po tofu SUPER spicy but delicous, egg rolls and scallion pancake i could have passed on... I wish we would have gone with a larger group, so much more I would have liked to try!",
-      },
-      {
-        name: "Jason",
-        date: "October 26, 2016",
-        rating: 3,
-        comments:
-          "I was VERY excited to come here after seeing and hearing so many good things about this place. Having read much, I knew going into it that it was not going to be authentic Chinese. The place was edgy, had a punk rock throwback attitude, and generally delivered the desired atmosphere. Things went downhill from there though. The food was okay at best and the best qualities were easily overshadowed by what I believe to be poor decisions by the kitchen staff.",
-      },
-    ],
   },
   {
-    name: "Emily",
-    username: "EM",
-    email: "emily@gmail.com",
-    neighborhood: "Brooklyn",
-    photograph: "2.jpg",
-    address: "919 Fulton St, Brooklyn, NY 11238",
-    latlng: {
-      lat: 40.683555,
-      lng: -73.966393,
-    },
-    cuisine_type: "Pizza",
-    operating_hours: {
-      Monday: "5:30 pm - 11:00 pm",
-      Tuesday: "5:30 pm - 11:00 pm",
-      Wednesday: "5:30 pm - 11:00 pm",
-      Thursday: "5:30 pm - 11:00 pm",
-      Friday: "5:30 pm - 11:00 pm",
-      Saturday: "5:00 pm - 11:30 pm",
-      Sunday: "12:00 pm - 3:00 pm, 5:00 pm - 11:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steph",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Five star food, two star atmosphere. I would definitely get takeout from this place - but dont think I have the energy to deal with the hipster ridiculousness again. By the time we left the wait was two hours long.",
-      },
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "This cozy Clinton Hill restaurant excels at both straightforward and unusual wood-fired pizzas. If you want a taste of the latter, consider ordering the Emily, which is topped with mozzarella, pistachios, truffled sottocenere cheese, and honey. The menu includes salads and a handful of starters, as well as a burger that some meat connoisseurs consider to be among the best in the city.",
-      },
-      {
-        name: "Sam",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "5 star atmosphere as it is very cozy with great staff. 5 star food as their Emmy burger is outrageously good. and its on a pretzel bun.. Too juicy for its own good and downright addicting. Also try the Colony pizza. Many others looked like worth competitors, but the Colony really found its way to my heart. when you start with a great crust, top it with top notch cheese and sauce, you've got a winner. But, if you go a step further and add the salty from the pepperoni, the sweet from the honey, and the spicy from the chili oil.... your mouth is confused and happy at the same time.",
-      },
-    ],
+    businessName: "Action Against Hunger",
+    businessType: "organization",
+    email: "actionAgainstHunger@gmail.com",
+    address: "39 Broadway, New York, NY 10038",
+    lat: 40.9387,
+    lng: -73.9612,
+    hash: bcrypt.hashSync("actionAgainstHunger", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "Food Bank For New York City has been working to end food poverty in our five boroughs since 1983. As the city’s largest hunger-relief organization, we employ a multifaceted approach centered on helping low-income New Yorkers overcome their circumstances and achieve greater independence.",
+    imageUrl:
+      "https://www.foodbanknyc.org/wp-content/uploads/2022/03/mothers-day-distribution.jpg",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Kang Ho Dong Baekjeong",
-    neighborhood: "Manhattan",
-    username: "KHDB",
-    email: "KHDB@gmail.com",
-    photograph: "3.jpg",
-    address: "1 E 32nd St, New York, NY 10016",
-    latlng: {
-      lat: 40.747143,
-      lng: -73.985414,
-    },
-    cuisine_type: "Asian",
-    operating_hours: {
-      Monday: "11:30 am - 2:00 am",
-      Tuesday: "11:30 am - 2:00 am",
-      Wednesday: "11:30 am - 2:00 am",
-      Thursday: "11:30 am - 2:00 am",
-      Friday: "11:30 am - 6:00 am",
-      Saturday: "11:30 am - 6:00 am",
-      Sunday: "11:30 am - 2:00 am",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "The tables at this 32nd Street favorite are outfitted with grills for cooking short ribs, brisket, beef tongue, rib eye, and pork jowl. The banchan plates are uniformly good, and Deuki Hong’s menu also includes winning dishes like stir-fried squid noodles, kimchi stew, and seafood pancakes. If it’s available, make sure to order the kimchi and rice “lunchbox.” Baekjeong is a great place for large groups and birthday parties.",
-      },
-      {
-        name: "ZS",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "I've been to Korea before and many other Korean BBQ places. We had the regular pork belly and a beef (forgot which cut) and a seafood tofu soup. Two meat and a soup was just prefect for the two of us. We could have done one meat and one soup. The portions of the meat are great! The beef was juicy, tender and so good. The sides were excellent. ",
-      },
-      {
-        name: "Emily",
-        date: "October 26, 2016",
-        rating: 2,
-        comments:
-          "MEH. I've tried their Jersey location as well but Kang Ho Dong meat quality is severely decreasing. A Korean bbq place with whatever meat? I think NOT!",
-      },
-    ],
+    businessName: "City Harvest",
+    businessType: "organization",
+    email: "cityharvest@gmail.com",
+    address: "6 East 32nd Street, New York, NY 10016",
+    lat: 40.746369,
+    lng: -73.983052,
+    hash: bcrypt.hashSync("cityHarvest", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "City Harvest is New York City’s largest food rescue organization, helping to feed the more than 1.5 million New Yorkers who are struggling to put meals on their tables. We will rescue 100 million pounds of food this year and deliver it, free of charge, to hundreds of food pantries, soup kitchens and other community partners across the five boroughs. Our programs help food-insecure New Yorkers access nutritious food that fits their needs and desires; increase our partners’ capacity; and strengthen the local food system, building a path to a food-secure future for all New Yorkers.",
+    imageUrl:
+      "https://www.cityharvest.org/wp-content/uploads/2016/05/210327_CityHarvest_0521.jpg",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Katz's Delicatessen",
-    neighborhood: "Manhattan",
-    username: "Katz",
-    email: "katz@gmail.com",
-    photograph: "4.jpg",
-    address: "205 E Houston St, New York, NY 10002",
-    latlng: {
-      lat: 40.722216,
-      lng: -73.987501,
-    },
-    cuisine_type: "American",
-    operating_hours: {
-      Monday: "8:00 am - 10:30 pm",
-      Tuesday: "8:00 am - 10:30 pm",
-      Wednesday: "8:00 am - 10:30 pm",
-      Thursday: "8:00 am - 2:30 am",
-      Friday: "8:00 am - Sat",
-      Saturday: "Open 24 hours",
-      Sunday: "Sat - 10:30 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "In 127 years, little has changed at Katz's. It remains one of New York's — and the country's — essential Jewish delicatessens. Every inch of the massive Lower East Side space smells intensely of pastrami and rye loaves. The sandwiches are massive, so they are best when shared. Order at the counter, and don't forget to tip your slicer — your sandwich will be better for it.",
-      },
-      {
-        name: "Allen",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "If I lived in NY and got diabetes from eating here every single time I ate, I would do it over and over and over again just for that first bite. These guys know how to make a sandwich. The heart attack comes free of charge! Came by while I was visiting NYC. First pit-stop when I come back :)!",
-      },
-      {
-        name: "David",
-        date: "October 26, 2016",
-        rating: 2,
-        comments:
-          "Ok so four of us came. One more later who didn't order becauase it's so expensive and simple. Seriously, a bunch of meat albeit you can sample beforehand on rye/white/wheat bread. Cheese extra. Pickles free, you can just ask them at the pickup counter. But seriously 20 bucks gone for an non-flavored half sandwich. And a line that is long, especially if you want seating. I'm down to just take a quick look where Sally and Harry sat and leave to the other delis all around NYC. Oh and they accept Samsung pay.",
-      },
-    ],
+    businessName: "Campaign Against Hunger",
+    businessType: "organization",
+    email: "campaign@gmail.com",
+    address: "2010 Fulton, Brooklyn, NY 11233",
+    lat: 43.192226,
+    lng: -76.25178,
+    hash: bcrypt.hashSync("campaignAgainstHunger", 10),
+    contactNum: "7187733551",
+    biography:
+      "Over the past twenty-two years, The Campaign Against Hunger has grown and stretched from operating out of a small pantry in a church basement to meeting some of the day’s toughest challenges–like youth empowerment, nutrition education, and community engagement–head-on. We have experienced a few name changes (Grace International → Bed-Stuy Campaign Against Hunger → The Campaign Against Hunger), served neighbors in 150 zip codes with food and other vital programs and services, and sought to bring food justice to New York City along the way.",
+    imageUrl: "https://www.tcahnyc.org/wp-content/uploads/2020/11/vol2.png",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Roberta's Pizza",
-    neighborhood: "Brooklyn",
-    username: "RP",
-    email: "RP@gmail.com",
-    photograph: "5.jpg",
-    address: "261 Moore St, Brooklyn, NY 11206",
-    latlng: {
-      lat: 40.705089,
-      lng: -73.933585,
-    },
-    cuisine_type: "Pizza",
-    operating_hours: {
-      Monday: "11:00 am - 12:00 am",
-      Tuesday: "11:00 am - 12:00 am",
-      Wednesday: "11:00 am - 12:00 am",
-      Thursday: "11:00 am - 12:00 am",
-      Friday: "11:00 am - 12:00 am",
-      Saturday: "10:00 am - 12:00 am",
-      Sunday: "10:00 am - 12:00 am",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Roberta's is the epicenter of the modern Brooklyn food scene.The pizzas are fantastic, but the restaurant really flexes its muscles with the vegetable dishes. In addition to the pies, consider ordering the radishes, the romaine salad, the roasted beets, and some of the charcuterie.",
-      },
-      {
-        name: "Raymond",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Roberta's, one of the better pizzas I have had in my life. Very trendy and hipsterish spot. Came here for lunch on a random weekday afternoon and when we arrived, there was a line forming already. The space is a bit cramped. You'll get to know your neighbors soon enough. The pizza is just delightful and delicious. It's a ncie plus that you get to see them firing up the pizzas in the corner. The major issue with Roberta's is the trek out to the Williamsburg/Bushwick.",
-      },
-      {
-        name: "Laurel",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "The pizza is fantastic, not THE best I've ever had, but would definitely go back since it has great food and great ambiance. Definitely worth going to. It has A LOT of hype in the New York food scene, and I question if it deserves all of it, but it's still a totally great spot to hit up when in the area!!",
-      },
-    ],
+    businessName: "Just Food",
+    businessType: "organization",
+    email: "justFood@gmail.com",
+    address: "424 W 54th St, New York, NY 10019",
+    lat: 40.9387,
+    lng: -73.9612,
+    hash: bcrypt.hashSync("justFood", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "At Just Food, we work passionately to shift the power, health, and wealth of historically marginalized communities that have been purposely divested from by developing community-driven solutions to inequities within the New York regional food system. We catalyze action and create change through our learner-centered trainings, annual conferences, and vibrant network of small- to mid-scale regional farmers. We have made racial, economic, and environmental equity our north star.",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/58bf039ca5790aac4a8a0561/1551147961388-7L19TKN5BQ1I16EXR3YJ/MARKET2.jpg?format=300w",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Hometown BBQ",
-    neighborhood: "Brooklyn",
-    photograph: "6.jpg",
-    username: "HBBQ",
-    email: "HBBQ@gmail.com",
-    address: "454 Van Brunt St, Brooklyn, NY 11231",
-    latlng: {
-      lat: 40.674925,
-      lng: -74.016162,
-    },
-    cuisine_type: "American",
-    operating_hours: {
-      Monday: "Closed",
-      Tuesday: "12:00 pm - 10:00 pm",
-      Wednesday: "12:00 pm - 10:00 pm",
-      Thursday: "12:00 pm - 10:00 pm",
-      Friday: "12:00 pm - 11:00 pm",
-      Saturday: "12:00 pm - 11:00 pm",
-      Sunday: "12:00 pm - 9:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Barbecue aficionados agree that Billy Durney is cooking up some of the best Texas-style barbecue in the city. Straightforward classics like smoked brisket and baby back ribs are always a strong choice, but there are also options like pork belly tacos and a lamb belly banh mi. The space is sprawling in a way that feels like the real deal, and Durney himself can usually be found working the room, and keeping a watchful eye on the smoking meats. It's counter service only, and there's often a line, but for the scene and certainly for the meat, it's easily worth the trip to Red Hook.",
-      },
-      {
-        name: "Michelle",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Overall, a great try of New York BBQ. The restaurant décor is rustic with a good amount of seats to sit and enjoy the meal. I definitely would love to come back and try that monster of a beef rib!",
-      },
-      {
-        name: "Ai-Mei",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "mmmmmm, what a gem this is in bklyn! I loveeee how soft their brisket is here. Their pork tacos are to die for, their different variety of ribs and lastly, their lamb is not gamey at all. Super wallet friendly for the amount they give you. I highly recommend this spot- after eating here, you can definitely walk over for Steve's key lime pies.",
-      },
-    ],
+    businessName: "Slow Food",
+    businessType: "organization",
+    email: "slowFood@gmail.com",
+    address: "77 E 4th St, New York, NY 10003",
+    lat: 40.726719,
+    lng: -73.990128,
+    hash: bcrypt.hashSync("slowFood", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "Slow Food NYC works to create a food system based on the principles of high quality and taste, environmental sustainability, and social justice—in essence, a food system that is good, clean, and fair. We seek to move our culture away from the destructive effects of an industrial food system and towards the cultural, social, health, and economic benefits of a sustainable food system, regional food traditions, and the pleasures of the table.",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/5797778115d5dbda8adb842b/1521084015158-EES6QJBMIJKHQGITCQPA/_H6A6149.jpg?format=500w",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Superiority Burger",
-    neighborhood: "Manhattan",
-    username: "SB",
-    email: "SB@gmail.com",
-    photograph: "7.jpg",
-    address: "430 E 9th St, New York, NY 10009",
-    latlng: {
-      lat: 40.727397,
-      lng: -73.983645,
-    },
-    cuisine_type: "American",
-    operating_hours: {
-      Monday: "11:30 am - 10:00 pm",
-      Tuesday: "Closed",
-      Wednesday: "11:30 am - 10:00 pm",
-      Thursday: "11:30 am - 10:00 pm",
-      Friday: "11:30 am - 10:00 pm",
-      Saturday: "11:30 am - 10:00 pm",
-      Sunday: "11:30 am - 10:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Brooks Headley’s tiny East Village cafe is so much more than a veggie burger spot — it's one of the best bang-for-your-buck restaurants in Lower Manhattan. Headley and his crew turn seasonal vegetables into delectable salads and riffs on American comfort food favorites. The specials menu changes daily, and the rest of the menu is constantly evolving. You can get a lot of food to eat here for under $15 per person.",
-      },
-      {
-        name: "Gabriel",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "I was turned on to this place following the glowing NYT review. Its near my area of the city so I figured why not go? Man they weren't kidding, Superiority Burger is probably the best vegetarian experience I've ever had!",
-      },
-      {
-        name: "Shivi",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Great flavors and very satisfying. Craving a sandwich, I stopped by on a Friday night with a vegetarian friend. Super small location with just a few seats inside. Ambiance is a bit industrial, good is definitely much more sophisticated than the look of the place! Ordered the superiority burger anda side of potato salad. The potato salad was very light and tasted clean ( less mayo, lots of dill and some cucumber) -- refreshing for a humid summer night! Sandwich was surprisingly delicious - it is very small ( funny allusion to a White Castle burger) but it packs a punch! Not only are there layers of flavors ( amazing sauces) but the party itself had a great texture Ahmed flavor-- well done and so wonderful! Will definitely stop by again for an overall amazing burger/sandwich. Staff was super nice and accommodating but not out of the way friendly.",
-      },
-    ],
+    businessName: "Hunger Free NYC",
+    businessType: "organization",
+    email: "hungerFreeNYC@gmail.com",
+    address: "938 Sheridan Ave, Bronx, NY, 10451",
+    lat: 40.82795,
+    lng: -73.92013,
+    hash: bcrypt.hashSync("hungerFreeNYC", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "Hunger Free NYC serves low-income New Yorkers. We are the New York City affiliate of Hunger Free America.",
+    imageUrl:
+      "https://images.prismic.io/hfa-website/18aa9ad0-ba53-4a04-9c78-cf34a3d4e25c_caridad+y+filomena+outreach+%281%29_cropped+4.jpg?auto=compress,format",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "The Dutch",
-    username: "TD",
-    email: "TD@gmail.com",
-    neighborhood: "Manhattan",
-    photograph: "8.jpg",
-    address: "131 Sullivan St, New York, NY 10012",
-    latlng: {
-      lat: 40.726584,
-      lng: -74.002082,
-    },
-    cuisine_type: "American",
-    operating_hours: {
-      Monday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
-      Tuesday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
-      Wednesday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
-      Thursday: "11:30 am - 3:00 pm, 5:30 pm - 11:00 pm",
-      Friday: "11:30 am - 3:00 pm, 5:30 pm - 11:30 pm",
-      Saturday: "10:00 am - 3:00 pm, 5:30 pm - 11:30 pm",
-      Sunday: "10:00 am - 3:00 pm, 5:30 pm - 11:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Over the last five years, The Dutch has turned into the quintessential American restaurant that chef Andrew Carmellini and partners Josh Pickard and Luke Ostrom sought to evoke when it first opened. It’s a great choice when you’re craving a steak, a burger, or oysters, and the menu always includes plentiful seafood options as well as pastas. The Dutch is now an indelible part of the Soho landscape.",
-      },
-      {
-        name: "Loren",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "I randomly came here on a Saturday night. I was pleasantly surprised with the food and the service. We had the calamari and the ceviche with avocado, and then the catfish. Oh! Then we had the banana soufflé for dessert with ice cream. It was all delicious and well put together. Would love to eat here again.",
-      },
-      {
-        name: "Lori",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Aside from the slightly claustrophobic dining area and the fact that you may have difficulty hearing your dining companion, I'd return to The Dutch without hesitation. The food is surprisingly well-executed and conceived, and our dinner service flowed smoothly without a hitch. Just make sure to get a reservation in advance, as I'm sure more than just a few other people will have the same idea.",
-      },
-    ],
+    businessName: "Holy Apostles Soup Kitchen",
+    businessType: "organization",
+    email: "holyApostles@gmail.com",
+    address: "296 9th Ave, New York, NY 10001",
+    lat: 40.758228,
+    lng: -73.992752,
+    hash: bcrypt.hashSync("holyApostles", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "Nourishing hungry New Yorkers since 1982 in an atmosphere of respect and hospitality.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1628428799437-d886d7d2e9b2?ixlib=rb-1.2.1&raw_url=true&q=80&fm=jpg&crop=entropy&cs=tinysrgb&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Mu Ramen",
-    username: "MR",
-    email: "MR@gmail.com",
-    neighborhood: "Queens",
-    photograph: "9.jpg",
-    address: "1209 Jackson Ave, Queens, NY 11101",
-    latlng: {
-      lat: 40.743797,
-      lng: -73.950652,
-    },
-    cuisine_type: "Asian",
-    operating_hours: {
-      Monday: "5:00 pm - 10:00 pm",
-      Tuesday: "5:00 pm - 10:00 pm",
-      Wednesday: "5:00 pm - 10:00 pm",
-      Thursday: "5:00 pm - 10:00 pm",
-      Friday: "5:00 pm - 11:00 pm",
-      Saturday: "5:00 pm - 11:00 pm",
-      Sunday: "5:00 pm - 10:00 pm",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Joshua Smookler’s two-year-old ramen shop serves one of the best tonkotsu broths around. Beyond ramen, Mu also offers some high minded plates, like foie gras-stuffed chicken wings, as well as dry-aged Japanese Wagyu beef specials. Mu is just 10 short minutes away from Midtown via the 7-train.",
-      },
-      {
-        name: "Brittany",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "Overall, I would definitely recommend this place if you enjoy thick curly noodles with a thick, intense broth.  If you don't there are still other options but I can't vouch for those.",
-      },
-      {
-        name: "Sally",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "One of the tastiest and most unique ramen places I've been to in NYC, but also the priciest. I think overall its worth the try. Not an everyday casual ramen shop though.",
-      },
-    ],
+    businessName: "New York Common Pantry",
+    businessType: "organization",
+    email: "commonPantry@gmail.com",
+    address: "8 East 109th Street, New York, NY 10029",
+    lat: 40.7958,
+    lng: -73.94921,
+    hash: bcrypt.hashSync("commonPantry", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "New York Common Pantry reduces hunger and promotes dignity, health and self-sufficiency.",
+    imageUrl:
+      "https://nycommonpantry.org/wp-content/uploads/2021/12/DSC_1242-Edit-Edit-Edit_R01-scaled.jpeg",
+    tags: { connect: tagsGenerator() },
   },
   {
-    name: "Casa Enrique",
-    username: "CE",
-    email: "CE@gmail.com",
-    neighborhood: "Queens",
-    photograph: "10.jpg",
-    address: "5-48 49th Ave, Queens, NY 11101",
-    latlng: {
-      lat: 40.743394,
-      lng: -73.954235,
-    },
-    cuisine_type: "Mexican",
-    operating_hours: {
-      Monday: "5:00 pm - 12:00 am",
-      Tuesday: "5:00 pm - 12:00 am",
-      Wednesday: "5:00 pm - 12:00 am",
-      Thursday: "5:00 pm - 12:00 am",
-      Friday: "5:00 pm - 12:00 am",
-      Saturday: "11:00 am - 12:00 am",
-      Sunday: "11:00 am - 12:00 am",
-    },
-    reviews: [
-      {
-        name: "Steve",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "Head to this laid-back Long Island City restaurant for beef tongue tacos, chicken smothered in a heady mole sauce, and a monster crab tostada. New York's only Michelin-starred Mexican restaurant is an especially cool choice for lunch during the week or drinks after work. Eater critic Ryan Sutton awarded this restaurant two stars.",
-      },
-      {
-        name: "Rob",
-        date: "October 26, 2016",
-        rating: 5,
-        comments:
-          "The hype was real. Please go. Get the ceviche. And the tres leches. You're welcome",
-      },
-      {
-        name: "Jason",
-        date: "October 26, 2016",
-        rating: 4,
-        comments:
-          "For a Michelin star restaurant, it's fairly priced and the food is fairly good. Started with a strawberry margarita which was good in flavor but not much alcohol. Had the chicken enchiladas with salsa verde and it was really good. Great balance in flavor and a good portion. Extra tasty with their hot sauces. My wife had the lamb but it was a bit too salty for our taste. Although, it was cooked very well and fell off the bone. The highlight of the night was the tres leches cake. Probably the best I've ever had to be honest. Not too sweet and very milky. Overall, one of my top 3 favorite Mexican in NY.",
-      },
-    ],
+    businessName: "West Side",
+    businessType: "organization",
+    email: "westside@gmail.com",
+    address: "263 West 86th Street, New York, NY 10024",
+    lat: 40.7889381,
+    lng: -73.977291,
+    hash: bcrypt.hashSync("westside", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "West Side Campaign Against Hunger is on a mission to alleviate hunger by ensuring that all New Yorkers have access with dignity to a choice of healthy food and supportive services.",
+    imageUrl:
+      "https://www.wscah.org/wp-content/uploads/2021/10/0J3A7035-resized-683x1024.jpg",
+    tags: { connect: tagsGenerator() },
+  },
+  {
+    businessName: "The Bowery Mission",
+    businessType: "organization",
+    email: "bowery@gmail.com",
+    address: "355 Lexington Ave, Floor 19, New York, NY 10017",
+    lat: 40.741895,
+    lng: -73.989308,
+    hash: bcrypt.hashSync("bowery", 10),
+    contactNum: faker.phone.phoneNumber("718-###-###"),
+    biography:
+      "The Bowery Mission serves homeless and hungry New Yorkers and provides services that meet their immediate needs and transforms their lives from poverty and hopelessness to hope.",
+    imageUrl:
+      "https://s7d2.scene7.com/is/image/TWCNews/bowery_mission_pkg4211803012000501072_11242021",
+    tags: { connect: tagsGenerator() },
   },
 ];
+
+module.exports = organizations;

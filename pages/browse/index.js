@@ -36,7 +36,8 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   const [toggleMap, setToggleMap] = useState(true);
   const [display, setDisplay] = useState("Restaurants");
   const [filteredResults, setFilteredResults] = useState(initialRestaurants);
-  const [filteredOrganizations, setFilteredResultsO] = useState(initialOrganizations)
+  const [filteredOrganizations, setFilteredResultsO] =
+    useState(initialOrganizations);
 
   function searchRestaurant(value) {
     if (value !== "") {
@@ -67,7 +68,7 @@ function Browse({ initialRestaurants, initialOrganizations }) {
   }
 
   function handleChange(e) {
-    setDisplay(e.target.value)
+    setDisplay(e.target.value);
   }
 
   return (
@@ -102,36 +103,53 @@ function Browse({ initialRestaurants, initialOrganizations }) {
         </button>
       </div>
       <br></br>
-      <div style={{textAlign:"center"}}>
-        <label htmlFor='uses'>Select:</label>
+      <div style={{ textAlign: "center" }}>
+        <label htmlFor="uses">Select:</label>
         <select value={display} onChange={handleChange}>
           <option value="Restaurants">Restaurants</option>
           <option value="Organizations">Organizations</option>
         </select>
       </div>
       <div>
-      <br></br>
+        <br></br>
 
         {display === "Restaurants" ? (
           <div>
-          {toggleMap ? <div><Map restaurants={restaurants}></Map> </div>
-          : <div>
-            <input className={styles.roundedInput} id="search" type="text" placeholder="Search by Restaurant" name="search" onChange={(e)=>searchRestaurant(e.target.value)} />
-            <div>
-              <br></br>
-              {filterRestaurants(filteredResults)}
-            </div>
-            </div>
-          }
-        </div>
-      ) : (
-        <div>
-          {toggleMap ? null : (
-            <div>
-            <input id="search" type="text" placeholder="Search by Organization" name="search" onChange={(e)=>searchOrganizations(e.target.value)} />
-            <div>
-                {filterOrganizations(filteredOrganizations)}
-              {/* <ul>
+            {toggleMap ? (
+              <div>
+                <Map restaurants={restaurants}></Map>{" "}
+              </div>
+            ) : (
+              <div>
+                <input
+                  className={styles.roundedInput}
+                  id="search"
+                  type="text"
+                  placeholder="Search by Restaurant"
+                  name="search"
+                  onChange={(e) => searchRestaurant(e.target.value)}
+                />
+                <div>
+                  <br></br>
+                  {filterRestaurants(filteredResults)}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            {toggleMap ? null : (
+              <div>
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="Search by Organization"
+                  name="search"
+                  onChange={(e) => searchOrganizations(e.target.value)}
+                />
+                <div>
+                  {filterOrganizations(filteredOrganizations)}
+                  {/* <ul>
                 {organizations.map((organization) => (
                    <Link
                    href="/browse/nonProfitOrg/[id]"
@@ -143,30 +161,28 @@ function Browse({ initialRestaurants, initialOrganizations }) {
                  </Link>
                 ))}
               </ul> */}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
-
+            )}
+          </div>
+        )}
       </div>
     </div>
-
   );
 }
 
 function filterRestaurants(filteredResults) {
   const filter = filteredResults.map((restaurant) => (
     <div key={restaurant.id} className={styles.cardItem}>
-    <Link
-      href="/browse/restaurants/[id]"
-      as={`/browse/restaurants/${restaurant.id}`}
-      key={restaurant.id}
-      restaurant={restaurant.id}
-      state={{ restaurant: restaurant }}
-    >
-      <p key={restaurant.id}>{restaurant.businessName}</p>
-    </Link>
+      <Link
+        href="/browse/restaurants/[id]"
+        as={`/browse/restaurants/${restaurant.id}`}
+        key={restaurant.id}
+        restaurant={restaurant.id}
+        state={{ restaurant: restaurant }}
+      >
+        <p key={restaurant.id}>{restaurant.businessName}</p>
+      </Link>
     </div>
   ));
   return filter;
@@ -175,18 +191,17 @@ function filterRestaurants(filteredResults) {
 function filterOrganizations(filteredOrganizations) {
   const filter = filteredOrganizations.map((organization) => (
     <div key={organization.id} className={styles.cardItem}>
-    <Link
-      href="/browse/nonProfitOrg/[id]"
-      as={`/browse/nonProfitOrg/${organization.id}`}
-      key={organization.id}
-      organization={organization.id}
-    >
-      <p key={organization.id}>{organization.businessName}</p>
-    </Link>
+      <Link
+        href="/browse/nonProfitOrg/[id]"
+        as={`/browse/nonProfitOrg/${organization.id}`}
+        key={organization.id}
+        organization={organization.id}
+      >
+        <p key={organization.id}>{organization.businessName}</p>
+      </Link>
     </div>
   ));
   return filter;
 }
-
 
 export default React.memo(Browse);

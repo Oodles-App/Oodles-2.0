@@ -33,3 +33,12 @@
 #incButtonLeft {
   width: 25px;
 }
+
+.noProducts {
+  color: #c31442;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
