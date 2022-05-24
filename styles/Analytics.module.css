@@ -8,6 +8,12 @@
   margin: 0 auto;
 }
 
+.landingWrapper {
+  max-height: 400px;
+  padding: 0 20px;
+  align-items: flex-start;
+}
+
 .chartLoadingWrapper {
   height: calc(100vh - 86px);
 }

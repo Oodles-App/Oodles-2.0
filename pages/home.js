@@ -1,12 +1,33 @@
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+
+import ChartLoading from "../components/analytics/ChartLoading";
 import organization from "../public/organization.png";
 import restaurant from "../public/restaurant.png";
 
+const getVisual = () => import("../components/analytics/LandingVisual");
+
 const Home = (props) => {
   const router = useRouter();
+  const [Chart, setChart] = useState(null);
+  const [loadingChart, setLoadingChart] = useState(true);
+  console.log(loadingChart, "loading");
+  console.log(Chart, "chart");
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      setChart(dynamic(getVisual));
+      setLoadingChart(false);
+    }
+  }, []);
+
+  if (loadingChart) {
+    return <div>Loading</div>;
+  }
 
   return (
     <>
@@ -50,14 +71,14 @@ const Home = (props) => {
             What is Life Without Purpose
           </h3>
           <div className="text-xl mt-4 mb-16 mx-16">
-            Oodles means abundance, and at Oodles we realize there is an abundance of food that is 
-            discarded every year by U.S. restaurants. In fact, U.S. restaurants account for a staggering 
-            22 to 33 billion pounds of food waste anually. By connecting restaurant owners with non-profit 
-            organizations requesting food donations, Oodles seeks to significantly decrease food waste 
-            with the greater purpose of making donations available to individuals in food 
-            insecure households across the country. 
-            
-            At Oodles, no food should go to waste.
+            Oodles means abundance, and at Oodles we realize there is an
+            abundance of food that is discarded every year by U.S. restaurants.
+            In fact, U.S. restaurants account for a staggering 22 to 33 billion
+            pounds of food waste anually. By connecting restaurant owners with
+            non-profit organizations requesting food donations, Oodles seeks to
+            significantly decrease food waste with the greater purpose of making
+            donations available to individuals in food insecure households
+            across the country. At Oodles, no food should go to waste.
           </div>
 
           <Link href="/account/register">
@@ -77,20 +98,22 @@ const Home = (props) => {
           <div className="mt-6 text-xl mx-8 py-8">
             We could do more with this abundance. At Oodles we want to help
             restaurants redirect this wasted excess of food to organizations
-            that could provide it to those in need. <Link href="/account/register">Join us</Link> and we will help you
+            that could provide it to those in need.{" "}
+            <Link href="/account/register">Join us</Link> and we will help you
             do your part.
           </div>
         </div>
 
-        <div className="w-full sm:w-1/2">
-          <Image
+        <div className="w-full h-full sm:w-1/2">
+          <Chart />
+          {/* <Image
             src="/foodWasteData.png"
             alt="Food Waste Data"
             width="80%"
             height="80%"
             layout="responsive"
             objectFit="contain"
-          />
+          /> */}
         </div>
       </div>
     </>
