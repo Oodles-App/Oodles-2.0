@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'luckiest-guy': ['"Luckiest Guy"', 'cursive'],
+      'acumin': ['"Open Sans"', 'sans-serif', 'ui-serif', 'Georgia'],
+    }
   },
   plugins: [],
 }
