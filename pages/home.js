@@ -14,18 +14,18 @@ const Home = (props) => {
     <>
       <div className="flex flex-wrap items-center bg-[#FF8370] py-16">
         <div className="w-full sm:w-1/2 text-center sm:px-6">
-          <h1 className="text-3xl text-[#00B1B0] font-semibold drop-shadow-lg">
+          <h1 className="text-3xl text-[#404040] font-semibold drop-shadow-lg">
             Generosity is a Way of Life
           </h1>
-          <h3 className="text-2xl text-gray-500 font-medium">
+          <h3 className="text-2xl text-[#FFFFFF] font-medium">
             Join Oodles and Start Giving
           </h3>
-          <div className="mt-6 text-xl mx-8 py-8">
+          <div className="mt-6 text-xl mx-8 py-8 text-[#404040] font-acumin font-medium">
             Oodles is an application bringing restaurants and non-profit
             organizations together with the common goal of eliminating food
             waste. Restaurant owners can use our application to donate specified
             food products to non-profit organizations seeking food donations.
-            While Non-profit organizations in search of donations can use our
+            While non-profit organizations in search of donations can use our
             application to find and contact local restaurants offering food
             items.
           </div>
@@ -45,13 +45,13 @@ const Home = (props) => {
 
       <div className="mx-auto py-32 bg-[#00B1B0]">
         <header className="text-center">
-          <h1 className="text-5xl text-[#E42256] font-bold whitespace-pre-line leading-hero drop-shadow-lg">
+          <h1 className="text-5xl text-[#404040] font-bold whitespace-pre-line leading-hero drop-shadow-lg">
             Our Mission
           </h1>
-          <h3 className="text-2xl text-gray-500 font-medium">
+          <h3 className="text-2xl text-[#FFFFFF] font-medium">
             What is Life Without Purpose
           </h3>
-          <div className="text-xl mt-4 mb-16 mx-16">
+          <div className="text-xl mt-4 mb-16 mx-16 text-[#404040] font-acumin font-medium">
             Oodles means abundance, and at Oodles we realize there is an
             abundance of food that is discarded every year by U.S. restaurants.
             In fact, U.S. restaurants account for a staggering 22 to 33 billion
@@ -72,11 +72,11 @@ const Home = (props) => {
 
       <div className="flex flex-wrap items-center flex-row-reverse items-center bg-[#FF8370] py-16">
         <div className="w-full sm:w-1/2 text-center sm:px-6">
-          <h1 className="text-3xl text-[#00B1B0] font-semibold drop-shadow-lg">
+          <h1 className="text-3xl text-[#404040] font-semibold drop-shadow-lg">
             Let us Eliminate this Excess Waste
           </h1>
-          <h3 className="text-2xl text-gray-500 font-medium">Together</h3>
-          <div className="mt-6 text-xl mx-8 py-8">
+          <h3 className="text-2xl text-[#FFFFFF] font-medium">Together</h3>
+          <div className="mt-6 text-xl mx-8 py-8 text-[#404040] font-acumin font-medium">
             We could do more with this abundance. At Oodles we want to help
             restaurants redirect this wasted excess of food to organizations
             that could provide it to those in need.{" "}
