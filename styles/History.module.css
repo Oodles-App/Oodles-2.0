@@ -9,6 +9,7 @@
     
 .historyTable {
     border: 2px solid forestgreen;
+    background-color: white;
     width: 800px;
     height: 200px;
     text-align: center;

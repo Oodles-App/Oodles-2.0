@@ -38,7 +38,7 @@ const SingleReservation = ({ initialReservation, restaurantList }) => {
     <div>
       <div style={{ textAlign: "center" }}>
         <div>
-          <h1 style={{ fontSize: "25px" }}>Order#: {reservation.id}</h1>
+          <h1 style={{ fontSize: "25px", color:"white"}}>Order #: {reservation.id}</h1>
         </div>
         <br></br>
         <div>Order Date: {reservation.reserveTime}</div>
@@ -50,7 +50,7 @@ const SingleReservation = ({ initialReservation, restaurantList }) => {
       <div className={styles.history}>
         <table className={styles.historyTable}>
           <tbody>
-            <tr>
+            <tr style={{backgroundColor:"#FF8370"}}>
               <th id={styles.organizationName}>Items </th>
               <th id={styles.status}>Quantity</th>
               <th id={styles.status}>Measurement</th>
@@ -59,15 +59,17 @@ const SingleReservation = ({ initialReservation, restaurantList }) => {
           </tbody>
         </table>
       </div>
+      <div style={{display:"flex", justifyContent:"center"}}>
       <button
         type="button"
-        style={{ border: "1px solid black" }}
+        style={{ border: "1px solid black", borderRadius:"0.25rem",backgroundColor:"white", paddingLeft:"2rem", paddingRight:"2rem"}}
         onClick={() => {
           router.push("/reservation/history");
         }}
       >
         Back
       </button>
+      </div>
     </div>
   );
 };
