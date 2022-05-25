@@ -1,7 +1,10 @@
 .landingSvg {
   background-image: url("/landing-01.png");
-  height: 400px;
-  margin-left: 10px;
+  min-height: 400px;
+  align-self: right;
+  background-position: center;
+  background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
+  margin-left: 5%;
 }
