@@ -1,0 +1,22 @@
+.bodyBgd {
+    background-image: url("/beveragePattern2-01.svg");
+    height: 100vh;
+  }
+  
+
+.blueBlock {
+background-color: #047474;
+padding:75px;
+padding-top:20px;
+margin: 0;
+background: #047474;
+position: absolute;
+top: 40%;
+left: 50%;
+margin-right: -50%;
+transform: translate(-50%, -50%) 
+}
+.block {
+    background-color: #06a6a6;
+    height: 10px !important;
+  }

@@ -86,15 +86,16 @@ const Restaurant = ({ restaurantInfo, initialProducts }) => {
       </div>
       <br></br>
 
-      <div></div>
+      <div style={{display:"flex", justifyContent:"center"}}>
+        <Link href={"/reservation/[id]"} as={`/reservation/${restaurant.id}`}>
+            <button type="button"
+            className="bg-white hover:bg-gray-100 text-lg text-gray-800 font-semibold m-2 py-4 px-8 border border-gray-400 rounded shadow">
+              Reserve
+            </button>
+        </Link>
+      </div>
 
-      <Link href={"/reservation/[id]"} as={`/reservation/${restaurant.id}`}>
-          <button type="button"
-          className="bg-white hover:bg-gray-100 text-lg text-gray-800 font-semibold m-2 py-4 px-8 border border-gray-400 rounded shadow">
-            Reserve
-          </button>
-      </Link>
-
+      
       <button
         className={styles.liveChat}
         type="button"
