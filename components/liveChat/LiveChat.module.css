@@ -45,27 +45,27 @@
 
 .button {
   border: 0;
-  color: #FEC84D;
+  color: #fec84d;
   font-weight: bold;
   font-size: 1.4em;
-  background: #00B1B0;
+  background: #00b1b0;
 }
 
 .button:hover {
-  background: #00B1B0;
+  background: #00b1b0;
   opacity: 0.25;
 }
 
 .button:disabled,
 .button:hover:disabled {
-  color: #00B1B0;
-  background: #FF8370;
+  color: #00b1b0;
+  background: #ff8370;
   opacity: 0.5;
 }
 
 .message1 {
   align-self: flex-start;
-  background-color: #4CD7D0;
+  background-color: #4cd7d0;
   padding: 1em;
   border-radius: 10px;
   flex-grow: 0;
@@ -74,14 +74,14 @@
 
 .message2 {
   align-self: flex-end;
-  background-color: #A4E8E0;
+  background-color: #a4e8e0;
   padding: 1em;
   border-radius: 10px;
   flex-grow: 0;
   border-bottom-left-radius: 0;
 }
 
-/* Smartphones (portrait and landscape) ----------- */
+/* Smartphones (portrait and landscape) -----------
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .chatContainer {
     width: 100vw;
@@ -101,18 +101,29 @@
     height: 82vh;
     overflow-y: auto;
   }
-}
+} */
 
-/* Smartphones (portrait) ----------- */
-@media only screen and (max-width: 320px) {
+/* Smartphones ----------- */
+@media only screen and (max-width: 480px) {
   .chatContainer {
     width: 100vw;
+    height: calc(100vh - 80px);
+    position: absolute;
+    margin-top: 0;
+    top: calc(50vh + 40px);
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 0px;
     background-color: #f9fbff;
-    margin-top: 10%;
+    box-shadow: none;
+    overflow: hidden;
   }
   .chatHolder {
     display: grid;
     grid-template-rows: 1fr 100px;
+    height: 100%;
+    width: 100%;
   }
   .chatText {
     display: flex;
@@ -120,7 +131,7 @@
     align-items: flex-start;
     gap: 1em;
     padding: 1em;
-    height: 82vh;
+    height: 100%;
     overflow-y: auto;
   }
 }
