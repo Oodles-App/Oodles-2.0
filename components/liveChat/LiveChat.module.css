@@ -43,6 +43,10 @@
   font-size: 1.2em;
 }
 
+.textarea:focus {
+  outline: 1px solid rgba(0, 0, 0, 0.35);
+}
+
 .button {
   border: 0;
   color: #fec84d;

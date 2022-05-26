@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 import prisma from "../../../db";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -196,7 +197,6 @@ const Organization = ({ organizationInfo }) => {
           }}
           className={styles.liveChat}
         >
-          {/* <RiMessage3Line size={50} /> */}
           <AiOutlineMessage className={styles.messageIcon} size={45} />
         </button>
       </div>

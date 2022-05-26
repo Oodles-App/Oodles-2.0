@@ -17,7 +17,7 @@ const LiveChat = (props) => {
   });
 
   useEffect(() => {
-    console.info({ receivedMessages, bool: !receivedMessages.length })
+    console.info({ receivedMessages, bool: !receivedMessages.length });
     if (!receivedMessages.length) {
       channel.history().then((res) => setMessages([...res.items].reverse()));
     }
@@ -45,10 +45,9 @@ const LiveChat = (props) => {
   const messages = receivedMessages.map((message, index) => {
     if (!messageId) setMessageId(message.connectionId);
     const author = message.connectionId === ably.connection.id ? "me" : "other";
-    const messageClass = messageId === message.connectionId 
-      ? "message1" 
-      : "message2";
-    console.log(message)
+    const messageClass =
+      messageId === message.connectionId ? "message1" : "message2";
+    console.log(message);
     return (
       <span key={index} className={styles[messageClass]} data-author={author}>
         {message.data}
