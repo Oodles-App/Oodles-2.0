@@ -182,7 +182,7 @@ const Organization = ({ organizationInfo }) => {
         <button
           type="button"
           onClick={() => {
-            router.push("/liveChat");
+            router.push(`/liveChat/${organizationInfo.id}`);
           }}
           className={styles.liveChat}
         >
