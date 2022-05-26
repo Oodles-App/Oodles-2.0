@@ -81,29 +81,6 @@
   border-bottom-left-radius: 0;
 }
 
-/* Smartphones (portrait and landscape) -----------
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  .chatContainer {
-    width: 100vw;
-    background-color: #f9fbff;
-    margin-top: 10%;
-  }
-  .chatHolder {
-    display: grid;
-    grid-template-rows: 1fr 100px;
-  }
-  .chatText {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1em;
-    padding: 1em;
-    height: 82vh;
-    overflow-y: auto;
-  }
-} */
-
-/* Smartphones ----------- */
 @media only screen and (max-width: 480px) {
   .chatContainer {
     width: 100vw;
