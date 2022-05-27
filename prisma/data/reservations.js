@@ -23,16 +23,15 @@ const randomTime = () => {
   return times[Math.floor(Math.random() * 6)];
 };
 
-console.log(randomTime());
 function pickUpDate(resDate) {
   const strDate = resDate.toString();
   const dateNoTime = strDate.slice(0, 11);
-  const prevDay = Number(dateNoTime.slice(4, 6));
+  const prevDay = Number(dateNoTime.slice(8, 10));
   let newDay = prevDay + randomNum(3);
   if (newDay > 28) {
     newDay = "01";
   }
-  const newFullDate = `${dateNoTime.slice(0, 3)} ${newDay} ${randomTime()}`;
+  const newFullDate = `${dateNoTime.slice(0, 7)} ${newDay} ${randomTime()}`;
 
   return newFullDate;
 }
@@ -45,7 +44,7 @@ const randomCart = () => {
   let cart = {};
   for (let i = 0; i < randomNum(2); i++) {
     const product = randomProduct();
-    cart[product.name] = product;
+    cart[product.name] = { product, quantity: randomNum(product.amount) };
   }
   return cart;
 };

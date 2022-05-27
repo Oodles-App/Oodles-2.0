@@ -18,31 +18,18 @@ import {
 
 export const getServerSideProps = async () => {
   const reservations = await prisma.reservation.findMany();
-  const restaurants = await prisma.user.findMany({
-    where: {
-      businessType: {
-        equals: "restaurant",
-      },
-    },
-  });
-  const allOrganizations = await prisma.user.findMany({
-    where: {
-      businessType: {
-        equals: "organization",
-      },
-    },
-  });
+
+  const allUsers = await prisma.user.findMany();
 
   return {
     props: {
       reservations: JSON.parse(JSON.stringify(reservations)),
-      restaurantList: JSON.parse(JSON.stringify(restaurants)),
-      organizations: JSON.parse(JSON.stringify(allOrganizations)),
+      users: JSON.parse(JSON.stringify(allUsers)),
     },
   };
 };
 
-export default function History({ reservations, restaurantList }) {
+export default function History({ reservations, restaurantList, users }) {
   const user = useSelector((state) => state.user);
   const [view700, setView700] = useState(null);
 
@@ -64,6 +51,13 @@ export default function History({ reservations, restaurantList }) {
       return restaurant.id === id;
     });
     return restaurant[0];
+  };
+
+  const findPartner = (id) => {
+    const partner = users.filter((user) => {
+      return user.id === id;
+    });
+    return partner[0];
   };
 
   const statusColor = (status) => {
@@ -139,7 +133,10 @@ export default function History({ reservations, restaurantList }) {
                           padding: view700 && view700.matches ? "16px" : "10px",
                         }}
                       >
-                        {findRestaurant(res.restaurantId).businessName}
+                        {user.businessType === "organization"
+                          ? findPartner(res.restaurantId).businessName
+                          : findPartner(res.organizationId).businessName}
+                        {/* {findRestaurant(res.restaurantId).businessName} */}
                       </TableCell>
                       <TableCell align="center" sx={{ padding: "10px" }}>
                         <span
