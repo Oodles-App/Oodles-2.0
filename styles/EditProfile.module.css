@@ -8,7 +8,6 @@
 }
 
 .editWrapper {
-  color: #ffffff;
   background: linear-gradient(#06a6a6, #047474);
   /* background-color: #008989; */
 }
@@ -45,6 +44,7 @@
 
 .title {
   text-align: center;
+  color: white;
 }
 
 .textarea {
@@ -68,4 +68,8 @@
 
 .center {
   margin: 0 auto;
+}
+
+.label {
+  color: white;
 }

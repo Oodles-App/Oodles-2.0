@@ -12,7 +12,7 @@ function randomDate() {
 
 const reservations = [
   {
-    organizationId: 21,
+    organizationId: 100,
     restaurantId: randomRestaurantId(),
     reserveTime: randomDate(),
     pickupTime: "May 26, 2022, 5:00PM",
@@ -29,7 +29,7 @@ const reservations = [
     },
   },
   {
-    organizationId: 21,
+    organizationId: 100,
     restaurantId: randomRestaurantId(),
     reserveTime: randomDate(),
     pickupTime: "May 24, 2022, 5:00PM",
@@ -46,7 +46,7 @@ const reservations = [
     },
   },
   {
-    organizationId: 21,
+    organizationId: 100,
     restaurantId: randomRestaurantId(),
     reserveTime: randomDate(),
     pickupTime: "April 20, 2022, 3:00PM",

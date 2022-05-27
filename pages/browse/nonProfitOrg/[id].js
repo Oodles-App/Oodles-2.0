@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+
 import prisma from "../../../db";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-
-import { Card, CardContent, Chip, Stack, Grid } from "@mui/material";
+import { Card, CardContent, Chip } from "@mui/material";
 import { IoLocationOutline, IoArrowBackCircle } from "react-icons/io5";
-import { BiMessageRounded } from "react-icons/bi";
-import { RiMessage3Line } from "react-icons/ri";
 import { AiOutlineMessage } from "react-icons/ai";
 import styles from "../../../styles/OrgProfile.module.css";
 
@@ -31,11 +29,11 @@ export const getServerSideProps = async ({ params }) => {
 const Organization = ({ organizationInfo }) => {
   const router = useRouter();
   const tags = organizationInfo.tags;
+  const user = useSelector((state) => state.user);
 
   const [view800, setView800] = useState(null);
   const [expandedBio, setExpandedBio] = useState(false);
 
-  console.log(view800, "view800");
   useEffect(() => {
     if (window !== undefined) {
       setView800(window.matchMedia("(min-width: 800px)"));
@@ -181,12 +179,24 @@ const Organization = ({ organizationInfo }) => {
         </div>
         <button
           type="button"
-          onClick={() => {
-            router.push("/liveChat");
+          onClick={async (e) => {
+            e.preventDefault();
+            try {
+              const res = await fetch("../../api/liveChat/createChannel", {
+                body: JSON.stringify({
+                  orgId: user.id,
+                  restaurantId: router.query.id,
+                }),
+                method: "POST",
+              });
+              const { chatChannel } = await res.json();
+              router.push(`/liveChat/${chatChannel.name}`);
+            } catch (error) {
+              console.log("error in creating new live chat channel", error);
+            }
           }}
           className={styles.liveChat}
         >
-          {/* <RiMessage3Line size={50} /> */}
           <AiOutlineMessage className={styles.messageIcon} size={45} />
         </button>
       </div>
