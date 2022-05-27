@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const tags = require("./data/tags");
 const organizations = require("./data/organizations");
 const reservations = require("./data/reservations");
+const products = require("./data/products");
 
 async function createOrgs() {
   await Promise.all(
@@ -23,6 +24,12 @@ async function createReservations() {
     reservations.map((reservation) =>
       prisma.reservation.create({ data: reservation })
     )
+  );
+}
+
+async function createProducts() {
+  await Promise.all(
+    products.map((product) => prisma.product.create({ data: product }))
   );
 }
 
@@ -619,6 +626,7 @@ async function main() {
   await createArticles();
   await createRestaurants();
   await createOrgs();
+  await createProducts();
   await createReservations();
 }
 

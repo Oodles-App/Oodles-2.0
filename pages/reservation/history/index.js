@@ -18,29 +18,26 @@ import {
 
 export const getServerSideProps = async () => {
   const reservations = await prisma.reservation.findMany();
-  const restaurants = await prisma.user.findMany({
-    where: {
-      businessType: {
-        equals: "restaurant",
-      },
-    },
-  });
+
+  const allUsers = await prisma.user.findMany();
 
   return {
     props: {
-      reservationsInfo: JSON.parse(JSON.stringify(reservations)),
-      restaurantList: JSON.parse(JSON.stringify(restaurants)),
+      reservations: JSON.parse(JSON.stringify(reservations)),
+      users: JSON.parse(JSON.stringify(allUsers)),
     },
   };
 };
 
-export default function History({ reservationsInfo, restaurantList }) {
-  const initialReservationList = useState({ reservationsInfo });
+export default function History({ reservations, restaurantList, users }) {
   const user = useSelector((state) => state.user);
   const [view700, setView700] = useState(null);
-  const reservations = initialReservationList[0].reservationsInfo;
+
+  const filterBy =
+    user.businessType === "restaurant" ? "restaurantId" : "organizationId";
+
   const usersReservation = reservations.filter((reservation) => {
-    return reservation.organizationId === user.id;
+    return reservation[filterBy] === user.id;
   });
 
   useEffect(() => {
@@ -54,6 +51,13 @@ export default function History({ reservationsInfo, restaurantList }) {
       return restaurant.id === id;
     });
     return restaurant[0];
+  };
+
+  const findPartner = (id) => {
+    const partner = users.filter((user) => {
+      return user.id === id;
+    });
+    return partner[0];
   };
 
   const statusColor = (status) => {
@@ -129,7 +133,10 @@ export default function History({ reservationsInfo, restaurantList }) {
                           padding: view700 && view700.matches ? "16px" : "10px",
                         }}
                       >
-                        {findRestaurant(res.restaurantId).businessName}
+                        {user.businessType === "organization"
+                          ? findPartner(res.restaurantId).businessName
+                          : findPartner(res.organizationId).businessName}
+                        {/* {findRestaurant(res.restaurantId).businessName} */}
                       </TableCell>
                       <TableCell align="center" sx={{ padding: "10px" }}>
                         <span
