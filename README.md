@@ -11,7 +11,8 @@ Our application is highly responsive, but is best viewed in mobile device dimens
   Password: oodles2202
 
 - Restaurant:
-  Email:
+  Email: HBBQ@gmail.com
+  Password: 12345678
 
 * Oodles app link: https://oodles-2-1.vercel.app/account/login
 
