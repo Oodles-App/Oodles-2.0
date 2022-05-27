@@ -25,22 +25,32 @@ export const getServerSideProps = async () => {
       },
     },
   });
+  const allOrganizations = await prisma.user.findMany({
+    where: {
+      businessType: {
+        equals: "organization",
+      },
+    },
+  });
 
   return {
     props: {
-      reservationsInfo: JSON.parse(JSON.stringify(reservations)),
+      reservations: JSON.parse(JSON.stringify(reservations)),
       restaurantList: JSON.parse(JSON.stringify(restaurants)),
+      organizations: JSON.parse(JSON.stringify(allOrganizations)),
     },
   };
 };
 
-export default function History({ reservationsInfo, restaurantList }) {
-  const initialReservationList = useState({ reservationsInfo });
+export default function History({ reservations, restaurantList }) {
   const user = useSelector((state) => state.user);
   const [view700, setView700] = useState(null);
-  const reservations = initialReservationList[0].reservationsInfo;
+
+  const filterBy =
+    user.businessType === "restaurant" ? "restaurantId" : "organizationId";
+
   const usersReservation = reservations.filter((reservation) => {
-    return reservation.organizationId === user.id;
+    return reservation[filterBy] === user.id;
   });
 
   useEffect(() => {
